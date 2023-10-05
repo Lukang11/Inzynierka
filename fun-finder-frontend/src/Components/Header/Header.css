@@ -1,0 +1,35 @@
+.header {
+  background-color: var(--mainpurple);
+  background-image: linear-gradient(to right, var(--mainpurple), #8143cf);
+  height: 7vh;
+}
+.header-list {
+  font-size: 1.5em;
+  color: white;
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+.profile-btn {
+  background-color: var(--mainpurple);
+  padding: 10px 50px;
+  border-radius: 100px;
+}
+.logo {
+  flex-basis: 50%;
+}
+ul,
+li {
+  margin: 0;
+}
+.flex-cont {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  flex-basis: 50%;
+}
+.nav-link {
+  margin: 0 20px 0 20px;
+}
