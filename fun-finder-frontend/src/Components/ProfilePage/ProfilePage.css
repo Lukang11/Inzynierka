@@ -1,0 +1,17 @@
+.description-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.profile-desc {
+  flex-basis: 60%;
+}
+.profile-card {
+  flex-basis: 30%;
+}
+
+.profile-card {
+  border-radius: 20px;
+  -webkit-box-shadow: 0px 15px 48px -10px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 0px 15px 48px -10px rgba(66, 68, 90, 1);
+  box-shadow: 0px 15px 48px -10px rgba(66, 68, 90, 1);
+}
