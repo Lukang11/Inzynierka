@@ -16,13 +16,6 @@ const ProfileDescription = () => {
           Morbi aliquet tincidunt enim eget dapibus. Duis volutpat faucibus
           dignissim. Sed nunc ligula, porttitor aliquet molestie non, euismod
           quis dolor. Curabitur scelerisque volutpat ligula, tristique posuere
-          neque interdum a. Cras eget nulla vitae orci dictum sodales. Aliquam
-          erat volutpat. Sed libero neque, vestibulum eget felis a, molestie
-          molestie quam. Proin rhoncus, enim quis mattis rhoncus, dolor neque
-          sodales dolor, eu facilisis metus sem suscipit dui. Nullam volutpat
-          interdum urna at bibendum. Integer imperdiet elit tincidunt efficitur
-          tempus. Nullam varius libero at risus tempus, vitae hendrerit nunc
-          pellentesque. Mauris nec mi.
         </div>
         <br></br>
       </div>
