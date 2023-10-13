@@ -51,6 +51,8 @@
   align-items: center;
   padding: 10px;
   flex-basis: 10%;
+  height: 100px;
+  min-width: 150px;
 }
 .hobbies-second-row {
   padding: 20px;
