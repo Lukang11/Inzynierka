@@ -7,7 +7,7 @@ import ProfileEvents from "./ProfileComponents/ProfileEvents/ProfileEvents";
 
 const ProfilePage = () => {
   return (
-    <div>
+    <div className="profile-page-content">
       <div className="description-wrapper">
         <div className="profile-desc">
           <ProfileDescription></ProfileDescription>
@@ -16,11 +16,13 @@ const ProfilePage = () => {
           <ProfileDetails></ProfileDetails>
         </div>
       </div>
-      <div>
-        <ProfileEvents></ProfileEvents>
-      </div>
-      <div>
-        <ProfileHobbies></ProfileHobbies>
+      <div className="second-row-wrapper">
+        <div className="profile-event-wrapper">
+          <ProfileEvents></ProfileEvents>
+        </div>
+        <div className="profile-hobbies-wrapper">
+          <ProfileHobbies></ProfileHobbies>
+        </div>
       </div>
     </div>
   );
