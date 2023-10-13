@@ -1,0 +1,56 @@
+.events-card > ul {
+  margin: 20px 20px 20px 20px;
+  padding: 20px;
+}
+
+.events-card {
+  border-radius: 20px;
+  -webkit-box-shadow: 0px 15px 48px -10px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 0px 15px 48px -10px rgba(66, 68, 90, 1);
+  box-shadow: 0px 15px 48px -10px rgba(66, 68, 90, 1);
+}
+
+.events-row {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  list-style: none;
+}
+.events-item {
+  align-self: center;
+  text-align: center;
+  flex-basis: 15%;
+}
+.events-item-icon {
+  flex-basis: 20%;
+  text-align: center;
+}
+.events-item-data {
+  flex-basis: 30%;
+  text-align: center;
+}
+.events-item-name {
+  flex-basis: 20%;
+  text-align: center;
+}
+.style-list-elem {
+  padding: 5px;
+}
+.events-hobbies-items {
+  padding: 5px;
+  flex-basis: 25%;
+}
+.events-card > h2 {
+  padding-left: 40px;
+  padding-top: 20px;
+}
+.bottom-border {
+  border-bottom: 1px solid #b0acac;
+  border-radius: 5px;
+}
+.bottom-border:hover {
+  background-color: #ddb7ff;
+}
+.text-color {
+  color: #b0acac;
+}
