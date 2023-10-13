@@ -1,5 +1,11 @@
 import React from "react";
 import "./ProfileDescription.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSquareFacebook,
+  faSquareInstagram,
+  faSquareTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 
 const ProfileDescription = () => {
   return (
@@ -18,6 +24,19 @@ const ProfileDescription = () => {
           quis dolor. Curabitur scelerisque volutpat ligula, tristique posuere
         </div>
         <br></br>
+        <div className="desc-links">
+          <div className="desc-icon">
+            <FontAwesomeIcon icon={faSquareFacebook} />
+          </div>
+          <div className="desc-icon">
+            {" "}
+            <FontAwesomeIcon icon={faSquareInstagram} />
+          </div>
+          <div className="desc-icon">
+            {" "}
+            <FontAwesomeIcon icon={faSquareTwitter} />
+          </div>
+        </div>
       </div>
     </div>
   );

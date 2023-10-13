@@ -6,4 +6,27 @@
   height: 40vh;
   font-size: 1.25em;
   min-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.desc-links {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.desc-icon > * {
+  height: 50px;
+  width: 50px;
+}
+.desc-icon {
+  height: 50px;
+  width: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+  transition: all 0.5s;
+}
+
+.desc-icon:hover {
+  transform: scale(1.2);
 }
