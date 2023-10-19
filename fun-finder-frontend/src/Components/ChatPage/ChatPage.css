@@ -2,18 +2,17 @@
     height: calc(100vh - 70px);
     display: flex;
     justify-content: flex-start;
-    z-index: 1;
 }
 
 .chat-clouds-section{
-    flex-basis: 25%;
+    flex-basis: 20%;
     flex-direction: column;
     background-color: #FFFFFF;
     display: flex;
 }
 
 .chat-messages-section{
-    flex-basis: 75%;
+    flex-basis: 80%;
     background-color: #F5F5F5;
     display: flex;
 }
