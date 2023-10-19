@@ -41,6 +41,8 @@
 .hobbies-contener-wrapper {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
 }
 .hobbies-contener-wrapper-item {
   display: flex;
@@ -48,6 +50,9 @@
   justify-items: center;
   align-items: center;
   padding: 10px;
+  flex-basis: 10%;
+  height: 100px;
+  min-width: 150px;
 }
 .hobbies-second-row {
   padding: 20px;
@@ -55,4 +60,7 @@
 
 .hobbies-contener-wrapper-item:hover {
   border-bottom: 1px solid #5908bf;
+}
+.hobbies-contener-wrapper-item > div {
+  padding: 10px;
 }
