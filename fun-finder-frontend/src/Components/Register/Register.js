@@ -157,7 +157,7 @@ const Register = () => {
                     </div>
                     <div className="error-message">{error}</div>
                     <div className="registerSubmitButton">
-                        <button type="submit">Zarejestruj się</button>
+                        <button type="submit">Zarejestruj</button>
                     </div>
                 </form>
             </div>
