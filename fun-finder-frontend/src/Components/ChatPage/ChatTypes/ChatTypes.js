@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ChatTypes.css";
 
-function ChatTypes(){
+function ChatTypes() {
+    const [buttonStyles, setButtonStyles] = useState({
+        person: "NotClicked",
+        group: "NotClicked",
+        event: "NotClicked",
+    });
+
+    const changeButtonStyle = (type) => {
+        const newStyles = { ...buttonStyles };
+        for (const key in newStyles) {
+            newStyles[key] = key === type ? "Clicked" : "NotClicked";
+        }
+        setButtonStyles(newStyles);
+    };
+
     return (
         <div className="chat-types">
-            <button className="persons-btn">
-                <a>Osoby</a>
-            </button>
-            <button className="group-btn">
-                <a>Grupy</a>
-            </button>
-            <button className="event-btn">
-                <a>Wydarzenia</a>
-            </button>
+            {["person", "group", "event"].map((type) => (
+                <button
+                    key={type}
+                    className={`button${buttonStyles[type]}`}
+                    onClick={() => changeButtonStyle(type)}
+                    >
+                    {type}
+                </button>
+            ))}
         </div>
     );
 }
