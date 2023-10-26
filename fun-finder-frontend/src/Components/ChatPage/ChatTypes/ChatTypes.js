@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import "./ChatTypes.css";
 
+const languageProp = {
+    person: "Osoby",
+    group: "Grupy",
+    event: "Wydarzenia"
+}
+
 function ChatTypes() {
     const [buttonStyles, setButtonStyles] = useState({
         person: "NotClicked",
@@ -24,7 +30,7 @@ function ChatTypes() {
                     className={`button${buttonStyles[type]}`}
                     onClick={() => changeButtonStyle(type)}
                     >
-                    {type}
+                    {languageProp[type]}
                 </button>
             ))}
         </div>
