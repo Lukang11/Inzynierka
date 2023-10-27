@@ -5,18 +5,20 @@ import ProfilePage from "./Components/ProfilePage/ProfilePage";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import ChatPage from "./Components/ChatPage/ChatPage";
+import WelcomePage from "./Components/WelcomePage/WelcomePage";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
         <Header></Header>
-        <Routes>
+        <WelcomePage />
+        {/* <Routes>
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/chat" element={<ChatPage />} />
-        </Routes>
+        </Routes> */}
       </div>
     </BrowserRouter>
   );
