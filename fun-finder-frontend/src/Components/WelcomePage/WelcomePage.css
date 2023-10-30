@@ -1,0 +1,92 @@
+/* FIRST SECTION */
+
+.first-section {
+    background-color: #FFFF;
+    height: 100vh;
+}
+
+.container {
+  display: flex;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  padding-left: 100px;
+  padding-top: 100px;
+  
+}
+
+.left, .right {
+  flex: 1;
+  padding: 10px;
+  
+}
+
+.fullscreenImg {
+    margin: -1%;
+    width: 50vw;
+    height: 100vh;
+}
+
+.section-title {
+    padding-top: 20vh;
+    padding-left: 100px;
+    font-size: 58px;
+}
+
+.section-text {
+font-size: 24px;
+padding-left: 100px;
+padding-top: 60px;
+padding-right: 200px;
+}
+
+.section-filled-btn {
+  background-color: var(--mainpurple);
+  border-radius: 100px;
+  width: 300px;
+  height: 70px;
+  color: #FFF;
+  display: flex; 
+  justify-content: center;
+  align-items: center; 
+}
+
+
+
+.section-outline-btn {
+  
+  border: 2px solid var(--mainpurple); 
+  border-radius: 100px;
+  width: 300px;
+  height: 70px;
+  color: var(--mainpurple); 
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.section-outline-btn:hover {
+  background-color: var(--mainpurple); 
+  color: #FFF; 
+}
+
+
+.second-section {
+    background-color: purple;
+    height: 100vh;
+}
+
+.third-section {
+    background-color: purple;
+    height: 100vh;
+}
+
+.fourth-section {
+    background-color: purple;
+    height: 100vh;
+}
+
