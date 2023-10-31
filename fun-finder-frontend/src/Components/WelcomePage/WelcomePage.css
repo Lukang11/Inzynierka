@@ -76,8 +76,32 @@ padding-right: 200px;
 
 
 .second-section {
-    background-color: purple;
-    height: 100vh;
+    background-color: #F5F5F5;
+    height: 120vh;
+}
+
+.card {
+    height: 500px;
+    width: 400px;
+    background-color: #FFFF;
+    border-radius: 20px; 
+}
+
+.card-title {
+    color: var(--mainpurple); 
+    font-size: 30px;
+    padding-top: 60px;
+    padding-left: 50px;
+}
+
+.card-text {
+    padding: 50px;
+}
+
+.cards-container {
+padding: 200px;
+  display: flex;
+  gap: 200px;
 }
 
 .third-section {
