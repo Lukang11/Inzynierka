@@ -7,9 +7,9 @@ const languageProp = {
     event: "Wydarzenia"
 }
 
-function ChatTypes() {
+function ChatTypes({ updateWichChatToDisplay }) {
     const [buttonStyles, setButtonStyles] = useState({
-        person: "NotClicked",
+        person: "Clicked",
         group: "NotClicked",
         event: "NotClicked",
     });
@@ -17,10 +17,17 @@ function ChatTypes() {
     const changeButtonStyle = (type) => {
         const newStyles = { ...buttonStyles };
         for (const key in newStyles) {
-            newStyles[key] = key === type ? "Clicked" : "NotClicked";
+            if(newStyles[key] = key === type){
+                newStyles[key] = "Clicked";
+                updateWichChatToDisplay(key);
+            }
+            else{
+                newStyles[key] = "NotClicked";
+            }
         }
         setButtonStyles(newStyles);
     };
+
 
     return (
         <div className="chat-types">
@@ -34,6 +41,7 @@ function ChatTypes() {
                 </button>
             ))}
         </div>
+        
     );
 }
 

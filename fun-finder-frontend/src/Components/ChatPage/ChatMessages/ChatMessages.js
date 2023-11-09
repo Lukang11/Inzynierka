@@ -1,9 +1,18 @@
 import React from "react";
 import "./ChatMessages.css"
 
-function ChatMessages(){
+function ChatMessages( {passWichMessageToDisplay} ){
+
     return (
-        <h2>chat messages</h2>
+        <div className="chat-field">
+        {passWichMessageToDisplay.map((item)=>(
+            <div key={item.id}
+            className={`chat-item-owner ${item.userId !==0 ? 'chat-item-other' : ''}`}>
+            <p>{item.message}</p>
+            </div>
+        ))}
+        </div>
+        
     );
 }
 
