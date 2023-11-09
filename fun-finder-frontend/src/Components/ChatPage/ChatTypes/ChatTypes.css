@@ -2,19 +2,24 @@
     flex-basis: 5%;
     display: flex;
     justify-content: space-around;
-    margin-top: 40px;
+    margin: 40px;
     margin-inline: 3%;
 }
 
-.chat-types button {
+
+.buttonNotClicked{
     background-color: #FFFFFF;
     padding: 10px 25px;
     border-radius: 25px;
     border-color: #5908BF;
 }
 
-.chat-types button a {
-    color: #5908BF;
-}
 
+.buttonClicked {
+    background-color: #5908BF;
+    padding: 10px 25px;
+    border-radius: 25px;
+    border: none;
+    color: #FFFFFF;
+}
 

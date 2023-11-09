@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProfilePage from "./Components/ProfilePage/ProfilePage";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
-import ChatPage from "./Components/ChatPage/ChatPage";
+import ChatPageComponent from "./Components/ChatPage/ChatPage";
 import WelcomePage from "./Components/WelcomePage/WelcomePage";
 
 function App() {
@@ -12,13 +12,13 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Header></Header>
-        <WelcomePage />
-        {/* <Routes>
+         <Routes>
+          <Route path="/" element={<WelcomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/chat" element={<ChatPage />} />
-        </Routes> */}
+          <Route path="/chat" element={<ChatPageComponent />} />
+        </Routes>
       </div>
     </BrowserRouter>
   );
