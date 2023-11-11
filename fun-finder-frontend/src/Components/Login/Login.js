@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 
-const Login = () => {
+const Login = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -16,6 +16,9 @@ const Login = () => {
             <div className="form-container">
                 <div className="title">
                     <h2>Logowanie</h2>
+                    <div>
+                    {props.name}
+                    </div>
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className="input-field">

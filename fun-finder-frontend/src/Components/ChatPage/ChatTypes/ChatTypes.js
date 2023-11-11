@@ -1,45 +1,55 @@
 import React, { useState } from "react";
 import "./ChatTypes.css";
 
-const languageProp = {
-    person: "Osoby",
-    group: "Grupy",
-    event: "Wydarzenia"
-}
-
 function ChatTypes({ updateWichChatToDisplay }) {
-    const [buttonStyles, setButtonStyles] = useState({
-        person: "Clicked",
-        group: "NotClicked",
-        event: "NotClicked",
-    });
 
-    const changeButtonStyle = (type) => {
-        const newStyles = { ...buttonStyles };
-        for (const key in newStyles) {
-            if(newStyles[key] = key === type){
-                newStyles[key] = "Clicked";
-                updateWichChatToDisplay(key);
-            }
-            else{
-                newStyles[key] = "NotClicked";
-            }
-        }
-        setButtonStyles(newStyles);
-    };
+    const [personChatBtnClicked, setPersonChatBtnClicked] = useState(true);
+    const [groupChatBtnClicked, setGroupBtnClicked] = useState(false);
+    const [eventChatBtnClicked, setEventChatBtnClicked] = useState(false);
 
+    const changePersonChatBtnStatus = () => {
+
+        updateWichChatToDisplay("person");
+        setPersonChatBtnClicked(true);
+        setGroupBtnClicked(false);
+        setEventChatBtnClicked(false);
+    }
+    const changeGroupChatBtnStatus = () => {
+
+        updateWichChatToDisplay("group");
+        setPersonChatBtnClicked(false);
+        setGroupBtnClicked(true);
+        setEventChatBtnClicked(false);
+    }
+
+    const changeEventChatBtnStatus = () => {
+
+        updateWichChatToDisplay("event");
+        setPersonChatBtnClicked(false);
+        setGroupBtnClicked(false);
+        setEventChatBtnClicked(true);
+    }
 
     return (
         <div className="chat-types">
-            {["person", "group", "event"].map((type) => (
-                <button
-                    key={type}
-                    className={`button${buttonStyles[type]}`}
-                    onClick={() => changeButtonStyle(type)}
-                    >
-                    {languageProp[type]}
-                </button>
-            ))}
+            <button
+                className={`buttonNotClicked ${personChatBtnClicked ? 'buttonClicked' : ''}`}
+                onClick={() => changePersonChatBtnStatus()}
+            >
+                Osoby
+            </button>
+            <button
+                className={`buttonNotClicked ${groupChatBtnClicked ? 'buttonClicked' : ''}`}
+                onClick={() => changeGroupChatBtnStatus()}
+            >
+                Grupy
+            </button>
+            <button
+                className={`buttonNotClicked ${eventChatBtnClicked ? 'buttonClicked' : ''}`}
+                onClick={() => changeEventChatBtnStatus()}
+            >
+                Eventy
+            </button>
         </div>
         
     );
