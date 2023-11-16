@@ -19,13 +19,17 @@
   height: 100%;
 
 }
-.profile-btn {
+
+.profile-login-register-btn {
   background-color: var(--mainpurple);
   padding: 10px 50px;
   border-radius: 100px;
 }
 .logo {
   flex-basis: 50%;
+  padding-left: 80px;
+  font-weight: bold;
+
 }
 ul,
 li {
@@ -36,6 +40,7 @@ li {
   align-items: center;
   justify-content: end;
   flex-basis: 50%;
+  padding-right: 20px;
 }
 .nav-link {
   margin: 0 20px 0 20px;
@@ -45,4 +50,5 @@ a {
   width: 100%;
   text-decoration: none;
   color: white;
+  font-size: 20px
 }

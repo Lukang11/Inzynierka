@@ -14,7 +14,7 @@ export default function Header() {
         <div className="flex-cont">
           <li className="nav-link">
             {" "}
-            <Link to="events">
+            <Link to="/events">
               {" "}
               <FontAwesomeIcon
                 icon={faEarthAmericas}
@@ -23,14 +23,14 @@ export default function Header() {
             </Link>
           </li>
           <li className="nav-link">
-            <Link to="chat">
+            <Link to="/chat">
               {" "}
               <FontAwesomeIcon icon={faMessage} style={{ color: "white" }} />
             </Link>
           </li>
           <li className="prof-btn nav-link">
-            <div className="profile-btn">
-              <Link to="profile"> Profile</Link>
+            <div className="profile-login-register-btn">
+              <Link to="/profile"> Profile</Link>
             </div>
           </li>
         </div>

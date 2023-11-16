@@ -6,18 +6,18 @@ import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import ChatPageComponent from "./Components/ChatPage/ChatPage";
 import WelcomePage from "./Components/WelcomePage/WelcomePage";
+import WelcomePageHeader from "./Components/Header/WelcomePageHeader";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header></Header>
          <Routes>
-          <Route path="/" element={<WelcomePage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/chat" element={<ChatPageComponent />} />
+          <Route path="/" element={<> <WelcomePageHeader /><WelcomePage /> </>} />
+          <Route path="/profile" element={<> <Header /><ProfilePage /> </>} />
+          <Route path="/login" element={<> <WelcomePageHeader /><Login /> </>} />
+          <Route path="/register" element={<> <WelcomePageHeader /><Register /> </>} />
+          <Route path="/chat" element={<> <Header /><ChatPageComponent /> </>} />
         </Routes>
       </div>
     </BrowserRouter>

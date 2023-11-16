@@ -10,6 +10,7 @@ import {
     faSquareInstagram,
     faSquareTwitter,
 } from "@fortawesome/free-brands-svg-icons";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function WelcomePage() {
 
