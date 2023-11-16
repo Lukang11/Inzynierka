@@ -6,6 +6,7 @@ import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import ChatPage from "./Components/ChatPage/ChatPage";
 import EventsPage from "./Components/Events/EventsPage";
+import CreateEvent from "./Components/Events/CreateEvent";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/events" element={<EventsPage />} />
+          <Route path="/create-event" element={<CreateEvent />} />
         </Routes>
       </div>
     </BrowserRouter>

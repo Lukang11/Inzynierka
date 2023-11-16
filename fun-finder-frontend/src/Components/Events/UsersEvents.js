@@ -1,5 +1,6 @@
 import React from "react";
 import "./UsersEvents.css";
+import { Link } from 'react-router-dom';
 
 const UsersEvents = () => {
   const test_data = [
@@ -37,8 +38,14 @@ const UsersEvents = () => {
 
   return (
     <div>
+      <Link to="/create-event">
+        <button className="create-event-button">Create Event</button>
+      </Link>
+      <div className="events-container">
       <div className="events-card">
         <h2 className="">Wydarzenia</h2>
+        <div className="create-button-container">
+      </div>
         <ul>
           <div className="events-row">
             {" "}
@@ -71,6 +78,7 @@ const UsersEvents = () => {
           ))}
         </ul>
       </div>
+    </div>
     </div>
   );
 };
