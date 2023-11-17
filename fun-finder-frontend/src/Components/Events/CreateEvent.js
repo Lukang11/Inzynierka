@@ -38,9 +38,9 @@ function CreateEvent() {
           </div>
           <div className='events-card'>
             <div className='info-header'>Lokalizacja</div>
-            <div className='events-map'>
-            <iframe src="https://www.google.com/maps/embed?pb=..." width="" height="450" style={{ border: 0 }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
+
+            <iframe className='events-map' src="https://www.google.com/maps/embed?pb=..." width="" height="450" style={{ border: 0 }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
           </div>
           <div className='events-card'>
             <div className='info-header'>Kategoria</div>
