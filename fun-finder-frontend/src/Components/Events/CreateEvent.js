@@ -25,10 +25,10 @@ function CreateEvent() {
   return (
     
       <div>
-        <div className='header-1'> Wydarzenia</div>
+        <div className='events-header'> Wydarzenia</div>
         <div className='container'> 
-          <div className='card'>
-            <div className='header-2'>Informacje</div>
+          <div className='events-card'>
+            <div className='info-header'>Informacje</div>
             <div className='label-text'>Nazwa:</div>
             <input type="text" className='input-textbox' value={name} onChange={e => setName(e.target.value)} />
             <div className='label-text'>Godzina:</div>
@@ -36,12 +36,14 @@ function CreateEvent() {
             <div className='label-text'>Ilość osób:</div>
             <input type="text" className='input-textbox' value={date} onChange={e => setPeople(e.target.value)} />
           </div>
-          <div className='card'>
-            <div className='header-2'>Lokalizacja</div>
+          <div className='events-card'>
+            <div className='info-header'>Lokalizacja</div>
+            <div className='events-map'>
             <iframe src="https://www.google.com/maps/embed?pb=..." width="" height="450" style={{ border: 0 }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
           </div>
-          <div className='card'>
-            <div className='header-2'>Kategoria</div>
+          <div className='events-card'>
+            <div className='info-header'>Kategoria</div>
           </div>
           <button className='create-eventt-button' onClick={handleSubmit}>Utwórz wydarzenie</button>
         </div>
