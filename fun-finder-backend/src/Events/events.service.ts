@@ -19,4 +19,25 @@ export class EventsService {
     console.log('Incoming POST request with this body :\n');
     console.log(result);
   }
+  async getAllEvents() {
+    try {
+      const allEvents = await this.eventsModel.find().exec();
+      console.log(allEvents);
+      return allEvents;
+    } catch (error) {
+      console.error('Error fetching all events:', error);
+      throw error;
+    }
+  }
+  async getEventsByLocation(desiredLocation: string) {
+    try {
+      const events = await this.eventsModel
+        .find({ location: desiredLocation })
+        .exec();
+      return events;
+    } catch (error) {
+      console.error('Error fetching events by location:', error);
+      throw error;
+    }
+  }
 }
