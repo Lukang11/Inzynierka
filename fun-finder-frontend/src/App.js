@@ -14,10 +14,11 @@ function App() {
       <div className="App">
         <Header></Header>
         <Routes>
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/chat" element={<ChatPage />} />
+        <Route path="/" element={<> <WelcomePageHeader /><WelcomePage /> </>} />
+          <Route path="/profile" element={<> <Header /><ProfilePage /> </>} />
+          <Route path="/login" element={<> <WelcomePageHeader /><Login /> </>} />
+          <Route path="/register" element={<> <WelcomePageHeader /><Register /> </>} />
+          <Route path="/chat" element={<> <Header /><ChatPageComponent /> </>} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/create-event" element={<CreateEvent />} />
         </Routes>
