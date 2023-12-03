@@ -3,13 +3,24 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserController } from './users.controller';
 import { UserService } from './users.service';
 import { User, UserSchema } from './AuthInterfaces/users.model';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import * as dotenv from 'dotenv';
+import { JwtStrategy } from './jwt.strategy';
+
+dotenv.config();
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: "User", schema: UserSchema }]),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET_KEY,
+      signOptions: { expiresIn: '3h' },
+    }),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [UserController],
-  providers: [UserService],
-  exports: [UserService],
+  providers: [UserService, JwtStrategy],
+  exports: [UserService, PassportModule],
 })
 export class UserModule {}
