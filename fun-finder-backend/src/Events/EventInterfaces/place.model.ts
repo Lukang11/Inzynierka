@@ -26,6 +26,8 @@ export class Place extends Document {
 
   @Prop({ type: String, required: false })
   iconMaskBaseUri: string;
+  @Prop({ type: Number, required: false })
+  rating: number;
 }
 
 export const PlaceSchema = SchemaFactory.createForClass(Place);

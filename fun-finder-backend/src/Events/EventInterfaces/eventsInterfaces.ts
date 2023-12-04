@@ -25,4 +25,5 @@ export interface GoogleApiPlacesResponse {
     languageCode: string;
   };
   iconMaskBaseUri: string;
+  rating: number;
 }

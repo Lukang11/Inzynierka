@@ -88,7 +88,7 @@ export class EventsService {
       'Content-Type': 'application/json',
       'X-Goog-Api-Key': `${process.env.API_KEY}`,
       'X-Goog-FieldMask':
-        'places.displayName,places.formattedAddress,places.types,places.websiteUri,places.iconMaskBaseUri',
+        'places.displayName,places.formattedAddress,places.types,places.websiteUri,places.iconMaskBaseUri,places.rating',
     };
     let response: GoogleApiQueryResponse | null = null;
     await axios
