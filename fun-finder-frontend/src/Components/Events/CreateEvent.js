@@ -33,8 +33,10 @@ function CreateEvent() {
             <input type="text" className='input-textbox' value={name} onChange={e => setName(e.target.value)} />
             <div className='label-text'>Godzina:</div>
             <input type="text" className='input-textbox' value={time} onChange={e => setTime(e.target.value)} />
-            <div className='label-text'>Ilość osób:</div>
-            <input type="text" className='input-textbox' value={date} onChange={e => setPeople(e.target.value)} />
+            <div className='label-text'>Data:</div>
+            <input type="text" className='input-textbox' value={date} onChange={e => setDate(e.target.value)}  />
+            <div className='label-text'>Ilośc osób:</div>
+            <input type="text" className='input-textbox' value={people} onChange={e => setPeople(e.target.value)} />
           </div>
           <div className='events-card'>
             <div className='info-header'>Lokalizacja</div>
