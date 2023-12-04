@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EventsModule } from './Events/events.module';
 import { UserModule } from './Auth/users.module';
+import { CronService } from './Cron/cron.service';
 
 @Module({
   imports: [
@@ -13,6 +14,6 @@ import { UserModule } from './Auth/users.module';
     UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CronService],
 })
 export class AppModule {}
