@@ -55,4 +55,8 @@ export class EventsController {
   testFunction(@Body() object: any) {
     this.eventService.createOfResourceInMongoDbOnlyIfDoesntExist(object);
   }
+  @Get('/all')
+  getAllPlaces() {
+    return this.eventService.getAllPlaces();
+  }
 }
