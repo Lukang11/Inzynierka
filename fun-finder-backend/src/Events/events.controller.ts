@@ -1,5 +1,10 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { EventsService } from './events.service';
+import {
+  GoogleApiQueryObject,
+  GoogleApiQueryResponse,
+} from './EventInterfaces/eventsInterfaces';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 @Controller('/events')
 export class EventsController {
@@ -11,7 +16,7 @@ export class EventsController {
   }
 
   @Get('/loc')
-  getEventByLocation(@Body() object: { location: string }) {
+  getEventByLocationFromDataBase(@Body() object: { location: string }) {
     const location = object.location.toLowerCase();
     return this.eventService.getEventsByLocation(location);
   }
@@ -31,5 +36,23 @@ export class EventsController {
       fullObject.location,
       fullObject.relatedHobbies,
     );
+  }
+  @Post('/find-places-by-localization')
+  findPlaceByLocalizationGoogleApi(
+    @Body() queryObject: GoogleApiQueryObject,
+  ): Promise<GoogleApiQueryResponse> {
+    try {
+      console.log(queryObject);
+      const result =
+        this.eventService.getEventsByLocationFromGoogleApi(queryObject);
+      return result;
+    } catch (error) {
+      console.error('Error processing request:', error);
+      throw new HttpException('Invalid data format', HttpStatus.BAD_REQUEST);
+    }
+  }
+  @Post('/test')
+  testFunction(@Body() object: any) {
+    this.eventService.create(object);
   }
 }
