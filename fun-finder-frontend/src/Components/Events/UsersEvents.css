@@ -1,52 +1,86 @@
 
-.events-container{
+.users-events-container{
   display: flex;
   justify-content: center;
   flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 2px 4px 4px #0000000d;
 }
-.events-card > ul {
-    margin: 20px 20px 20px 20px;
+.buttons-container{
+  display: flex;
+  justify-content: space-between;
+
+}
+.event-add-button{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #5908BF;;
+  color:#ffffff;
+  border-radius: 15px;
+  box-shadow: 2px 4px 4px #0000000d;
+  margin: 10px;
+  padding: 10px;
+  margin-left: 2200px; 
+}
+.filter-events-button{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 2px 4px 4px #0000000d;
+  margin: 10px;
+  padding: 10px;
+  margin-left: 2200px; 
+
+}
+.users-events-card > ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 200px;
     padding: 20px;
   }
   
-  .events-card {
+  .users-events-card {
     border-radius: 20px;
-    -webkit-box-shadow: 0px 15px 48px -10px rgba(66, 68, 90, 1);
-    -moz-box-shadow: 0px 15px 48px -10px rgba(66, 68, 90, 1);
-    box-shadow: 0px 15px 48px -10px rgba(66, 68, 90, 1);
+
   }
   
-  .events-row {
+  .users-events-row {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     list-style: none;
+    height: 80px;
   }
-  .events-item {
+  .users-events-item {
     align-self: center;
     text-align: center;
-    flex-basis: 15%;
+    flex-basis: 20%;
   }
-  .events-item-icon {
+  .users-events-item-icon {
     flex-basis: 20%;
     text-align: center;
   }
-  .events-item-data {
+  .users-events-item-data {
     flex-basis: 30%;
     text-align: center;
   }
-  .events-item-name {
+  .users-events-item-name {
     flex-basis: 20%;
     text-align: center;
   }
-  .style-list-elem {
+  .users-style-list-elem {
     padding: 5px;
   }
-  .events-hobbies-items {
+  .users-events-hobbies-items {
     padding: 5px;
     flex-basis: 25%;
   }
-  .events-card > h2 {
+  .users-events-card > h2 {
     padding-left: 40px;
     padding-top: 20px;
   }
