@@ -1,0 +1,96 @@
+
+.users-events-container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 2px 4px 4px #0000000d;
+}
+.buttons-container{
+  display: flex;
+  justify-content: space-between;
+
+}
+.event-add-button{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #5908BF;;
+  color:#ffffff;
+  border-radius: 15px;
+  box-shadow: 2px 4px 4px #0000000d;
+  margin: 10px;
+  padding: 10px;
+  margin-left: 2200px; 
+}
+.filter-events-button{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 2px 4px 4px #0000000d;
+  margin: 10px;
+  padding: 10px;
+  margin-left: 2200px; 
+
+}
+.users-events-card > ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 200px;
+    padding: 20px;
+  }
+  
+  .users-events-card {
+    border-radius: 20px;
+
+  }
+  
+  .users-events-row {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    list-style: none;
+    height: 80px;
+  }
+  .users-events-item {
+    align-self: center;
+    text-align: center;
+    flex-basis: 20%;
+  }
+  .users-events-item-icon {
+    flex-basis: 20%;
+    text-align: center;
+  }
+  .users-events-item-data {
+    flex-basis: 30%;
+    text-align: center;
+  }
+  .users-events-item-name {
+    flex-basis: 20%;
+    text-align: center;
+  }
+  .users-style-list-elem {
+    padding: 5px;
+  }
+  .users-events-hobbies-items {
+    padding: 5px;
+    flex-basis: 25%;
+  }
+  .users-events-card > h2 {
+    padding-left: 40px;
+    padding-top: 20px;
+  }
+  .bottom-border {
+    border-bottom: 1px solid #b0acac;
+    border-radius: 5px;
+  }
+  .bottom-border:hover {
+    background-color: #ddb7ff;
+  }
+  .text-color {
+    color: #b0acac;
+  }
