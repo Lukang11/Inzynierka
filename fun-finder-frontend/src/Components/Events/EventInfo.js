@@ -20,7 +20,9 @@ export const EventInfo = () => {
             ut tempor.
           </p>
         </div>
+        <div className="event-map-container">
         <iframe className='event-map' src="https://www.google.com/maps/embed?pb=..." width="" height="450" style={{ border: 0 }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
         <div className="event-name">Kajaki</div>
         <div className="event-address">Dokowa 1, 80-863 Gdańsk</div>
         <p className="event-enrolled-users">

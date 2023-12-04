@@ -1,26 +1,13 @@
 .event-info-container {
     background-color: #f5f5f5;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    width: 100%;
+    flex-basis: 100%;
+
   }
   
-  .div {
-    background-color: #f5f5f5;
-    height: 1117px;
-    overflow: hidden;
-    position: relative;
-    width: 1728px;
-  }
-  
-  .group {
-    height: 84px;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 1730px;
-  }
+
   
   .overlap-group {
     background: linear-gradient(180deg, rgba(90.66, 0, 206.32, 0.98) 0%, rgb(128.62, 66.88, 207.39) 100%);
@@ -30,22 +17,7 @@
     width: 1728px;
   }
   
-  .vector {
-    height: 28px;
-    left: 1481px;
-    position: absolute;
-    top: 29px;
-    width: 28px;
-  }
   
-  
-  .img {
-    height: 29px;
-    left: 1409px;
-    position: absolute;
-    top: 28px;
-    width: 29px;
-  }
   
   .text-wrapper {
     color: #ffffff;
@@ -66,39 +38,7 @@
     top: 325px;
     width: 601px;
   }
-  
-  .vector-2 {
-    height: 19px;
-    left: 74px;
-    position: absolute;
-    top: 664px;
-    width: 24px;
-  }
-  
-  .vector-3 {
-    height: 20px;
-    left: 81px;
-    position: absolute;
-    top: 436px;
-    width: 11px;
-  }
-  
-  .vector-4 {
-    height: 19px;
-    left: 74px;
-    position: absolute;
-    top: 512px;
-    width: 24px;
-  }
-  
-  .vector-5 {
-    height: 17px;
-    left: 78px;
-    position: absolute;
-    top: 589px;
-    width: 17px;
-  }
-  
+   
   .event-information {
     color: #000000;
     font-family: "Kanit-Light", Helvetica;
@@ -111,13 +51,18 @@
     top: 0;
     width: 601px;
   }
+  .event-map-container{
+    display: flex;
+    flex-direction: column;
+
+  }
   
   .event-map {
-    height: 748px;
+    height: 500px;
     left: 1000px;
     position: absolute;
     top: 298px;
-    width: 1000px;
+    width: 500px;
   }
   
   .event-name {
@@ -150,7 +95,7 @@
     font-family: "Inter-Regular", Helvetica;
     font-size: 24px;
     font-weight: 400;
-    left: 1342px;
+    left: 1142px;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;

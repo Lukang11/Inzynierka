@@ -14,7 +14,6 @@
 }
 .event-add-button{
   display: flex;
-  justify-content: flex-end;
   align-items: center;
   background-color: #5908BF;;
   color:#ffffff;
@@ -22,18 +21,17 @@
   box-shadow: 2px 4px 4px #0000000d;
   margin: 10px;
   padding: 10px;
-  margin-left: 2200px; 
+  margin-left: 1800px; 
 }
 .filter-events-button{
   display: flex;
-  justify-content: flex-end;
   align-items: center;
   background-color: #ffffff;
   border-radius: 15px;
   box-shadow: 2px 4px 4px #0000000d;
   margin: 10px;
   padding: 10px;
-  margin-left: 2200px; 
+  margin-left: 1800px; 
 
 }
 .users-events-card > ul {
