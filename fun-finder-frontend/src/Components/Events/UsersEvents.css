@@ -7,9 +7,10 @@
   border-radius: 15px;
   box-shadow: 2px 4px 4px #0000000d;
 }
-.buttons-container{
+.events-button-container{
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end; 
+  margin-bottom: 10px; 
 
 }
 .event-add-button{
@@ -21,17 +22,17 @@
   box-shadow: 2px 4px 4px #0000000d;
   margin: 10px;
   padding: 10px;
-  margin-left: 1800px; 
+  margin-left: 10px; 
 }
 .filter-events-button{
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   background-color: #ffffff;
   border-radius: 15px;
   box-shadow: 2px 4px 4px #0000000d;
   margin: 10px;
   padding: 10px;
-  margin-left: 1800px; 
+  margin-left: 10px; 
 
 }
 .users-events-card > ul {
@@ -44,6 +45,9 @@
   
   .users-events-card {
     border-radius: 20px;
+    box-shadow: 2px 4px 4px #0000000d;
+    background-color: #ffffff;
+    padding: 20px;
 
   }
   
