@@ -63,7 +63,9 @@ export class EventsService {
   //   }
   // }
 
-  async create(createPlaceDto: CreatePlaceDto): Promise<Place> {
+  async createOfResourceInMongoDbOnlyIfDoesntExist(
+    createPlaceDto: CreatePlaceDto,
+  ): Promise<Place> {
     const { displayName, formattedAddress } = createPlaceDto;
 
     const doesPlaceAlreadyExist = await this.placeModel
@@ -95,7 +97,7 @@ export class EventsService {
         response = res.data;
         console.log(response);
         response.places.map((value) => {
-          this.create(value);
+          this.createOfResourceInMongoDbOnlyIfDoesntExist(value);
         });
       })
       .catch((err) => {
