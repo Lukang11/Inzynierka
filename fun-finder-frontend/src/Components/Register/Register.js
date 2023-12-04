@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { useAuth } from '../../Utils/AuthProvider';
 import "./Register.css";
 
 const Register = () => {
     const navigate = useNavigate();
+    const { isLoggedIn, setIsLoggedIn } = useAuth();
+
     const [formData, setFormData] = useState({
         fname: '',
         lname: '',
@@ -15,6 +18,12 @@ const Register = () => {
 
     const [passwordStrength, setPasswordStrength] = useState(0);
     const [error, setError] = useState(null);
+
+    useEffect(() => {
+        if (isLoggedIn) {
+          navigate("/");
+        }
+      }, [isLoggedIn]);
 
     useEffect(() => {
         let strength = 0;

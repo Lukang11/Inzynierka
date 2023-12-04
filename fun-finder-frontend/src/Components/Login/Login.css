@@ -60,4 +60,14 @@
 
 .signupText a {
     color: blue;
+    font-size: 17px;
+}
+
+.signupText p {
+    font-size: 17px;
+}
+
+.login-error-message {
+    color: red;
+    text-align: center;
 }
