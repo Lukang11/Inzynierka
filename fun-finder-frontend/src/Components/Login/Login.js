@@ -1,15 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { serialize } from 'cookie';
+import { useAuth } from '../../Utils/AuthProvider';
 import "./Login.css";
-import { Link } from "react-router-dom";
 
 const Login = () => {
+    const navigate = useNavigate();
+    const { isLoggedIn, setIsLoggedIn } = useAuth();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
-    const handleSubmit = (e) => {
+    useEffect(() => {
+        if (isLoggedIn) {
+          navigate("/");
+        }
+      }, [isLoggedIn]);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Email: ", email);
-        console.log("Password: ", password);
+
+        try {
+            const response = await axios.post('http://localhost:7000/users/login', {
+                email,
+                password,
+            });
+
+            document.cookie = serialize('accessToken', response.data.accessToken, { path: '/', maxAge: 3600 });
+            setIsLoggedIn(true);
+            navigate("/profile")
+        } catch (error) {
+            console.error('Błąd logowania:', error.message);
+
+            if (error.response && error.response.status === 401) {
+                setError('Nieprawidłowy adres email lub hasło');
+            } else {
+                setError('Wystąpił błąd logowania. Spróbuj ponownie później.');
+            }
+        }
     };
 
     return (
@@ -41,16 +71,15 @@ const Login = () => {
                             required
                         />
                     </div>
+                    <div className="login-error-message">{error}</div>
                     <div className="submit-btn">
-                        <button type="submit"><a href="/profile">Zaloguj się</a></button>
-                    
+                        <button type="submit">Zaloguj się</button>
                     </div>
                 </form>
                 <div className="signupText">
-                    <p>Nie masz konta? <a href="/register">Zajerestruj Się!</a></p>
+                    <p>Nie masz konta? <Link to="/register">Zarejestruj Się!</Link></p>
                 </div>
             </div>
-
         </div>
     );
 };

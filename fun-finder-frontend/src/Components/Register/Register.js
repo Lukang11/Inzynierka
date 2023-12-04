@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { useAuth } from '../../Utils/AuthProvider';
 import "./Register.css";
 
 const Register = () => {
+    const navigate = useNavigate();
+    const { isLoggedIn, setIsLoggedIn } = useAuth();
+
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
+        fname: '',
+        lname: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -12,6 +18,12 @@ const Register = () => {
 
     const [passwordStrength, setPasswordStrength] = useState(0);
     const [error, setError] = useState(null);
+
+    useEffect(() => {
+        if (isLoggedIn) {
+          navigate("/");
+        }
+      }, [isLoggedIn]);
 
     useEffect(() => {
         let strength = 0;
@@ -44,8 +56,8 @@ const Register = () => {
         setError(null);
 
         if (
-            formData.firstName.trim() === "" ||
-            formData.lastName.trim() === "" ||
+            formData.fname.trim() === "" ||
+            formData.lname.trim() === "" ||
             formData.email.trim() === "" ||
             formData.password === "" ||
             formData.confirmPassword === ""
@@ -78,14 +90,26 @@ const Register = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const isFormValid = validateForm();
-
+      
         if (isFormValid) {
-            console.log("Dane z formularza:", formData);
+          try {
+            const { confirmPassword, ...restFormData } = formData;
+            const response = await axios.post('http://localhost:7000/users/register', restFormData, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+      
+            console.log('Użytkownik zarejestrowany pomyślnie!');
+            navigate('/login');
+          } catch (error) {
+            console.error('Błąd podczas wysyłania danych do serwera:', error.message);
+          }
         }
-    };
+      };
 
     return (
         <div className="register-container">
@@ -101,18 +125,18 @@ const Register = () => {
                     <div>
                         <input
                             type="text"
-                            name="firstName"
+                            name="fname"
                             placeholder="Imię"
-                            value={formData.firstName}
+                            value={formData.fname}
                             onChange={handleInputChange}
                         />
                     </div>
                     <div>
                         <input
                             type="text"
-                            name="lastName"
+                            name="lname"
                             placeholder="Nazwisko"
-                            value={formData.lastName}
+                            value={formData.lname}
                             onChange={handleInputChange}
                         />
                     </div>
