@@ -4,11 +4,6 @@
   justify-content: center;
   flex-direction: row;
 }
-.create-eventt-button{
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-}
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -71,7 +66,24 @@
   width: 100%;
   height: 400px;
 }
+.create-eventt-button-container{
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+  margin-bottom: 100px;
+  height: 100%;;
+}
+.create-eventt-button{
+  width: 446px;
+  height: 80px;
+  border-radius: 20px;
+  background: #5908BF;
+  color: white;
+  text-align: center; 
+  line-height: 80px;
+  box-sizing: border-box; 
 
+}
 
   
  
