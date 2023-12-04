@@ -53,6 +53,6 @@ export class EventsController {
   }
   @Post('/test')
   testFunction(@Body() object: any) {
-    this.eventService.create(object);
+    this.eventService.createOfResourceInMongoDbOnlyIfDoesntExist(object);
   }
 }
