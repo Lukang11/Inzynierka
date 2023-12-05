@@ -7,13 +7,13 @@ import axios from 'axios';
 import { useAuth } from '../../Utils/AuthProvider';
 
 export default function Header() {
-  const { isLoggedIn, setIsLoggedIn } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
 
   const handleLogout = async () => {
     try {
       await axios.post('http://localhost:7000/users/logout');
       document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-      setIsLoggedIn(false);
+      logout();
     } catch (error) {
       console.error('Błąd wylogowywania:', error.message);
     }

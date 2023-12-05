@@ -7,7 +7,7 @@ import "./Login.css";
 
 const Login = () => {
     const navigate = useNavigate();
-    const { isLoggedIn, setIsLoggedIn } = useAuth();
+    const { isLoggedIn, login } = useAuth();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,7 +17,7 @@ const Login = () => {
         if (isLoggedIn) {
           navigate("/");
         }
-      }, [isLoggedIn]);
+      }, [isLoggedIn, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,8 +28,10 @@ const Login = () => {
                 password,
             });
 
+            login(response.data.user);
+
             document.cookie = serialize('accessToken', response.data.accessToken, { path: '/', maxAge: 3600 });
-            setIsLoggedIn(true);
+            
             navigate("/profile")
         } catch (error) {
             console.error('Błąd logowania:', error.message);
