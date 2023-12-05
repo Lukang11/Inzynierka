@@ -6,7 +6,7 @@ import "./Register.css";
 
 const Register = () => {
     const navigate = useNavigate();
-    const { isLoggedIn, setIsLoggedIn } = useAuth();
+    const { isLoggedIn } = useAuth();
 
     const [formData, setFormData] = useState({
         fname: '',
@@ -23,7 +23,7 @@ const Register = () => {
         if (isLoggedIn) {
           navigate("/");
         }
-      }, [isLoggedIn]);
+      }, [isLoggedIn, navigate]);
 
     useEffect(() => {
         let strength = 0;
@@ -97,7 +97,7 @@ const Register = () => {
         if (isFormValid) {
           try {
             const { confirmPassword, ...restFormData } = formData;
-            const response = await axios.post('http://localhost:7000/users/register', restFormData, {
+            await axios.post('http://localhost:7000/users/register', restFormData, {
               headers: {
                 'Content-Type': 'application/json',
               },

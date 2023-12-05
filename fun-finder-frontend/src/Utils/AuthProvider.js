@@ -4,24 +4,32 @@ import { isUserAuthenticated } from './Auth';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [authData, setAuthData] = useState({ isLoggedIn: null, user: null });
 
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
         const isAuthenticated = await isUserAuthenticated();
-        setIsLoggedIn(isAuthenticated);
+        setAuthData({ isLoggedIn: isAuthenticated, user: null });
       } catch (error) {
         console.error('Błąd weryfikacji tokenu:', error);
-        setIsLoggedIn(false);
+        setAuthData({ isLoggedIn: false, user: null });
       }
     };
 
     checkAuthentication();
   }, []);
 
+  const login = (userData) => {
+    setAuthData({ isLoggedIn: true, user: userData });
+  };
+
+  const logout = () => {
+    setAuthData({ isLoggedIn: false, user: null });
+  };
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+    <AuthContext.Provider value={{ ...authData, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
