@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useAuth } from '../../Utils/AuthProvider';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
+import { serialize } from 'cookie';
 import "./Register.css";
 
 const Register = () => {
     const navigate = useNavigate();
-    const { isLoggedIn } = useAuth();
+    const { isLoggedIn, login } = useAuth();
 
     const [formData, setFormData] = useState({
         fname: '',
@@ -21,9 +24,9 @@ const Register = () => {
 
     useEffect(() => {
         if (isLoggedIn) {
-          navigate("/");
+            navigate("/");
         }
-      }, [isLoggedIn, navigate]);
+    }, [isLoggedIn, navigate]);
 
     useEffect(() => {
         let strength = 0;
@@ -93,27 +96,56 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const isFormValid = validateForm();
-      
+
         if (isFormValid) {
-          try {
-            const { confirmPassword, ...restFormData } = formData;
-            await axios.post('http://localhost:7000/users/register', restFormData, {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            });
-      
-            console.log('Użytkownik zarejestrowany pomyślnie!');
-            navigate('/login');
-          } catch (error) {
-            console.error('Błąd podczas wysyłania danych do serwera:', error.message);
-          }
+            try {
+                const { confirmPassword, ...restFormData } = formData;
+                await axios.post('http://localhost:7000/users/register', restFormData, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                console.log('Użytkownik zarejestrowany pomyślnie!');
+                navigate('/login');
+            } catch (error) {
+                console.error('Błąd podczas wysyłania danych do serwera:', error.message);
+            }
         }
-      };
+    };
+
+
+    const handleLoginSuccess = async (credentialResponse) => {
+        try {
+            const decodedToken = jwtDecode(credentialResponse.credential);
+
+            const adaptedUser = {
+                email: decodedToken.email,
+                fname: decodedToken.given_name,
+                lname: decodedToken.family_name,
+            };
+
+            document.cookie = serialize('accessToken', credentialResponse.credential, { path: '/', maxAge: 3600 });
+
+            if (!decodedToken) {
+                console.error('Failed to decode JWT token.');
+                return;
+            }
+
+            login(adaptedUser);
+            navigate("/profile");
+        } catch (error) {
+            console.error('Error decoding JWT token:', error);
+        }
+    };
+
+    const handleLoginError = () => {
+        console.log('Login Failed');
+    };
 
     return (
         <div className="register-container">
-            
+
             <div className="welcomeText-container">
                 <h1>Poznawaj ludzi z FunFinder!</h1>
                 <p>Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. Duis luctus feugiat tellus non ultrices. Nullam eget iaculis leo. Mauris et tellus est. Nullam quis risus justo. Curabitur luctus sed elit ac vehicula.</p>
@@ -182,6 +214,22 @@ const Register = () => {
                     <div className="error-message">{error}</div>
                     <div className="registerSubmitButton">
                         <button type="submit">Zarejestruj</button>
+                    </div>
+                    <div className="google-login-button-container-register">
+                        <GoogleLogin
+                            buttonText="Zaloguj się z Google"
+                            onSuccess={handleLoginSuccess}
+                            onError={handleLoginError}
+                            render={renderProps => (
+                                <button
+                                    onClick={renderProps.onClick}
+                                    disabled={renderProps.disabled}
+                                    className="google-login-button" // Dodaj klasę CSS
+                                >
+                                    Zaloguj się z Google
+                                </button>
+                            )}
+                        />
                     </div>
                 </form>
             </div>
