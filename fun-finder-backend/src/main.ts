@@ -13,8 +13,10 @@ async function bootstrap() {
     origin: 'http://localhost:3000',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
+    optionsSuccessStatus: 204,
+    allowedHeaders: 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Observe, Authorization',
   };
-
+  
   app.enableCors(corsOptions);
   app.use(cookieParser());
 

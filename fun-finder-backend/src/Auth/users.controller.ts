@@ -4,10 +4,15 @@ import { User } from './AuthInterfaces/users.model';
 import { parse } from 'cookie';
 import { Response, Request } from 'express';
 import * as jwt from 'jsonwebtoken';
+import { OAuth2Client } from 'google-auth-library';
 
 @Controller('/users')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  private readonly googleOAuthClient: OAuth2Client;
+
+  constructor(private readonly userService: UserService) {
+    this.googleOAuthClient = new OAuth2Client(process.env.CLIENT_ID);
+   }
 
   @Post("/register")
   async register(@Body() user: User): Promise<User> {
@@ -55,7 +60,40 @@ export class UserController {
   
       res.status(isUserAuthenticated ? 200 : 401).json({ isUserAuthenticated });
     } catch (error) {
-      console.error('Błąd weryfikacji tokenu:', error);
+      res.status(401).json({ isUserAuthenticated: false });
+    }
+  }
+
+  @Get('/verify-google-token')
+  async verifyGoogleToken(@Req() req: Request, @Res() res: Response) {
+    const idToken = req.headers.authorization?.split(' ')[1];
+
+    try {
+      const ticket = await this.googleOAuthClient.verifyIdToken({
+        idToken: idToken,
+        audience: process.env.CLIENT_ID,
+      });
+
+      const payload = ticket.getPayload();
+
+      if (!payload || !payload.email) {
+        throw new UnauthorizedException('Invalid Google token');
+      }
+
+      // Sprawdź, czy użytkownik o danym adresie e-mail już istnieje
+      let user = await this.userService.findByEmail(payload.email);
+
+      // Jeżeli użytkownik istnieje, zaktualizuj jego dane
+      if (user) {
+        user = await this.userService.updateGoogleUser(user, payload);
+      } else {
+        // Jeżeli użytkownik nie istnieje, utwórz nowego
+        user = await this.userService.createGoogleUser(payload);
+      }
+
+      res.status(200).json({ isUserAuthenticated: true });
+    } catch (error) {
+      console.error('Błąd weryfikacji tokenu Google:', error);
       res.status(401).json({ isUserAuthenticated: false });
     }
   }

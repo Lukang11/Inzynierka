@@ -13,14 +13,17 @@ export class UserService {
   ) { }
 
   async createUser(user: User): Promise<User> {
-    if (!user.email || !user.password || !user.fname || !user.lname) {
+    if (!user.email || !user.fname || !user.lname) {
       throw new Error('Wszystkie pola są wymagane.');
     }
-    const hashedPassword = await bcrypt.hash(user.password, 10);
-    const userWithHashedPassword = { ...user, password: hashedPassword };
-
-    const createdUser = new this.UserModel(userWithHashedPassword);
-    return createdUser.save();
+    
+    if (user.password) {
+      const hashedPassword = await bcrypt.hash(user.password, 10);
+      user = { ...user, password: hashedPassword } as User;
+    }
+    
+    const createdUser = await this.UserModel.create(user);
+    return createdUser.toObject() as User;
   }
 
   async findByEmail(email: string): Promise<User | null> {
@@ -45,5 +48,25 @@ export class UserService {
     }
 
     throw new UnauthorizedException('Nieprawidłowy adres email lub hasło');
+  }
+
+  async createGoogleUser(payload: any): Promise<User> {
+    const { email, given_name, family_name } = payload;
+    const newUser = new this.UserModel({
+      email,
+      fname: given_name,
+      lname: family_name,
+    });
+  
+    const newUserObject = newUser.toObject() as User;
+    return this.createUser(newUserObject);
+  }
+
+  async updateGoogleUser(user: User, payload: any): Promise<User> {
+    user.email = payload.email;
+    user.fname = payload.given_name;
+    user.lname = payload.family_name;
+
+    return user.save();
   }
 }
