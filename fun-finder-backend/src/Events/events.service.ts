@@ -106,4 +106,7 @@ export class EventsService {
 
     return response;
   }
+  async getAllPlaces() {
+    return await this.placeModel.find().exec();
+  }
 }
