@@ -71,3 +71,7 @@
     color: red;
     text-align: center;
 }
+
+.google-login-button-container-login {
+    padding: 20px;
+}

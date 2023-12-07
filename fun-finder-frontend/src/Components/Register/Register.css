@@ -88,8 +88,12 @@
     margin-top: 5px;
   }
 
-  .error-message{
+  .error-message {
     width: 35vh;
     text-align: center;
     color: red;
+  }
+
+  .google-login-button-container-register {
+    width: 35vh;
   }

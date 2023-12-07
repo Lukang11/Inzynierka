@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { serialize } from 'cookie';
 import { useAuth } from '../../Utils/AuthProvider';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 import "./Login.css";
 
 const Login = () => {
@@ -44,6 +46,34 @@ const Login = () => {
         }
     };
 
+    const handleLoginSuccess = async (credentialResponse) => {
+        try {
+            const decodedToken = jwtDecode(credentialResponse.credential);
+
+            const adaptedUser = {
+                email: decodedToken.email,
+                fname: decodedToken.given_name,
+                lname: decodedToken.family_name,
+            };
+
+            document.cookie = serialize('accessToken', credentialResponse.credential, { path: '/', maxAge: 3600 });
+
+            if (!decodedToken) {
+                console.error('Failed to decode JWT token.');
+                return;
+            }
+
+            login(adaptedUser);
+            navigate("/profile");
+        } catch (error) {
+            console.error('Error decoding JWT token:', error);
+        }
+    };
+
+    const handleLoginError = () => {
+        console.log('Login Failed');
+    };
+
     return (
         <div className="login-container">
             <div className="form-container">
@@ -76,6 +106,22 @@ const Login = () => {
                     <div className="login-error-message">{error}</div>
                     <div className="submit-btn">
                         <button type="submit">Zaloguj się</button>
+                    </div>
+                    <div className="google-login-button-container-login">
+                        <GoogleLogin
+                            buttonText="Zaloguj się z Google"
+                            onSuccess={handleLoginSuccess}
+                            onError={handleLoginError}
+                            render={renderProps => (
+                                <button
+                                    onClick={renderProps.onClick}
+                                    disabled={renderProps.disabled}
+                                    className="google-login-button"
+                                >
+                                    Zaloguj się z Google
+                                </button>
+                            )}
+                        />
                     </div>
                 </form>
                 <div className="signupText">
