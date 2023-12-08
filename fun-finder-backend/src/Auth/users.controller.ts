@@ -1,4 +1,14 @@
-import { Controller, Post, Body, Get, Param, Res, Req, UnauthorizedException, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Res,
+  Req,
+  UnauthorizedException,
+  HttpStatus,
+} from '@nestjs/common';
 import { UserService } from './users.service';
 import { User } from './AuthInterfaces/users.model';
 import { parse } from 'cookie';
@@ -12,9 +22,9 @@ export class UserController {
 
   constructor(private readonly userService: UserService) {
     this.googleOAuthClient = new OAuth2Client(process.env.CLIENT_ID);
-   }
+  }
 
-  @Post("/register")
+  @Post('/register')
   async register(@Body() user: User): Promise<User> {
     const existingUser = await this.userService.findByEmail(user.email);
     if (existingUser) {
@@ -24,8 +34,10 @@ export class UserController {
     return this.userService.createUser(user);
   }
 
-  @Post("/login")
-  async login(@Body() credentials: { email: string, password: string }): Promise<{ user: User; accessToken: string } | null> {
+  @Post('/login')
+  async login(
+    @Body() credentials: { email: string; password: string },
+  ): Promise<{ user: User; accessToken: string } | null> {
     try {
       const { email, password } = credentials;
       const result = await this.userService.loginUser(email, password);
@@ -46,18 +58,23 @@ export class UserController {
       res.status(HttpStatus.OK).json({ message: 'Pomyślnie wylogowano!' });
     } catch (error) {
       console.error('Błąd podczas wylogowywania:', error);
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: 'Wystąpił błąd podczas wylogowywania' });
+      res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Wystąpił błąd podczas wylogowywania' });
       console.log('Status:', HttpStatus.INTERNAL_SERVER_ERROR);
     }
-  } 
+  }
 
   @Get('/verify-token')
   verifyToken(@Req() req: Request, @Res() res: Response) {
     const accessToken = req.headers.authorization?.split(' ')[1];
-  
+
     try {
-      const isUserAuthenticated = !!jwt.verify(accessToken, process.env.JWT_SECRET_KEY);
-  
+      const isUserAuthenticated = !!jwt.verify(
+        accessToken,
+        process.env.JWT_SECRET_KEY,
+      );
+
       res.status(isUserAuthenticated ? 200 : 401).json({ isUserAuthenticated });
     } catch (error) {
       res.status(401).json({ isUserAuthenticated: false });
@@ -96,5 +113,9 @@ export class UserController {
       console.error('Błąd weryfikacji tokenu Google:', error);
       res.status(401).json({ isUserAuthenticated: false });
     }
+  }
+  @Get('/user-data/:email')
+  async getCurrentUserData(@Param('email') email: string) {
+    return this.userService.findByEmail(email);
   }
 }

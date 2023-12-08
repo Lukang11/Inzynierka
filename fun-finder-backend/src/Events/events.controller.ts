@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { EventsService } from './events.service';
 import {
   GoogleApiQueryObject,
@@ -58,5 +58,13 @@ export class EventsController {
   @Get('/all')
   getAllPlaces() {
     return this.eventService.getAllPlaces();
+  }
+  @Get(':id')
+  getUsersEvents(@Param('id') user_id: string) {
+    return this.eventService.getUsersEvents(user_id);
+  }
+  @Get(':id')
+  getUsersHobbies(@Param('id') user_id: string) {
+    return this.eventService.getUsersHobbies(user_id);
   }
 }

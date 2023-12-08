@@ -12,7 +12,7 @@ dotenv.config();
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: "User", schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
     JwtModule.register({
       secret: process.env.JWT_SECRET_KEY,
       signOptions: { expiresIn: '3h' },
@@ -21,6 +21,10 @@ dotenv.config();
   ],
   controllers: [UserController],
   providers: [UserService, JwtStrategy],
-  exports: [UserService, PassportModule],
+  exports: [
+    UserService,
+    PassportModule,
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+  ],
 })
 export class UserModule {}
