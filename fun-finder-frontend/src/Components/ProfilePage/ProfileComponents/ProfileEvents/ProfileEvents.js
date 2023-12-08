@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./ProfileEvents.css";
+import axios from "axios";
+import { useAuth } from "../../../../Utils/AuthProvider";
 
 const ProfileEvents = () => {
+  const [eventsData, setEventsData] = useState();
+  const { user } = useAuth();
+  const url = "http://localhost:7000/events/";
+  useEffect(() => {
+    async function fetchData() {
+      const events = await axios.get(`${url}${user._id}`);
+      setEventsData(() => events.data);
+    }
+    fetchData();
+  }, []);
   const test_data = [
     {
       id: "1",
@@ -37,6 +49,8 @@ const ProfileEvents = () => {
 
   return (
     <div>
+      {console.log(user._id)}
+      {console.log(eventsData)}
       <div className="events-card">
         <h2 className="">Wydarzenia</h2>
         <ul>
