@@ -117,4 +117,10 @@ export class EventsService {
     const user_events = user.events;
     return user_events;
   }
+  async getUsersHobbies(user_id: string) {
+    const user = await this.userModel.findOne({ _id: user_id });
+
+    const user_hobbies = user.hobbies;
+    return user_hobbies;
+  }
 }

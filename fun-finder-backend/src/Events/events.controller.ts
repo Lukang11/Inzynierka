@@ -63,4 +63,8 @@ export class EventsController {
   getUsersEvents(@Param('id') user_id: string) {
     return this.eventService.getUsersEvents(user_id);
   }
+  @Get(':id')
+  getUsersHobbies(@Param('id') user_id: string) {
+    return this.eventService.getUsersHobbies(user_id);
+  }
 }
