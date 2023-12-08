@@ -14,23 +14,8 @@ const ProfileHobbies = () => {
     }
     fetchData();
   }, []);
-  const data = [
-    { id: 1, hobby: "KINO" },
-    { id: 2, hobby: "PRZYGODA" },
-    { id: 3, hobby: "PUB" },
-    { id: 4, hobby: "TEATR" },
-    { id: 5, hobby: "MALARSTWO" },
-    { id: 6, hobby: "SZTUKA" },
-    { id: 7, hobby: "JEDZENIE" },
-    { id: 8, hobby: "SPORT" },
-    { id: 9, hobby: "SZTUKA" },
-    { id: 10, hobby: "WINO" },
-    { id: 11, hobby: "PIWO" },
-    { id: 12, hobby: "GRY PLANSZOWE" },
-  ];
   return (
     <div className="hobbies-card">
-      {console.log(hobbiesData)}
       <div className="hobbies-first-row">
         <h2>Zainteresowania</h2>
         <div className="hobbies-add-button">+</div>
