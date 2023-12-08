@@ -10,18 +10,18 @@ export class UserService {
   constructor(
     @InjectModel('User') private readonly UserModel: Model<User>,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async createUser(user: User): Promise<User> {
     if (!user.email || !user.fname || !user.lname) {
       throw new Error('Wszystkie pola są wymagane.');
     }
-    
+
     if (user.password) {
       const hashedPassword = await bcrypt.hash(user.password, 10);
       user = { ...user, password: hashedPassword } as User;
     }
-    
+
     const createdUser = await this.UserModel.create(user);
     return createdUser.toObject() as User;
   }
@@ -34,14 +34,20 @@ export class UserService {
     return this.UserModel.findById(userId).exec();
   }
 
-  async comparePassword(candidatePassword: string, hashedPassword: string): Promise<boolean> {
+  async comparePassword(
+    candidatePassword: string,
+    hashedPassword: string,
+  ): Promise<boolean> {
     return bcrypt.compare(candidatePassword, hashedPassword);
   }
 
-  async loginUser(email: string, password: string): Promise<{ user: User; accessToken: string } | null> {
+  async loginUser(
+    email: string,
+    password: string,
+  ): Promise<{ user: User; accessToken: string } | null> {
     const user = await this.findByEmail(email);
 
-    if (user && await this.comparePassword(password, user.password)) {
+    if (user && (await this.comparePassword(password, user.password))) {
       const payload = { sub: user._id, email: user.email };
       const accessToken = this.jwtService.sign(payload);
       return { user, accessToken };
@@ -57,7 +63,7 @@ export class UserService {
       fname: given_name,
       lname: family_name,
     });
-  
+
     const newUserObject = newUser.toObject() as User;
     return this.createUser(newUserObject);
   }

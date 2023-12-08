@@ -1,5 +1,5 @@
 // events.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, forwardRef, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
@@ -10,12 +10,14 @@ import {
 import axios from 'axios';
 import { Place } from './EventInterfaces/place.model';
 import { CreatePlaceDto } from './EventInterfaces/create-place.dto';
+import { User } from 'src/Auth/AuthInterfaces/users.model';
 
 @Injectable()
 export class EventsService {
   constructor(
     @InjectModel('Events') private readonly eventsModel: Model<Event>,
     @InjectModel('Api_Places') private readonly placeModel: Model<Place>,
+    @InjectModel('User') private readonly userModel: Model<User>,
   ) {}
 
   async insertEvent(name: string, location: string, relatedHobbies: string[]) {
@@ -108,5 +110,11 @@ export class EventsService {
   }
   async getAllPlaces() {
     return await this.placeModel.find().exec();
+  }
+  async getUsersEvents(user_id: string) {
+    const user = await this.userModel.findOne({ _id: user_id });
+
+    const user_events = user.events;
+    return user_events;
   }
 }
