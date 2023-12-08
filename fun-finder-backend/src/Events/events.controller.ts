@@ -63,8 +63,13 @@ export class EventsController {
   getUsersEvents(@Param('id') user_id: string) {
     return this.eventService.getUsersEvents(user_id);
   }
-  @Get(':id')
+  @Get('/hobbies/:id')
   getUsersHobbies(@Param('id') user_id: string) {
     return this.eventService.getUsersHobbies(user_id);
+  }
+  @Get('/hobbies/add/:id')
+  addUsersHobbies(@Param('id') user_id: string, @Body() hobbies: string[]) {
+    console.log(hobbies);
+    return this.eventService.addUsersHobbies(user_id, hobbies);
   }
 }
