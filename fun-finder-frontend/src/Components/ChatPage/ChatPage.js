@@ -2,101 +2,102 @@ import "./ChatPage.css";
 import ChatTypes from "./ChatTypes/ChatTypes";
 import ChatClouds from "./ChatClouds/ChatClouds";
 import ChatMessages from "./ChatMessages/ChatMessages";
-import { useState } from "react";
+import { useAuth } from "../../Utils/AuthProvider"
+import { useState, useEffect } from "react";
+import axios from 'axios';
 
 const ChatPageComponent = () => {
+    const { user } = useAuth(); // do pobierania id uz
 
     const [whichChatToDisplay,setWichChatToDisplay] = useState("person");
-    const [whichMessagesToDisplay,setWichMessagesToDisplay] = useState(0);
+    const [whichMessagesToDisplay,setWichMessagesToDisplay] = useState("");
+    const [participantInfo, setParticipantInfo] = useState([]);
+    const [messages, SetMessages] = useState([]);
+    const [initialRender, setInitialRender] = useState(true); // Dodatkowy stan
 
-    const chatData = {
-        person: [
-            {
-                image: "../../../../Images/Monkey_test.jpg",
-                id: 1,
-                name: "John",
-                surename: "Johnson",
-                newMessage: "How are u"
-            },
-            {
-                image: "../../../../Images/Monkey_test.jpg",
-                id: 2,
-                name: "Tommmy",
-                surename: "Cash",
-                newMessage: "I like mango"
-            }
-        ],
-        group: [
-            {
-                image: "../../../../Images/Monkey_test.jpg",
-                id: 1,
-                name: "Tommy Lee",
-                surename: "Johnson",
-                newMessage: "How are u"
-            },
-            {
-                image: "../../../../Images/Monkey_test.jpg",
-                id: 2,
-                name: "Antoni",
-                surename: "Brocoli",
-                newMessage: "I like mango"
-            }
-        ],
-        event: [
-            {
-                image: "../../../../Images/Monkey_test.jpg",
-                id: 1,
-                name: "Patricia",
-                surename: "tran",
-                newMessage: "<3 <3"
-            },
-            {
-                image: "../../../../Images/Monkey_test.jpg",
-                id: 2,
-                name: "tomson",
-                surename: "tomson",
-                newMessage: "I like mango"
-            }
-        ],
-        messages: [
-            {
-                id: 0,
-                userId: 0,
-                message: "hello"
-            },
-            {
-                id: 1,
-                userId: 0,
-                message: "no u"
-            },
-            {
-                id: 2,
-                userId: 1,
-                message: "what?"
-            }
-        ]
-    }
-    
+    useEffect(() => { //use effect do wyświetlania dymkow czatu
+        if (initialRender) {
+            setInitialRender(false);
+            return;
+        }
+
+        
+        const userId = user._id; // id zalogowanego usera
+
+        switch (whichChatToDisplay) {
+            case "person":
+                axios.get(`http://localhost:7000/clouds/participants/${userId}`)
+                .then(response => {
+                setParticipantInfo(response.data);
+                console.log(response.data);
+                })
+                .catch(error => {
+                console.error('Error fetching participant info:', error);
+                });
+
+                break;
+        
+            case "group":
+                axios.get(`http://localhost:7000/clouds/group/${userId}`)
+                .then(response => {
+                    setParticipantInfo(response.data);
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error('Error fetching group info;', error);
+                })
+
+                break;
+
+            case "event":
+                axios.get(`http://localhost:7000/clouds/event/${userId}`)
+                .then(response => {
+                    setParticipantInfo(response.data);
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error('Error fetching group info', error);
+                })
+
+                break;
+        }
+      }, [whichChatToDisplay,initialRender]);
+
+    useEffect(() => { //use effect do wyswietlenia wiadomości z chatu
+        if(whichMessagesToDisplay != 0){
+            const chatId = whichMessagesToDisplay;
+            axios.get(`http://localhost:7000/messages/${chatId}`)
+                .then(response => {
+                SetMessages(response.data);
+            console.log(response.data);
+        })
+        .catch(error => {
+            console.log('Error fetching messages info', error);
+        })
+        }
+    },[whichMessagesToDisplay])
+
     const updateWichChatToDisplay = (data) => {
         setWichChatToDisplay(data);
     };
     const updateWichMessagesToDisplay = (chatId) => {
-        console.log("a tu?");
         setWichMessagesToDisplay(chatId);
+        SetMessages([]);
     };
 
     return (
         <div className="chat-page">
             <div className="chat-clouds-section">
                 <ChatTypes
-                    updateWichChatToDisplay={updateWichChatToDisplay}/>
+                    updateWichChatToDisplay={updateWichChatToDisplay}
+                    clearDisplayedMessage={updateWichMessagesToDisplay}/>
                 <ChatClouds 
-                    passChatCloudsDBData={chatData[whichChatToDisplay]} 
+                    passChatCloudsDBData={participantInfo} 
                     updateWichMessagesToDisplay={updateWichMessagesToDisplay}/>
             </div>
             <div className="chat-messages-section">
-                {whichMessagesToDisplay > 0 && (
-                    <ChatMessages passWichMessageToDisplay={chatData.messages}/>
+                {whichMessagesToDisplay !== "" && (
+                    <ChatMessages passWichMessageToDisplay={messages}/>
                 )}
             </div>
             </div>

@@ -17,6 +17,7 @@ export class Event {
     public relatedHobbies: string[],
   ) {}
 }
+
 export interface Event {
   name: string;
   location: string;

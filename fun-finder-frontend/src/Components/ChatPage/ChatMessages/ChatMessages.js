@@ -1,15 +1,21 @@
 import React, { useEffect, useState} from "react";
 import "./ChatMessages.css"
 import io , {socket} from "socket.io-client"
+import { useAuth } from "../../../Utils/AuthProvider";
 
 function ChatMessages( {passWichMessageToDisplay} ){
+    const { user } = useAuth(); // do pobierania id uz
+
     const [socket, setSocket ] = useState(null);
     const [messages, setMessages] = useState([]);
     const [singleMessage, setSingleMessage] = useState("");
 
+
     const messageListener = (obj) => {
-        setMessages([...messages, [obj[0]]]) // funkcja do zapisania wiadomosci
-        console.log(obj,"co to"); /// tu mi coś nie działa 
+        console.log("co ja ci tu podaje ", obj);
+        setMessages([...messages, obj[0]]) // funkcja do zapisania wiadomosci
+        console.log(messages, " co to za obiekt");
+         /// tu mi coś nie działa 
     }
     
     const send = (message,id) => {
@@ -21,6 +27,10 @@ function ChatMessages( {passWichMessageToDisplay} ){
             send(singleMessage);
         }
     }
+    useEffect(() => {
+        setMessages(passWichMessageToDisplay);
+    },[passWichMessageToDisplay])
+
     useEffect(() => {
         const newSocket = io("http://localhost:8001")
         setSocket(newSocket);
@@ -44,12 +54,14 @@ function ChatMessages( {passWichMessageToDisplay} ){
     return (
         <div className="chat-wrapper">
             <div className="chat-field">
-                {messages.map((mesage,id)=>(
-                <div key={id}
-                    className='chat-item-owner'>
-                    <p>{mesage}</p>
-                </div>
-                ))}
+                {messages.map((message)=>{
+                    const userId = String(user._id);
+                return (<div  key={message._id}
+                    className={ userId === message.sender_id ? "chat-item-owner" : "chat-item-other"}>
+                    <p>{message.text}</p>
+                </div>)
+
+                })}
             </div>
             <div className="message-field">
                     <input
@@ -60,7 +72,7 @@ function ChatMessages( {passWichMessageToDisplay} ){
                         onKeyDown={handleKeyPress}/>
                     <button
                         className="message-send-btn"  
-                        onClick={ () => send(singleMessage,'test')}>
+                        onClick={ () => send(singleMessage,user._id)}>
                     </button>
             </div>
         </div>

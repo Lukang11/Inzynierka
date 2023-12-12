@@ -12,6 +12,8 @@
 }
 
 .chat-avatar {
+  display: flex;
+  margin-top: 15px;
   height: 50px;
   width: 50px;
   background-image: url("../../../Images/Monkey_test.jpg");
@@ -21,17 +23,16 @@
 }
 .chat-item {
     display: flex;
-    margin-bottom: 20px;
-    margin-top: 20px;
 }
 
 .chat-info{
+    margin: 15px;
     display: flex;
     flex-direction: column;
-    margin-left: 15px;
+    font-size: medium;
 }
 
 .chat-info-message {
     display: flex;
-    margin-top: 5px;
+    
 }
