@@ -1,0 +1,67 @@
+.hobbies-modal-wrapper {
+  background-color: rgba(0, 0, 0, 0.608);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 300;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+}
+
+.hobbies-form {
+  width: 600px;
+  height: 800px;
+  border-radius: 20px;
+  background-color: white;
+  margin: auto; /* Center horizontally and vertically */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.close-modal {
+  font-size: xx-large;
+  position: relative;
+  left: 10px;
+  top: 40px;
+  width: fit-content;
+  cursor: pointer;
+}
+.modal-input {
+  width: 300px;
+  height: 50px;
+  font-size: xx-large;
+}
+.hobbies-item-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.sel-hobbies-wrap {
+  display: flex;
+  width: 350px;
+  height: 150px;
+  flex-wrap: wrap;
+  overflow: scroll;
+}
+.sel-hobbies-item {
+  border: var(--mainpurple) solid 3px;
+  margin: 10px;
+  height: 30px;
+  border-radius: 5px;
+}
+.modal-send-btn {
+  color: white;
+  background-color: var(--mainpurple);
+  padding: 10px;
+  border-radius: 10px;
+  border-color: rgb(18, 8, 28);
+  border-width: 15px;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
