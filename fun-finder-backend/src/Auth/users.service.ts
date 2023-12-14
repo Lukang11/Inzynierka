@@ -31,7 +31,7 @@ export class UserService {
   }
 
   async findById(userId: string): Promise<User | null> {
-    return this.UserModel.findById(userId).exec();
+    return this.UserModel.findOne({ _id: userId }).exec();
   }
 
   async comparePassword(

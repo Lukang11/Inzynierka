@@ -10,12 +10,18 @@ const ProfileHobbies = () => {
   const url = "http://localhost:7000/events/";
   const { user } = useAuth();
   useEffect(() => {
-    async function fetchData() {
-      const hobbies = await axios.get(`${url}hobbies/${user._id}`);
-      sethobbiesData(() => hobbies.data);
-    }
+    const fetchData = async () => {
+      if (user && user.email) {
+        try {
+          const hobbies = await axios.get(`${url}hobbies/${user.email}`);
+          sethobbiesData(() => hobbies.data);
+        } catch (error) {
+          console.error("Error fetching hobbies:", error);
+        }
+      }
+    };
     fetchData();
-  }, []);
+  }, [user]);
   function onclick() {
     setIsOpen((val) => !val);
   }
@@ -32,11 +38,11 @@ const ProfileHobbies = () => {
         <div className="hobbies-contener-wrapper">
           {hobbiesData
             ? hobbiesData.map((element, index) => (
-                <div key={index} className="hobbies-contener-wrapper-item">
-                  <div>{index}</div>
-                  <div>{element}</div>
-                </div>
-              ))
+              <div key={index} className="hobbies-contener-wrapper-item">
+                <div>{index}</div>
+                <div>{element}</div>
+              </div>
+            ))
             : null}
         </div>
       </div>

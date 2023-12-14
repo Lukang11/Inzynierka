@@ -8,16 +8,22 @@ const ProfileEvents = () => {
   const { user } = useAuth();
   const url = "http://localhost:7000/events/event/";
   useEffect(() => {
-    async function fetchData() {
-      const events = await axios.get(`${url}${user._id}`);
-      setEventsData(() => events.data);
-    }
+    const fetchData = async () => {
+      if (user && user.email) {
+        try {
+          const events = await axios.get(`${url}${user.email}`);
+          setEventsData(events.data);
+        } catch (error) {
+          console.error("Error fetching events:", error);
+        }
+      }
+    };
+
     fetchData();
-  }, []);
+  }, [user]);
 
   return (
     <div>
-      {console.log(user._id)}
       {console.log(eventsData)}
       <div className="events-profile-card">
         <h2 className="">Wydarzenia</h2>

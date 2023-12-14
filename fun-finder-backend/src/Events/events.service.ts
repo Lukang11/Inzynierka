@@ -115,14 +115,14 @@ export class EventsService {
   async getAllPlaces() {
     return await this.placeModel.find().exec();
   }
-  async getUsersEvents(user_id: string) {
-    const user = await this.userModel.findOne({ _id: user_id });
+  async getUsersEvents(email: string) {
+    const user = await this.userModel.findOne({ email: email });
     const events = user.events;
     console.log(user);
     return events;
   }
-  async getUsersHobbies(user_id: string) {
-    const user = await this.userModel.findOne({ _id: user_id });
+  async getUsersHobbies(email: string) {
+    const user = await this.userModel.findOne({ email: email });
 
     const user_hobbies = user.hobbies;
     return user_hobbies;

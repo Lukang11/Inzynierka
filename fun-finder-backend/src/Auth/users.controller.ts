@@ -114,8 +114,14 @@ export class UserController {
       res.status(401).json({ isUserAuthenticated: false });
     }
   }
-  @Get('/user-data/:email')
-  async getCurrentUserData(@Param('email') email: string) {
+
+  @Get('/user-data-email/:email')
+  async getCurrentUserDataByEmail(@Param('email') email: string) {
     return this.userService.findByEmail(email);
+  }
+
+  @Get('/user-data-id/:id')
+  async getCurrentUserDataById(@Param('id') id: string) {
+    return this.userService.findById(id)
   }
 }

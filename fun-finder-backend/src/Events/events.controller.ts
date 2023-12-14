@@ -60,9 +60,9 @@ export class EventsController {
   getAllPlaces() {
     return this.eventService.getAllPlaces();
   }
-  @Get('/event/:id')
-  getUsersEvents(@Param('id') user_id: string) {
-    return this.eventService.getUsersEvents(user_id);
+  @Get('/event/:email')
+  getUsersEvents(@Param('email') email: string) {
+    return this.eventService.getUsersEvents(email);
   }
   @Get('/add-event/:id')
   addUsersEvents(
@@ -72,9 +72,9 @@ export class EventsController {
     console.log(user_events);
     return this.eventService.addUsersEvent(user_id, user_events);
   }
-  @Get('/hobbies/:id')
-  getUsersHobbies(@Param('id') user_id: string) {
-    return this.eventService.getUsersHobbies(user_id);
+  @Get('/hobbies/:email')
+  getUsersHobbies(@Param('email') email: string) {
+    return this.eventService.getUsersHobbies(email);
   }
   @Get('/hobbies/add/:id')
   addUsersHobbies(@Param('id') user_id: string, @Body() hobbies: string[]) {
