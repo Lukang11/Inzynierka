@@ -5,7 +5,7 @@ export interface User extends Document {
   password?: string;
   fname: string;
   lname: string;
-  hobbies: string[];
+  hobbies: UserHobbies[];
   events: UserEvents[];
 }
 
@@ -24,4 +24,8 @@ export interface UserEvents {
   event_time_end: string;
   event_location: string;
   event_person_count: number;
+}
+export interface UserHobbies {
+  hobbie_id: string;
+  hobbie_value: string;
 }

@@ -10,7 +10,11 @@ import {
 import axios from 'axios';
 import { Place } from './EventInterfaces/place.model';
 import { CreatePlaceDto } from './EventInterfaces/create-place.dto';
-import { User } from 'src/Auth/AuthInterfaces/users.model';
+import {
+  User,
+  UserEvents,
+  UserHobbies,
+} from 'src/Auth/AuthInterfaces/users.model';
 
 @Injectable()
 export class EventsService {
@@ -113,14 +117,42 @@ export class EventsService {
   }
   async getUsersEvents(user_id: string) {
     const user = await this.userModel.findOne({ _id: user_id });
-
-    const user_events = user.events;
-    return user_events;
+    const events = user.events;
+    console.log(user);
+    return events;
   }
   async getUsersHobbies(user_id: string) {
     const user = await this.userModel.findOne({ _id: user_id });
 
     const user_hobbies = user.hobbies;
     return user_hobbies;
+  }
+  async addUsersEvents(user_id: string, user_hobbies: UserHobbies) {
+    const user = await this.userModel.findOne({ _id: user_id });
+
+    const user_events = user.events;
+    return user_events;
+  }
+  async addUsersHobbies(user_id: string, user_hobbies: string[]): Promise<any> {
+    try {
+      const user = await this.userModel.updateOne(
+        { _id: user_id },
+        { $set: { hobbies: user_hobbies } },
+      );
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async addUsersEvent(user_id: string, user_event: UserEvents): Promise<any> {
+    try {
+      const user = await this.userModel.updateOne(
+        { _id: user_id },
+        { $push: { events: user_event } },
+      );
+      return user;
+    } catch (error) {
+      throw error;
+    }
   }
 }

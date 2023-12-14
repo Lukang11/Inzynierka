@@ -1,0 +1,40 @@
+.hobbies-item {
+  border: 2px solid var(--mainpurple);
+  border-radius: 5px;
+  height: 60px;
+  width: 100px;
+  padding: 10px;
+  word-wrap: break-word;
+  text-align: center;
+  margin: 10px;
+  position: relative;
+  font-weight: 600;
+}
+.hobbies-item:hover {
+  animation: background-switch 0.3s ease forwards;
+}
+
+.hobbies-item-removal-x {
+  color: rgb(209, 15, 247);
+  font-weight: 900;
+  font-size: large;
+  position: absolute;
+  top: -10px;
+  right: -5px;
+  background-color: white;
+}
+.hobbies-item-removal-x:hover {
+  color: red;
+  cursor: pointer;
+}
+
+@keyframes background-switch {
+  from {
+    background-color: rgb(255, 255, 255);
+  }
+  to {
+    color: var(--mainpurple);
+    box-shadow: 5px 5px 5px grey;
+    transform: scale(1.1, 1.1);
+  }
+}

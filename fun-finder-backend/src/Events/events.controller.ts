@@ -5,6 +5,7 @@ import {
   GoogleApiQueryResponse,
 } from './EventInterfaces/eventsInterfaces';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { UserEvents } from 'src/Auth/AuthInterfaces/users.model';
 
 @Controller('/events')
 export class EventsController {
@@ -59,12 +60,25 @@ export class EventsController {
   getAllPlaces() {
     return this.eventService.getAllPlaces();
   }
-  @Get(':id')
+  @Get('/event/:id')
   getUsersEvents(@Param('id') user_id: string) {
     return this.eventService.getUsersEvents(user_id);
   }
-  @Get(':id')
+  @Get('/add-event/:id')
+  addUsersEvents(
+    @Param('id') user_id: string,
+    @Body() user_events: UserEvents,
+  ) {
+    console.log(user_events);
+    return this.eventService.addUsersEvent(user_id, user_events);
+  }
+  @Get('/hobbies/:id')
   getUsersHobbies(@Param('id') user_id: string) {
     return this.eventService.getUsersHobbies(user_id);
+  }
+  @Get('/hobbies/add/:id')
+  addUsersHobbies(@Param('id') user_id: string, @Body() hobbies: string[]) {
+    console.log(hobbies);
+    return this.eventService.addUsersHobbies(user_id, hobbies);
   }
 }
