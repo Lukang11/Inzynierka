@@ -9,14 +9,14 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const isAuthenticated = await isUserAuthenticated();
-        setAuthData({ isLoggedIn: isAuthenticated, user: null });
+        const { isAuthenticated, user } = await isUserAuthenticated();
+        setAuthData({ isLoggedIn: isAuthenticated, user: user });
       } catch (error) {
         console.error('Błąd weryfikacji tokenu:', error);
         setAuthData({ isLoggedIn: false, user: null });
       }
     };
-
+  
     checkAuthentication();
   }, []);
 

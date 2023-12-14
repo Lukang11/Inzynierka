@@ -14,7 +14,12 @@ const ProfileDescription = () => {
   return (
     <div>
       <div className="desc-cont">
-        <h3>{`${user.fname} ${user.lname}`}</h3>
+        {!user ? (
+          <h3>Ładowanie...</h3>
+        ) : (
+          <h3>{`${user.fname} ${user.lname}`}</h3>
+        )}
+
         <div>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dapibus
           ornare risus, quis malesuada mauris. Sed mauris ligula, hendrerit id

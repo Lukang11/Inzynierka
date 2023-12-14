@@ -48,7 +48,7 @@ export class UserService {
     const user = await this.findByEmail(email);
 
     if (user && (await this.comparePassword(password, user.password))) {
-      const payload = { sub: user._id, email: user.email };
+      const payload = { _id: user._id, email: user.email, fname: user.fname, lname: user.lname };
       const accessToken = this.jwtService.sign(payload);
       return { user, accessToken };
     }

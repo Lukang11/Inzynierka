@@ -30,7 +30,7 @@ const Login = () => {
                 password,
             });
 
-            login(response.data.user);
+            await login(response.data.user);
 
             document.cookie = serialize('accessToken', response.data.accessToken, { path: '/', maxAge: 3600 });
             
@@ -63,7 +63,7 @@ const Login = () => {
                 return;
             }
 
-            login(adaptedUser);
+            await login(adaptedUser);
             navigate("/profile");
         } catch (error) {
             console.error('Error decoding JWT token:', error);
