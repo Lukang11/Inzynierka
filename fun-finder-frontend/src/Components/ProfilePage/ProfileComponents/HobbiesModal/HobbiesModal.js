@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./HobbiesModalCss.css";
 import HobbiesItem from "./HobbiesItem/HobbiesItem";
+import axios from "axios";
+import { useAuth } from "../../../../Utils/AuthProvider";
 
 function HobbiesModal({ onClick }) {
   const [hobbies, setHobbies] = useState([]);
+  const { user } = useAuth();
+
   const test_data = [
     { hobby_name: "sport" },
     { hobby_name: "kino" },
@@ -41,7 +45,17 @@ function HobbiesModal({ onClick }) {
   };
 
   const sendUserHobbies = () => {
-    alert(hobbies);
+    const fetchData = async () => {
+      if (user && user.email) {
+        try {
+          let url = "http://localhost:7000/events/";
+          await axios.post(`${url}hobbies/add/${user.email}`, { hobbies });
+        } catch (error) {
+          console.error("Error fetching hobbies:", error);
+        }
+      }
+    };
+    fetchData();
   };
   useEffect(() => {
     console.log(hobbies);

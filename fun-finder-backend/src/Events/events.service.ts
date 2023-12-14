@@ -133,11 +133,14 @@ export class EventsService {
     const user_events = user.events;
     return user_events;
   }
-  async addUsersHobbies(user_id: string, user_hobbies: string[]): Promise<any> {
+  async addUsersHobbies(
+    usr_email: string,
+    user_hobbies: string[],
+  ): Promise<any> {
     try {
       const user = await this.userModel.updateOne(
-        { _id: user_id },
-        { $set: { hobbies: user_hobbies } },
+        { email: usr_email },
+        { $push: { hobbies: user_hobbies } },
       );
       return user;
     } catch (error) {

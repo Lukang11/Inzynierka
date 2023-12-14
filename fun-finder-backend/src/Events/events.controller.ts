@@ -76,9 +76,9 @@ export class EventsController {
   getUsersHobbies(@Param('email') email: string) {
     return this.eventService.getUsersHobbies(email);
   }
-  @Get('/hobbies/add/:id')
-  addUsersHobbies(@Param('id') user_id: string, @Body() hobbies: string[]) {
-    console.log(hobbies);
-    return this.eventService.addUsersHobbies(user_id, hobbies);
+  @Post('/hobbies/add/:email')
+  addUsersHobbies(@Param('email') email: string, @Body() object) {
+    console.log(object.hobbies);
+    return this.eventService.addUsersHobbies(email, object.hobbies);
   }
 }
