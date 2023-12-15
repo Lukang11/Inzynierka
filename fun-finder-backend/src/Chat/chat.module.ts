@@ -24,7 +24,8 @@ import { ChatService } from "./chat.service";
     exports: [
         MongooseModule.forFeature([
             { name: 'Group_Chats', schema: GroupChatSchema},
-            { name: 'Event_Chats', schema: EventChatSchema}
+            { name: 'Event_Chats', schema: EventChatSchema},
+            { name: 'Messages', schema: MessageSchema}
         ])
     ]
 })

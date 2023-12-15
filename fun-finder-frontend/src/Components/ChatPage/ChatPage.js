@@ -64,7 +64,7 @@ const ChatPageComponent = () => {
       }, [whichChatToDisplay,initialRender]);
 
     useEffect(() => { //use effect do wyswietlenia wiadomości z chatu
-        if(whichMessagesToDisplay != 0){
+        if(whichMessagesToDisplay != ""){
             const chatId = whichMessagesToDisplay;
             axios.get(`http://localhost:7000/messages/${chatId}`)
                 .then(response => {
@@ -81,8 +81,10 @@ const ChatPageComponent = () => {
         setWichChatToDisplay(data);
     };
     const updateWichMessagesToDisplay = (chatId) => {
-        setWichMessagesToDisplay(chatId);
-        SetMessages([]);
+        if(chatId != whichMessagesToDisplay){
+            setWichMessagesToDisplay(chatId);
+            SetMessages([]);
+        }
     };
 
     return (
@@ -97,7 +99,11 @@ const ChatPageComponent = () => {
             </div>
             <div className="chat-messages-section">
                 {whichMessagesToDisplay !== "" && (
-                    <ChatMessages passWichMessageToDisplay={messages}/>
+                    <ChatMessages 
+                    passWichMessageToDisplay={messages}
+                    participantsInfo={participantInfo}
+                    passConversationId={whichMessagesToDisplay}
+                    />
                 )}
             </div>
             </div>
