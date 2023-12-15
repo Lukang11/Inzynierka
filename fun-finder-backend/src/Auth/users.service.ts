@@ -19,7 +19,7 @@ export class UserService {
 
     if (user.password) {
       const hashedPassword = await bcrypt.hash(user.password, 10);
-      user = { ...user, password: hashedPassword } as User;
+      user = { ...user, password: hashedPassword, description: "Not yet set", score: 0 } as User;
     }
 
     const createdUser = await this.UserModel.create(user);
@@ -74,5 +74,35 @@ export class UserService {
     user.lname = payload.family_name;
 
     return user.save();
+  }
+
+  async getUserDescByEmail(email: string): Promise<string | null> {
+    const user = await this.UserModel.findOne({ email }).exec();
+    return user ? user.description : null;
+  }
+
+  async updateUserDescByEmail(email: string, newDescription: string): Promise<User | null> {
+    const user = await this.UserModel.findOneAndUpdate(
+      { email },
+      { $set: { description: newDescription } },
+      { new: true },
+    ).exec();
+
+    return user;
+  }
+
+  async getUserScoreByEmail(email: string): Promise<number | null> {
+    const user = await this.UserModel.findOne({ email }).exec();
+    return user ? user.score : null;
+  }
+
+  async updateUserScoreByEmail(email: string, newScore: number): Promise<User | null> {
+    const user = await this.UserModel.findOneAndUpdate(
+      { email },
+      { $set: { score: newScore } },
+      { new: true },
+    ).exec();
+
+    return user || null;
   }
 }
