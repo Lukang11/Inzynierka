@@ -19,7 +19,7 @@ export const UserSchema = new Schema<User>({
   hobbies: { type: [String], required: true },
   events: { type: [Object] },
   description: { type: String, required: true },
-  score: { type: Number },
+  score: { type: Number, required: true },
 });
 
 export interface UserEvents {

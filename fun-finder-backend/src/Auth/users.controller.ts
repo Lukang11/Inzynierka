@@ -122,6 +122,31 @@ export class UserController {
 
   @Get('/user-data-id/:id')
   async getCurrentUserDataById(@Param('id') id: string) {
-    return this.userService.findById(id)
+    return this.userService.findById(id);
   }
+
+  @Get('/user-description/:email')
+  async getCurrentUserDesc(@Param('email') email: string) {
+    const description = await this.userService.getUserDescByEmail(email);
+    return { description };
+  }
+
+  @Post('/update-user-description/:email')
+  async updateCurrentUserDesc(@Param('email') email: string, @Body() body: { description: string }) {
+    const updatedUser = await this.userService.updateUserDescByEmail(email, body.description);
+    return updatedUser ? { message: 'Description updated successfully', user: updatedUser } : { message: 'User not found' };
+  }
+
+  @Get('/user-score/:email')
+  async getCurrentUserScore(@Param('email') email: string) {
+    const score = await this.userService.getUserScoreByEmail(email);
+    return { score };
+  }
+
+  @Post('/update-user-score/:email')
+  async updateUserScore(@Param('email') email: string, @Body() body: { score: number }) {
+    const updatedUser = await this.userService.updateUserScoreByEmail(email, body.score);
+    return updatedUser ? { message: 'Score updated successfully', user: updatedUser } : { message: 'User not found' };
+  }
+
 }
