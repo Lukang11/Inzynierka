@@ -1,8 +1,10 @@
 
 .chat-field {
-    flex-basis: 90%;
+    flex-basis: 95%;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    max-height: 750px;
 }
 
 .chat-item-owner{
@@ -12,6 +14,7 @@
     background-color: #FFFFFF;
     padding: 10px 25px;
     border-radius: 25px;
+    word-break: break-word;
 }
 
 .chat-item-other{
@@ -21,6 +24,7 @@
     background-color: #FFFFFF;
     padding: 10px 25px;
     border-radius: 25px;
+    word-break: break-word;
 }
 .message-field {
     display: flex;

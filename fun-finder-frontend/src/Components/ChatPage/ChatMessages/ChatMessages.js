@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState, useRef} from "react";
 import "./ChatMessages.css"
 import io from "socket.io-client"
 import { useAuth } from "../../../Utils/AuthProvider";
@@ -11,6 +11,7 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
     const [singleMessage, setSingleMessage] = useState("");
     const [participants, SetParticipants] = useState("");
     const [conversationId, setConversationId] = useState("");
+    const inputMesageRef = useRef(null);
 
 
     const messageListener = (obj) => {
@@ -24,6 +25,10 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
         console.log(data);
         await socket?.emit("message",(data));
     }
+    const handleMessageInput = () => {
+        const value = inputMesageRef.current.value;
+        console.log(value);
+    }
 
     const handleData = (singleMessage,user_id,passConversationId,participantsInfo) => {
         const dataToSendViaSocket = {
@@ -36,7 +41,7 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
     }
     const handleKeyPress = (Event) => {
         if (Event.key === 'Enter') {
-            send(singleMessage,user._id);
+            handleData(inputMesageRef.current.value,user._id,passConversationId,participantsInfo);
         }
     }
     useEffect(() => {
@@ -88,12 +93,14 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
                     <input
                         className="message-input"
                         type="text"
-                        value={singleMessage}
-                        onChange={handleInputChange}
+                        ref={inputMesageRef}
+                        onChange={handleMessageInput}
+                        // onChange={handleInputChange}
                         onKeyDown={handleKeyPress}/>
                     <button
-                        className="message-send-btn"  
-                        onClick={ () => handleData(singleMessage,user._id,passConversationId,participantsInfo)}>
+                        className="message-send-btn"
+                        // ref={singleMessage}  
+                        onClick={ () => handleData(inputMesageRef.current.value,user._id,passConversationId,participantsInfo)}>
                     </button>
             </div>
         </div>
