@@ -37,10 +37,17 @@ export class UserController {
   @Post('/login')
   async login(
     @Body() credentials: { email: string; password: string },
+    @Res({ passthrough: true }) res: Response,
   ): Promise<{ user: User; accessToken: string } | null> {
     try {
       const { email, password } = credentials;
       const result = await this.userService.loginUser(email, password);
+
+      res.cookie('accessToken', result.accessToken, {
+        httpOnly: true,
+        sameSite: 'strict',
+      });
+
       return result;
     } catch (error) {
       console.error('Błąd logowania:', error.message);
