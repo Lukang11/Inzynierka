@@ -1,7 +1,6 @@
 import mongoose, { Schema, model, Document } from 'mongoose';
 
 export interface Message extends mongoose.Document {
-  _id: string;
   conversation_id: string;
   sender_id: string;
   text: string;
@@ -10,10 +9,6 @@ export interface Message extends mongoose.Document {
 
 export const MessageSchema = new mongoose.Schema(
 {   
-    _id: {
-        type: String,
-        required: true,
-      },
     conversation_id: {
     type: String,
     required: true,

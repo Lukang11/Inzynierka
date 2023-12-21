@@ -1,45 +1,72 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState, useRef} from "react";
 import "./ChatMessages.css"
-import io , {socket} from "socket.io-client"
+import io from "socket.io-client"
 import { useAuth } from "../../../Utils/AuthProvider";
 
-function ChatMessages( {passWichMessageToDisplay} ){
+function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversationId,passChatType} ){
     const { user } = useAuth(); // do pobierania id uz
 
     const [socket, setSocket ] = useState(null);
     const [messages, setMessages] = useState([]);
     const [singleMessage, setSingleMessage] = useState("");
+    const [participants, SetParticipants] = useState("");
+    const [conversationId, setConversationId] = useState("");
+    const inputMesageRef = useRef(null);
 
 
     const messageListener = (obj) => {
         console.log("co ja ci tu podaje ", obj);
-        setMessages([...messages, obj[0]]) // funkcja do zapisania wiadomosci
+        setMessages([...messages, obj]) // funkcja do zapisania wiadomosci
         console.log(messages, " co to za obiekt");
          /// tu mi coś nie działa 
     }
     
-    const send = (message,id) => {
-        socket?.emit("message",message,id);
+     const send = async (data) => {
+        console.log(data);
+        await socket?.emit("message",(data));
+    }
+    const handleMessageInput = () => {
+        const value = inputMesageRef.current.value;
+        console.log(value);
     }
 
+    const handleData = (singleMessage,user_id,passConversationId,participantsInfo,passChatType) => {
+        if(singleMessage !== "") {
+            const dataToSendViaSocket = {
+                message:singleMessage,
+                user_id:user_id,
+                conversationId: passConversationId,
+                participants: participantsInfo,
+                chatType: passChatType
+            }
+            console.log("to wysylam ", dataToSendViaSocket);
+            send(dataToSendViaSocket);
+        }
+    }
     const handleKeyPress = (Event) => {
         if (Event.key === 'Enter') {
-            send(singleMessage);
+            handleData(inputMesageRef.current.value,user._id,passConversationId,participantsInfo,passChatType);
         }
     }
     useEffect(() => {
         setMessages(passWichMessageToDisplay);
-    },[passWichMessageToDisplay])
+        setConversationId(passConversationId);
+        SetParticipants(participantsInfo);
+    },[passWichMessageToDisplay,passConversationId,participantsInfo])
 
     useEffect(() => {
-        const newSocket = io("http://localhost:8001")
+        const newSocket = io("http://localhost:8001", {
+            query: {
+                "sender_id": user._id,
+            },
+        })
         setSocket(newSocket);
                                                         // nawiązujemy połączenie
         return () => {
             newSocket.disconnect();
         }
         
-    },[setSocket])
+    },[setSocket,user._id])
 
     useEffect(() => {
         socket?.on("message",messageListener)
@@ -50,14 +77,13 @@ function ChatMessages( {passWichMessageToDisplay} ){
     },[messageListener])
 
 
-
     return (
         <div className="chat-wrapper">
             <div className="chat-field">
                 {messages.map((message)=>{
-                    const userId = String(user._id);
+                    console.log(message)
                 return (<div  key={message._id}
-                    className={ userId === message.sender_id ? "chat-item-owner" : "chat-item-other"}>
+                    className={ user._id === message.sender_id ? "chat-item-owner" : "chat-item-other"}>
                     <p>{message.text}</p>
                 </div>)
 
@@ -67,12 +93,12 @@ function ChatMessages( {passWichMessageToDisplay} ){
                     <input
                         className="message-input"
                         type="text"
-                        value={singleMessage}
-                        onChange={(e) => setSingleMessage(e.target.value)}
+                        ref={inputMesageRef}
+                        onChange={handleMessageInput}
                         onKeyDown={handleKeyPress}/>
                     <button
-                        className="message-send-btn"  
-                        onClick={ () => send(singleMessage,user._id)}>
+                        className="message-send-btn"
+                        onClick={ () => handleData(inputMesageRef.current.value,user._id,passConversationId,participantsInfo,passChatType)}>
                     </button>
             </div>
         </div>

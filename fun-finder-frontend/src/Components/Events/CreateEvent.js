@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { FaMusic, FaFootballBall, FaPaintBrush } from 'react-icons/fa';
 import './CreateEvent.css';
-import { useNavigate } from 'react-router-dom'; 
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../../Utils/AuthProvider"; 
 
 function CreateEvent() {
+  const { user } = useAuth(); // do pobierania id uz
+
   const [name, setName] = useState('');
   const [time, setTime] = useState('');
   const [people, setPeople] = useState('');
@@ -15,8 +19,22 @@ function CreateEvent() {
   };
   const navigate = useNavigate(); 
 
+  const createNewEventChat = async (userCreatingChatId, chatName) => {
+    try {
+        await axios.post(`http://localhost:7000/clouds/event/createEventChat`,
+        {
+          userCreatingChatId: userCreatingChatId,
+          chatName: chatName
+        })
+    }
+    catch (error) {
+        console.log("failed to create new EventChat");
+    }
+}
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    createNewEventChat(user._id,name);
     console.log(`Event Name: ${name}, Event Time: ${time}, Number of People: ${people}, Category: ${category}, Event Date: ${date}`);
     alert('Wydarzenie zostało utworzone'); 
     navigate('/events');

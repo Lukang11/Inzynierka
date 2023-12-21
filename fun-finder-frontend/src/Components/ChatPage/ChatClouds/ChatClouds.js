@@ -1,12 +1,16 @@
 import React from "react";
 import "./ChatClouds.css"
+import { useState } from "react";
 
 
 function ChatClouds({ passChatCloudsDBData, updateWichMessagesToDisplay }){
+    const [lastMess,setLastMess] = useState("");
 
     const changeWichMessageToUpdate = (id) =>{
-        console.log(id);
-        updateWichMessagesToDisplay(id);
+            console.log(lastMess, "a tu cos robie")
+            console.log(id);
+            setLastMess(id)
+            updateWichMessagesToDisplay(id);
     }
 
     return (
@@ -15,7 +19,7 @@ function ChatClouds({ passChatCloudsDBData, updateWichMessagesToDisplay }){
             {passChatCloudsDBData.map((item) => (
             <button 
             key = {item.chatId}
-            onClick={() => changeWichMessageToUpdate(item.chatId)}
+            onClick={() => {changeWichMessageToUpdate(item.chatId); console.log("ile razy sie wykonuje")}}
             className="btn-chat-clouds">
                 <div className="chat-item">
                     <div className="chat-avatar">
