@@ -18,8 +18,8 @@ export const UserSchema = new Schema<User>({
   lname: { type: String, required: true },
   hobbies: { type: [String], required: true },
   events: { type: [Object] },
-  description: { type: String, required: true },
-  score: { type: Number, required: true },
+  description: { type: String, default: "Not set yet" },
+  score: { type: Number, default: 0 },
 });
 
 export interface UserEvents {

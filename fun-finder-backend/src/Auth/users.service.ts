@@ -19,7 +19,7 @@ export class UserService {
 
     if (user.password) {
       const hashedPassword = await bcrypt.hash(user.password, 10);
-      user = { ...user, password: hashedPassword, description: "Not yet set", score: 0 } as User;
+      user = { ...user, password: hashedPassword } as User;
     }
 
     const createdUser = await this.UserModel.create(user);
