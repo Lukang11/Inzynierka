@@ -3,7 +3,7 @@ import "./ChatMessages.css"
 import io from "socket.io-client"
 import { useAuth } from "../../../Utils/AuthProvider";
 
-function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversationId} ){
+function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversationId,passChatType} ){
     const { user } = useAuth(); // do pobierania id uz
 
     const [socket, setSocket ] = useState(null);
@@ -30,18 +30,22 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
         console.log(value);
     }
 
-    const handleData = (singleMessage,user_id,passConversationId,participantsInfo) => {
-        const dataToSendViaSocket = {
-            message:singleMessage,
-            user_id:user_id,
-            conversationId: passConversationId,
-            participants: participantsInfo
+    const handleData = (singleMessage,user_id,passConversationId,participantsInfo,passChatType) => {
+        if(singleMessage !== "") {
+            const dataToSendViaSocket = {
+                message:singleMessage,
+                user_id:user_id,
+                conversationId: passConversationId,
+                participants: participantsInfo,
+                chatType: passChatType
+            }
+            console.log("to wysylam ", dataToSendViaSocket);
+            send(dataToSendViaSocket);
         }
-        send(dataToSendViaSocket);
     }
     const handleKeyPress = (Event) => {
         if (Event.key === 'Enter') {
-            handleData(inputMesageRef.current.value,user._id,passConversationId,participantsInfo);
+            handleData(inputMesageRef.current.value,user._id,passConversationId,participantsInfo,passChatType);
         }
     }
     useEffect(() => {
@@ -72,10 +76,6 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
         }                                               // odbieramy wiadomość
     },[messageListener])
 
-    const handleInputChange = (e) => {
-        e.preventDefault();
-        setSingleMessage(e.target.value); // Aktualizacja stanu zgodnie z wartością z pola wejściowego
-      };
 
     return (
         <div className="chat-wrapper">
@@ -95,12 +95,10 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
                         type="text"
                         ref={inputMesageRef}
                         onChange={handleMessageInput}
-                        // onChange={handleInputChange}
                         onKeyDown={handleKeyPress}/>
                     <button
                         className="message-send-btn"
-                        // ref={singleMessage}  
-                        onClick={ () => handleData(inputMesageRef.current.value,user._id,passConversationId,participantsInfo)}>
+                        onClick={ () => handleData(inputMesageRef.current.value,user._id,passConversationId,participantsInfo,passChatType)}>
                     </button>
             </div>
         </div>

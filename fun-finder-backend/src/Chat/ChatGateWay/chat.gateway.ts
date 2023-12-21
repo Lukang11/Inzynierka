@@ -5,19 +5,24 @@ import {
     OnGatewayConnection,
  } from "@nestjs/websockets";
 import { Server } from "http";
-import { ObjectId, UUID } from "mongodb";
 import { Socket } from "socket.io";
 import { Data } from "./data.model";
-import { InjectModel, Schema } from "@nestjs/mongoose";
+import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import messageModel, { Message } from "../ChatInterfaces/message.model";
+import { PrivateChat } from "src/ChatClouds/ChatCloudsInterfaces/chatclouds.model";
+import { EventChat } from "../ChatInterfaces/eventChat.model";
+import { GroupChat } from "../ChatInterfaces/groupChat.model";
 
 
 
 @WebSocketGateway(8001, {cors: true})
 export class ChatGateway implements OnGatewayConnection {
     constructor(
-        @InjectModel('Messages') private readonly messages: Model<Message>
+        @InjectModel('Messages') private readonly messages: Model<Message>,
+        @InjectModel('Private_Chats') private readonly privateChatModel: Model<PrivateChat>,
+        @InjectModel('Group_Chats') private readonly groupChat: Model<GroupChat>,
+        @InjectModel('Event_Chats') private readonly eventChats: Model<EventChat>
       ) {}
 
     @WebSocketServer() server: Server
@@ -52,9 +57,10 @@ export class ChatGateway implements OnGatewayConnection {
             date: new Date
           });
         this.sendMessageToDatabase(messageToSend);
+        this.updateLastMessage(data.conversationId,data.message,data.chatType);
 
         const messageToSendToUser = {
-            id: messageToSend._id.toString(),
+            id: messageToSend._id,
             conversation_id: conversationId,
             sender_id: userId,
             text: message,
@@ -83,9 +89,46 @@ export class ChatGateway implements OnGatewayConnection {
             console.error("unable to create user", err);
         }
     }
-     generateRandomId() {
-        return Math.random().toString(36).substring(2, 9);
-      }   
+    
+    async updateLastMessage(chatId: string, message: string, chatType: string) {
+        switch (chatType) {
+            case "person":
+                try {
+                    await this.privateChatModel.updateOne(
+                        { _id: chatId},
+                        {$set: {last_message: message}}
+                    );
+                    console.log("updatuje");
+                }
+                catch (err) {
+                    console.log("failed to Update person chat", err);
+                }
+                break
+            case "group":
+                try {
+                    await this.groupChat.updateOne(
+                        { _id: chatId},
+                        {$set: {last_message: message}}
+                    );
+                }
+                catch (err) {
+                    console.log("failed to Update group chat", err);
+                }
+                break
+            case "event":
+                try {
+                    await this.eventChats.updateOne(
+                        { _id: chatId},
+                        {$set: {last_message: message}}
+                    );
+                    console.log("wykonuje dla eventow", chatId , message)
+                }
+                catch (err) {
+                    console.log("failed to Update event chat", err);
+                }
+                break
+        }
+    }
 }
 // _id: string;
 // conversation_id: string;

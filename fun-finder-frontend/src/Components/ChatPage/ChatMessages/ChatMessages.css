@@ -44,12 +44,14 @@
     flex-direction: column;
 }
 .message-input {
-    flex-basis: 95%;
+    flex-basis: 97%;
     border: none;
 }
 
 .message-send-btn {
-    flex-basis: 5%;
+    flex-basis: 3%;
     background-color: #5908BF;
+    width: 35px;
     height: 35px;
+    border-radius: 50%;
 }

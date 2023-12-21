@@ -6,6 +6,7 @@ import { EventChatSchema } from "./ChatInterfaces/eventChat.model";
 import { MessageSchema } from "./ChatInterfaces/message.model";
 import { ChatController } from "./chat.controller";
 import { ChatService } from "./chat.service";
+import { PrivateChatSchema } from "src/ChatClouds/ChatCloudsInterfaces/chatclouds.model";
 
 
 @Module({
@@ -13,7 +14,8 @@ import { ChatService } from "./chat.service";
         MongooseModule.forFeature([
             { name: 'Group_Chats', schema: GroupChatSchema},
             { name: 'Event_Chats', schema: EventChatSchema},
-            { name: 'Messages', schema: MessageSchema}
+            { name: 'Messages', schema: MessageSchema},
+            { name: 'Private_Chats', schema: PrivateChatSchema }
         ])
     ],
     controllers: [ChatController],

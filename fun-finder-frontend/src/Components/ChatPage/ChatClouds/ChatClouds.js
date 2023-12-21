@@ -7,12 +7,10 @@ function ChatClouds({ passChatCloudsDBData, updateWichMessagesToDisplay }){
     const [lastMess,setLastMess] = useState("");
 
     const changeWichMessageToUpdate = (id) =>{
-        if(lastMess !== id) {
             console.log(lastMess, "a tu cos robie")
             console.log(id);
             setLastMess(id)
             updateWichMessagesToDisplay(id);
-        }
     }
 
     return (
