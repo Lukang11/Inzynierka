@@ -8,6 +8,7 @@ import {
     ConnectedSocket
  } from "@nestjs/websockets";
 import { Server } from "http";
+import { ObjectId, UUID } from "mongodb";
 import { Socket } from "socket.io";
 
 
@@ -31,8 +32,24 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     @SubscribeMessage('message')
     handleMessage(@MessageBody() chatObj: [mes: String, id: String], @MessageBody() id: string, @ConnectedSocket() client: Socket): void {
+        const message = []
+        console.log(chatObj, "podaje chat obj");
+        message.push({
+            sender_id: chatObj[1],
+            _id: new ObjectId,
+            conversation_id: "na razie puste",
+            text: chatObj[0],
+            date: new Date
+          });
+
         chatObj[1] = client.id;
-        this.chatServer.emit('message',chatObj );
+        this.chatServer.emit('message',message );
         console.log(client.id);
     }
 }
+
+// _id: string;
+//   conversation_id: string;
+//   sender_id: string;
+//   text: string;
+//   date: Date;

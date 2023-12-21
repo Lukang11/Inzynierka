@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ChatTypes.css";
 
-function ChatTypes({ updateWichChatToDisplay }) {
+function ChatTypes({ updateWichChatToDisplay, clearDisplayedMessage }) {
 
     const [personChatBtnClicked, setPersonChatBtnClicked] = useState(true);
     const [groupChatBtnClicked, setGroupBtnClicked] = useState(false);
@@ -13,6 +13,7 @@ function ChatTypes({ updateWichChatToDisplay }) {
         setPersonChatBtnClicked(true);
         setGroupBtnClicked(false);
         setEventChatBtnClicked(false);
+        clearDisplayedMessage("");
     }
     const changeGroupChatBtnStatus = () => {
 
@@ -20,6 +21,7 @@ function ChatTypes({ updateWichChatToDisplay }) {
         setPersonChatBtnClicked(false);
         setGroupBtnClicked(true);
         setEventChatBtnClicked(false);
+        clearDisplayedMessage("");
     }
 
     const changeEventChatBtnStatus = () => {
@@ -28,6 +30,8 @@ function ChatTypes({ updateWichChatToDisplay }) {
         setPersonChatBtnClicked(false);
         setGroupBtnClicked(false);
         setEventChatBtnClicked(true);
+        clearDisplayedMessage("");
+
     }
 
     return (

@@ -1,15 +1,30 @@
-import { Controller, Post, Body, Get, Param, Res, Req, UnauthorizedException, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Res,
+  Req,
+  UnauthorizedException,
+  HttpStatus,
+} from '@nestjs/common';
 import { UserService } from './users.service';
 import { User } from './AuthInterfaces/users.model';
 import { parse } from 'cookie';
 import { Response, Request } from 'express';
 import * as jwt from 'jsonwebtoken';
+import { OAuth2Client } from 'google-auth-library';
 
 @Controller('/users')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  private readonly googleOAuthClient: OAuth2Client;
 
-  @Post("/register")
+  constructor(private readonly userService: UserService) {
+    this.googleOAuthClient = new OAuth2Client(process.env.CLIENT_ID);
+  }
+
+  @Post('/register')
   async register(@Body() user: User): Promise<User> {
     const existingUser = await this.userService.findByEmail(user.email);
     if (existingUser) {
@@ -19,8 +34,10 @@ export class UserController {
     return this.userService.createUser(user);
   }
 
-  @Post("/login")
-  async login(@Body() credentials: { email: string, password: string }): Promise<{ user: User; accessToken: string } | null> {
+  @Post('/login')
+  async login(
+    @Body() credentials: { email: string; password: string },
+  ): Promise<{ user: User; accessToken: string } | null> {
     try {
       const { email, password } = credentials;
       const result = await this.userService.loginUser(email, password);
@@ -41,22 +58,95 @@ export class UserController {
       res.status(HttpStatus.OK).json({ message: 'Pomyślnie wylogowano!' });
     } catch (error) {
       console.error('Błąd podczas wylogowywania:', error);
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: 'Wystąpił błąd podczas wylogowywania' });
+      res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Wystąpił błąd podczas wylogowywania' });
       console.log('Status:', HttpStatus.INTERNAL_SERVER_ERROR);
     }
-  } 
+  }
 
   @Get('/verify-token')
   verifyToken(@Req() req: Request, @Res() res: Response) {
     const accessToken = req.headers.authorization?.split(' ')[1];
-  
+
     try {
-      const isUserAuthenticated = !!jwt.verify(accessToken, process.env.JWT_SECRET_KEY);
-  
+      const isUserAuthenticated = !!jwt.verify(
+        accessToken,
+        process.env.JWT_SECRET_KEY,
+      );
+
       res.status(isUserAuthenticated ? 200 : 401).json({ isUserAuthenticated });
     } catch (error) {
-      console.error('Błąd weryfikacji tokenu:', error);
       res.status(401).json({ isUserAuthenticated: false });
     }
   }
+
+  @Get('/verify-google-token')
+  async verifyGoogleToken(@Req() req: Request, @Res() res: Response) {
+    const idToken = req.headers.authorization?.split(' ')[1];
+
+    try {
+      const ticket = await this.googleOAuthClient.verifyIdToken({
+        idToken: idToken,
+        audience: process.env.CLIENT_ID,
+      });
+
+      const payload = ticket.getPayload();
+
+      if (!payload || !payload.email) {
+        throw new UnauthorizedException('Invalid Google token');
+      }
+
+      // Sprawdź, czy użytkownik o danym adresie e-mail już istnieje
+      let user = await this.userService.findByEmail(payload.email);
+
+      // Jeżeli użytkownik istnieje, zaktualizuj jego dane
+      if (user) {
+        user = await this.userService.updateGoogleUser(user, payload);
+      } else {
+        // Jeżeli użytkownik nie istnieje, utwórz nowego
+        user = await this.userService.createGoogleUser(payload);
+      }
+
+      res.status(200).json({ isUserAuthenticated: true });
+    } catch (error) {
+      console.error('Błąd weryfikacji tokenu Google:', error);
+      res.status(401).json({ isUserAuthenticated: false });
+    }
+  }
+
+  @Get('/user-data-email/:email')
+  async getCurrentUserDataByEmail(@Param('email') email: string) {
+    return this.userService.findByEmail(email);
+  }
+
+  @Get('/user-data-id/:id')
+  async getCurrentUserDataById(@Param('id') id: string) {
+    return this.userService.findById(id);
+  }
+
+  @Get('/user-description/:email')
+  async getCurrentUserDesc(@Param('email') email: string) {
+    const description = await this.userService.getUserDescByEmail(email);
+    return { description };
+  }
+
+  @Post('/update-user-description/:email')
+  async updateCurrentUserDesc(@Param('email') email: string, @Body() body: { description: string }) {
+    const updatedUser = await this.userService.updateUserDescByEmail(email, body.description);
+    return updatedUser ? { message: 'Description updated successfully', user: updatedUser } : { message: 'User not found' };
+  }
+
+  @Get('/user-score/:email')
+  async getCurrentUserScore(@Param('email') email: string) {
+    const score = await this.userService.getUserScoreByEmail(email);
+    return { score };
+  }
+
+  @Post('/update-user-score/:email')
+  async updateUserScore(@Param('email') email: string, @Body() body: { score: number }) {
+    const updatedUser = await this.userService.updateUserScoreByEmail(email, body.score);
+    return updatedUser ? { message: 'Score updated successfully', user: updatedUser } : { message: 'User not found' };
+  }
+
 }

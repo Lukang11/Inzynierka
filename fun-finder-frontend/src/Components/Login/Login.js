@@ -3,11 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { serialize } from 'cookie';
 import { useAuth } from '../../Utils/AuthProvider';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 import "./Login.css";
 
 const Login = () => {
     const navigate = useNavigate();
-    const { isLoggedIn, setIsLoggedIn } = useAuth();
+    const { isLoggedIn, login } = useAuth();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,7 +19,7 @@ const Login = () => {
         if (isLoggedIn) {
           navigate("/");
         }
-      }, [isLoggedIn]);
+      }, [isLoggedIn, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,8 +30,10 @@ const Login = () => {
                 password,
             });
 
+            await login(response.data.user);
+
             document.cookie = serialize('accessToken', response.data.accessToken, { path: '/', maxAge: 3600 });
-            setIsLoggedIn(true);
+            
             navigate("/profile")
         } catch (error) {
             console.error('Błąd logowania:', error.message);
@@ -40,6 +44,34 @@ const Login = () => {
                 setError('Wystąpił błąd logowania. Spróbuj ponownie później.');
             }
         }
+    };
+
+    const handleLoginSuccess = async (credentialResponse) => {
+        try {
+            const decodedToken = jwtDecode(credentialResponse.credential);
+
+            const adaptedUser = {
+                email: decodedToken.email,
+                fname: decodedToken.given_name,
+                lname: decodedToken.family_name,
+            };
+
+            document.cookie = serialize('accessToken', credentialResponse.credential, { path: '/', maxAge: 3600 });
+
+            if (!decodedToken) {
+                console.error('Failed to decode JWT token.');
+                return;
+            }
+
+            await login(adaptedUser);
+            navigate("/profile");
+        } catch (error) {
+            console.error('Error decoding JWT token:', error);
+        }
+    };
+
+    const handleLoginError = () => {
+        console.log('Login Failed');
     };
 
     return (
@@ -74,6 +106,22 @@ const Login = () => {
                     <div className="login-error-message">{error}</div>
                     <div className="submit-btn">
                         <button type="submit">Zaloguj się</button>
+                    </div>
+                    <div className="google-login-button-container-login">
+                        <GoogleLogin
+                            buttonText="Zaloguj się z Google"
+                            onSuccess={handleLoginSuccess}
+                            onError={handleLoginError}
+                            render={renderProps => (
+                                <button
+                                    onClick={renderProps.onClick}
+                                    disabled={renderProps.disabled}
+                                    className="google-login-button"
+                                >
+                                    Zaloguj się z Google
+                                </button>
+                            )}
+                        />
                     </div>
                 </form>
                 <div className="signupText">

@@ -6,12 +6,20 @@ import {
   faSquareInstagram,
   faSquareTwitter,
 } from "@fortawesome/free-brands-svg-icons";
+import { useAuth } from "../../../../Utils/AuthProvider"
 
 const ProfileDescription = () => {
+  const { user } = useAuth();
+
   return (
     <div>
       <div className="desc-cont">
-        <h3>Testek Testowy</h3>
+        {!user ? (
+          <h3>Ładowanie...</h3>
+        ) : (
+          <h3>{`${user.fname} ${user.lname}`}</h3>
+        )}
+
         <div>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dapibus
           ornare risus, quis malesuada mauris. Sed mauris ligula, hendrerit id

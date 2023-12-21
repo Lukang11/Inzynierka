@@ -12,33 +12,36 @@ import ChatPageComponent from "./Components/ChatPage/ChatPage";
 import WelcomePage from "./Components/WelcomePage/WelcomePage";
 import WelcomePageHeader from "./Components/Header/WelcomePageHeader";
 import { EventInfo } from "./Components/Events/EventInfo";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <div className="App">
-          <Routes>
-            <Route path="/" element={<> <Header /><WelcomePage /> </>} />
-            <Route
-              path="/profile"
-              element={
-                <PrivateRoute>
-                  <Header />
-                  <ProfilePage />
-                </PrivateRoute>
-              }
-            />
-            <Route path="/login" element={<> <Header /><Login /> </>} />
-            <Route path="/register" element={<> <Header /><Register /> </>} />
-            <Route path="/chat" element={<> <Header /><ChatPageComponent /> </>} />
-            <Route path="/events" element={<> <Header /><EventsPage /> </>} />
-          <Route path="/create-event" element={<> <Header /><CreateEvent /> </>} />
-          <Route path="/event-info/:id" element={<> <Header /><EventInfo /> </>} />
-          </Routes>
-        </div>
-      </BrowserRouter>
-    </AuthProvider>
+    <div className="App">
+      <AuthProvider>
+        <BrowserRouter>
+          <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
+            <Routes>
+              <Route path="/" element={<> <Header /><WelcomePage /> </>} />
+              <Route
+                path="/profile"
+                element={
+                  <PrivateRoute>
+                    <Header />
+                    <ProfilePage />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="/login" element={<> <Header /><Login /> </>} />
+              <Route path="/register" element={<> <Header /><Register /> </>} />
+              <Route path="/chat" element={<> <Header /><ChatPageComponent /> </>} />
+              <Route path="/events" element={<> <Header /><EventsPage /> </>} />
+              <Route path="/create-event" element={<> <Header /><CreateEvent /> </>} />
+              <Route path="/event-info/:id" element={<> <Header /><EventInfo /> </>} />
+            </Routes>
+          </GoogleOAuthProvider>;
+        </BrowserRouter>
+      </AuthProvider>
+    </div>
   );
 }
 

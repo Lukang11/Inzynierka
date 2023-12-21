@@ -7,6 +7,7 @@ import { EventsModule } from './Events/events.module';
 import { ChatModule } from './Chat/chat.module';
 import { UserModule } from './Auth/users.module';
 import { CronService } from './Cron/cron.service';
+import { ChatCloudsModule } from './ChatClouds/chatClouds.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { CronService } from './Cron/cron.service';
     EventsModule,
     ChatModule,
     UserModule,
+    ChatCloudsModule,
   ],
   controllers: [AppController],
   providers: [AppService, CronService],

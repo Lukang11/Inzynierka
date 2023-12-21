@@ -14,16 +14,16 @@ function ChatClouds({ passChatCloudsDBData, updateWichMessagesToDisplay }){
             <hr></hr>
             {passChatCloudsDBData.map((item) => (
             <button 
-            key = {item.id}
-            onClick={() => changeWichMessageToUpdate(item.id)}
+            key = {item.chatId}
+            onClick={() => changeWichMessageToUpdate(item.chatId)}
             className="btn-chat-clouds">
                 <div className="chat-item">
                     <div className="chat-avatar">
                     </div>
                     <div className="chat-info">
-                        <p>{item.name} {item.surename}</p>
+                        <p>{item.name}</p>
                         <div className="chat-info-message">
-                            <p>{item.newMessage}</p>
+                            <p>{item.lastMessage}</p>
                         </div>
                     </div>
                     </div>

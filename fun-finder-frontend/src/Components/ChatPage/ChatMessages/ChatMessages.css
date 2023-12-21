@@ -9,17 +9,18 @@
     display: flex;
     margin: 20px;
     justify-content: flex-start;
-    background-color: #D9D9D9;
     background-color: #FFFFFF;
     padding: 10px 25px;
     border-radius: 25px;
-    border-color: #5908BF;
 }
 
 .chat-item-other{
-    margin: 20px;
     display: flex;
+    margin: 20px;
     justify-content: flex-end;
+    background-color: #FFFFFF;
+    padding: 10px 25px;
+    border-radius: 25px;
 }
 .message-field {
     display: flex;

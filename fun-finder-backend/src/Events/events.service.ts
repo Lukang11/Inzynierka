@@ -1,5 +1,5 @@
 // events.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, forwardRef, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
@@ -10,12 +10,18 @@ import {
 import axios from 'axios';
 import { Place } from './EventInterfaces/place.model';
 import { CreatePlaceDto } from './EventInterfaces/create-place.dto';
+import {
+  User,
+  UserEvents,
+  UserHobbies,
+} from 'src/Auth/AuthInterfaces/users.model';
 
 @Injectable()
 export class EventsService {
   constructor(
     @InjectModel('Events') private readonly eventsModel: Model<Event>,
     @InjectModel('Api_Places') private readonly placeModel: Model<Place>,
+    @InjectModel('User') private readonly userModel: Model<User>,
   ) {}
 
   async insertEvent(name: string, location: string, relatedHobbies: string[]) {
@@ -105,5 +111,51 @@ export class EventsService {
       });
 
     return response;
+  }
+  async getAllPlaces() {
+    return await this.placeModel.find().exec();
+  }
+  async getUsersEvents(email: string) {
+    const user = await this.userModel.findOne({ email: email });
+    const events = user.events;
+    console.log(user);
+    return events;
+  }
+  async getUsersHobbies(email: string) {
+    const user = await this.userModel.findOne({ email: email });
+
+    const user_hobbies = user.hobbies;
+    return user_hobbies;
+  }
+  async addUsersEvents(user_id: string, user_hobbies: UserHobbies) {
+    const user = await this.userModel.findOne({ _id: user_id });
+
+    const user_events = user.events;
+    return user_events;
+  }
+  async addUsersHobbies(
+    usr_email: string,
+    user_hobbies: string[],
+  ): Promise<any> {
+    try {
+      const user = await this.userModel.updateOne(
+        { email: usr_email },
+        { $push: { hobbies: user_hobbies } },
+      );
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async addUsersEvent(user_id: string, user_event: UserEvents): Promise<any> {
+    try {
+      const user = await this.userModel.updateOne(
+        { _id: user_id },
+        { $push: { events: user_event } },
+      );
+      return user;
+    } catch (error) {
+      throw error;
+    }
   }
 }
