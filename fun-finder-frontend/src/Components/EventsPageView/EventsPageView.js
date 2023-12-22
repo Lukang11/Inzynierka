@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import EventCardView from "./EventCardView/EventCardView";
 import "./EventsPageView.css";
+import { useNavigate } from "react-router-dom";
 
 function EventsPageView() {
   const [events, setEvents] = useState();
@@ -15,13 +16,17 @@ function EventsPageView() {
   useEffect(() => {
     fetchEvents();
   }, []);
+  const navigate = useNavigate();
+
   return (
     <div>
       <div>
         <h2>Wydarzenia</h2>
         <div>
           <button className="">Filtruj</button>
-          <button className="">Dodaj Wydarzenia</button>
+          <button className="" onClick={() => navigate("/create-event")}>
+            Dodaj Wydarzenia
+          </button>
         </div>
       </div>
       <div className="events-view-container">

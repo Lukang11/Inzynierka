@@ -1,9 +1,18 @@
 import React from "react";
 import "./EventCardView.css";
+import { useNavigate } from "react-router-dom";
 
 function EventCardView({ eventInfo }) {
+  const navigate = useNavigate();
+  const handleRowClick = (id) => {
+    navigate(`/event-info/${id}`);
+  };
+
   return (
-    <div className="events-view-card">
+    <div
+      className="events-view-card"
+      onClick={() => handleRowClick(eventInfo._id)}
+    >
       {console.log(eventInfo)}
       <div className="events-view-card-item">
         <div className="events-view-image"></div>
