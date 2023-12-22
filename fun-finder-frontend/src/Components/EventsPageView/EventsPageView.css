@@ -1,11 +1,9 @@
 .events-view-container {
-  width: 90%;
-  height: 70vh;
   margin: auto;
   display: flex;
   flex-wrap: wrap;
   margin-top: 5%;
-  overflow-y: scroll;
+  overflow-x: scroll;
 }
 .events-button-fillter {
   border: solid var(--mainpurple) 2px;
@@ -27,4 +25,12 @@
   display: flex;
   justify-content: end;
   margin-top: 50px;
+}
+.event-view-title {
+  font-size: 2em;
+  padding-left: 20px;
+}
+.event-view-title-desc {
+  font-size: 1.7em;
+  padding-left: 40px;
 }
