@@ -30,8 +30,7 @@ export class EventsController {
       location: string;
       relatedHobbies: string[];
     },
-  ): any {
-    //Bedzie typ ale nararzie nie dodaje
+  ) {
     this.eventService.insertEvent(
       fullObject.name,
       fullObject.location,
