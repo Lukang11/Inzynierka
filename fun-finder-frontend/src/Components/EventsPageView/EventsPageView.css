@@ -1,0 +1,9 @@
+.events-view-container {
+  width: 90%;
+  height: 70vh;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5%;
+  overflow-y: scroll;
+}
