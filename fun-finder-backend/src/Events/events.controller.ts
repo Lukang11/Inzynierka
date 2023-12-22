@@ -12,7 +12,7 @@ export class EventsController {
   constructor(private readonly eventService: EventsService) {}
 
   @Get()
-  getAllEvents(): any {
+  getAllEvents() {
     return this.eventService.getAllEvents();
   }
 
