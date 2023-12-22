@@ -3,6 +3,7 @@ import "./EventsPageView.css";
 import { useNavigate } from "react-router-dom";
 import AllEventComponent from "./AllEventComponent/AllEventComponent";
 import NearbyEventsComponent from "./NearbyEventsComponent/NearbyEventsComponent";
+import HiglyRatedPlaces from "./HiglyRatingPlacesComponent/HiglyRatedPlaces";
 
 function EventsPageView() {
   const [error, setError] = useState();
@@ -66,7 +67,7 @@ function EventsPageView() {
         Wiemy co misie lubią najbardziej :)
       </div>
       <div className="events-view-container">
-        <NearbyEventsComponent />
+        <HiglyRatedPlaces />
       </div>
     </div>
   );

@@ -23,6 +23,7 @@
   height: 100px;
   justify-content: space-around;
   align-items: center;
+  padding: 3px;
 }
 .events-info-card-name,
 .events-view-card-hour {

@@ -1,12 +1,10 @@
-import React from "react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EventCardView from "../EventCardView/EventCardView";
-import "./NearbyEventsComponent.css";
 
 function HiglyRatedPlaces() {
   const [palces, setPlaces] = useState();
-  const url = "http://localhost:7000/events";
+  const url = "http://localhost:7000/events/places/top-rating";
   const fetchEvents = () => {
     axios.get(url).then((response) => {
       setPlaces(() => response.data);
@@ -19,7 +17,9 @@ function HiglyRatedPlaces() {
     <div className="all-events-component">
       {" "}
       {palces
-        ? events.map((palce) => <EventCardView eventInfo={palce} />)
+        ? palces.map((palce) => (
+            <EventCardView eventInfo={palce} places={true} />
+          ))
         : "Couldnt fetch events at the moment, try later"}
     </div>
   );

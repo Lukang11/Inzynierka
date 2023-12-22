@@ -18,7 +18,9 @@ function NearbyEventsComponent() {
     <div className="all-events-component">
       {" "}
       {events
-        ? events.map((event) => <EventCardView eventInfo={event} />)
+        ? events.map((event) => (
+            <EventCardView eventInfo={event} places={false} />
+          ))
         : "Couldnt fetch events at the moment, try later"}
     </div>
   );
