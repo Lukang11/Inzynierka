@@ -80,4 +80,8 @@ export class EventsController {
     console.log(object.hobbies);
     return this.eventService.addUsersHobbies(email, object.hobbies);
   }
+  @Get('/places/top-rating')
+  getTopRatingPlaces() {
+    return this.eventService.fetchTopRatingPlaces();
+  }
 }

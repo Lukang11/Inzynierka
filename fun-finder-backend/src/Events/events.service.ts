@@ -158,4 +158,10 @@ export class EventsService {
       throw error;
     }
   }
+  async fetchTopRatingPlaces() {
+    const rating_places = await this.placeModel
+      .find({ rating: { $gt: 4.5, $lt: 5 } })
+      .exec();
+    return rating_places;
+  }
 }

@@ -1,33 +1,73 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import EventCardView from "./EventCardView/EventCardView";
 import "./EventsPageView.css";
+import { useNavigate } from "react-router-dom";
+import AllEventComponent from "./AllEventComponent/AllEventComponent";
+import NearbyEventsComponent from "./NearbyEventsComponent/NearbyEventsComponent";
+import HiglyRatedPlaces from "./HiglyRatingPlacesComponent/HiglyRatedPlaces";
 
 function EventsPageView() {
-  const [events, setEvents] = useState();
   const [error, setError] = useState();
-  const url = "http://localhost:7000/events";
-  const fetchEvents = () => {
-    axios.get(url).then((response) => {
-      setEvents(() => response.data);
-    });
-  };
+  const [location, setLocation] = useState(null);
+  const navigate = useNavigate();
+
   useEffect(() => {
-    fetchEvents();
+    const getLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            setLocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            });
+          },
+          (error) => {
+            setError(error.message);
+          }
+        );
+      } else {
+        setError("Geolocation is not supported by your browser");
+      }
+    };
+
+    getLocation();
   }, []);
+
   return (
     <div>
       <div>
-        <h2>Wydarzenia</h2>
-        <div>
-          <button className="">Filtruj</button>
-          <button className="">Dodaj Wydarzenia</button>
+        {console.log(location)}
+        <div className="event-button-group">
+          <button className="events-button-fillter">Filtruj</button>
+          <button
+            className="events-button-add-events"
+            onClick={() => navigate("/create-event")}
+          >
+            Dodaj +
+          </button>
+        </div>
+        <h2 className="event-view-title">Wydarzenia</h2>
+        <div className="event-view-title-desc">
+          Szukasz nowych wrażeń? Nuda dopadła? Dołącz do jednego z wydarzeń!
         </div>
       </div>
       <div className="events-view-container">
-        {events
-          ? events.map((event) => <EventCardView eventInfo={event} />)
-          : "Couldnt fetch events at the moment, try later"}
+        <AllEventComponent />
+      </div>
+      <h3 className="event-view-title">
+        Wydarzenia którę mogą ci się spodobać
+      </h3>
+      <div className="event-view-title-desc">
+        A może to co wiemy, że lubisz ?
+      </div>
+      <div className="events-view-container">
+        <NearbyEventsComponent />
+      </div>
+      <h3 className="event-view-title">Miejsca warte odwiedzenia</h3>
+      <div className="event-view-title-desc">
+        Wiemy co misie lubią najbardziej :)
+      </div>
+      <div className="events-view-container">
+        <HiglyRatedPlaces />
       </div>
     </div>
   );
