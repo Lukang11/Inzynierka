@@ -24,11 +24,9 @@ export class EventsService {
     @InjectModel('User') private readonly userModel: Model<User>,
   ) {}
 
-  async insertEvent(name: string, location: string, relatedHobbies: string[]) {
+  async insertEvent(fullObject) {
     const newEvent = new this.eventsModel({
-      name,
-      location,
-      relatedHobbies,
+      fullObject
     });
     const result = await newEvent.save();
     console.log('Incoming POST request with this body :\n');
