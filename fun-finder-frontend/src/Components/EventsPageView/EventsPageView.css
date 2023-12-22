@@ -7,3 +7,24 @@
   margin-top: 5%;
   overflow-y: scroll;
 }
+.events-button-fillter {
+  border: solid var(--mainpurple) 2px;
+  color: var(--mainpurple);
+  background-color: white;
+  padding: 10px 20px 10px 20px;
+  border-radius: 20px;
+  margin: 0 20px 0 20px;
+}
+
+.events-button-add-events {
+  background-color: var(--mainpurple);
+  color: white;
+  padding: 10px 20px 10px 20px;
+  border-radius: 20px;
+  margin: 0 20px 0 20px;
+}
+.event-button-group {
+  display: flex;
+  justify-content: end;
+  margin-top: 50px;
+}
