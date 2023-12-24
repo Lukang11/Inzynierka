@@ -31,7 +31,7 @@ function WelcomePage() {
                 <div className="container">
                     <div className="left">
                         <div className="section-title">Poznawaj ludzi z<br></br> twoimi zainteresowaniami</div>
-                        <div className="section-text">Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. Duis luctus feugiat tellus non ultrices. Nullam eget iaculis leo. Mauris et tellus est. Nullam quis risus justo. Curabitur luctus sed elit ac vehicula. Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. </div>
+                        <div className="section-text">Dzięki spersonalizowanym kategoriom odnajdziesz osoby podobne do Ciebie. Dołącz do nas i nawiązuj nowe znajomości.</div>
 
                         <div className="buttons-container">
                             <div className="left">
@@ -55,7 +55,7 @@ function WelcomePage() {
 
             <div className="second-section">
                 <div className="section-title">Tworzenie profilu. Szybkie i proste</div>
-                <div className="section-text">Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. Duis luctus feugiat tellus non ultrices. Nullam eget iaculis leo. Mauris et tellus est. Nullam quis risus justo. Curabitur luctus sed elit ac vehicula. Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. </div>
+                <div className="section-text">Dopasuj profil do twoich potrzeb. Wybieraj spośród wielu kategorii, opisz siebie i wkrocz w świat wydarzeń! </div>
 
                 <div className="cards-container">{cards}</div>
 
@@ -71,7 +71,7 @@ function WelcomePage() {
                     <div className="right">
                         <div className="section-title2">Spędź niezapomniane
 wspólne chwile</div>
-                        <div className="section-text2">Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. Duis luctus feugiat tellus non ultrices. Nullam eget iaculis leo. Mauris et tellus est. Nullam quis risus justo. Curabitur luctus sed elit ac vehicula. Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. </div>
+                        <div className="section-text2"> Znajdź wydarzenia, które Cię interesują. Dołącz do nich i poznawaj nowych ludzi.  </div>
 
 
                     </div>
