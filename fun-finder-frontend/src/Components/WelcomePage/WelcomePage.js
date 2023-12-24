@@ -10,9 +10,11 @@ import {
     faSquareInstagram,
     faSquareTwitter,
 } from "@fortawesome/free-brands-svg-icons";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useRef } from "react";
 
 function WelcomePage() {
+    const ref = useRef(null);
 
     const cards = data.map(item => {
         return (
@@ -23,6 +25,10 @@ function WelcomePage() {
             />
         )
     })
+
+    const scrollToSecondSection = () => {
+        ref.current?.scrollIntoView({ behavior: 'smooth' });
+    };
 
 
     return (
@@ -35,12 +41,14 @@ function WelcomePage() {
 
                         <div className="buttons-container">
                             <div className="left">
+                                <Link to="/register">
                                 <div className="section-filled-btn ">
                                     Stwórz konto
                                 </div>
+                                </Link>
                             </div>
                             <div className="right">
-                                <div className="section-outline-btn">
+                                <div className="section-outline-btn" onClick={scrollToSecondSection}>
                                     Dowiedz się więcej
                                 </div>
                             </div>
@@ -53,7 +61,7 @@ function WelcomePage() {
                 </div>
             </div>
 
-            <div className="second-section">
+            <div className="second-section" ref={ref}>
                 <div className="section-title">Tworzenie profilu. Szybkie i proste</div>
                 <div className="section-text">Dopasuj profil do twoich potrzeb. Wybieraj spośród wielu kategorii, opisz siebie i wkrocz w świat wydarzeń! </div>
 
