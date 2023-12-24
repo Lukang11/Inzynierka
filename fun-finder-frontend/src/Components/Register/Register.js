@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Register.css";
+import firstSectionImg from "./register-img.png";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -89,12 +90,14 @@ const Register = () => {
 
     return (
         <div className="register-container">
-            
-            <div className="welcomeText-container">
-                <h1>Poznawaj ludzi z FunFinder!</h1>
-                <p>Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. Duis luctus feugiat tellus non ultrices. Nullam eget iaculis leo. Mauris et tellus est. Nullam quis risus justo. Curabitur luctus sed elit ac vehicula.</p>
-            </div>
 
+            
+                <img className="mobile-only-image" src={firstSectionImg} />
+                <div className="welcomeText-container">
+                    <h1>Poznawaj ludzi z FunFinder!</h1>
+                    <p>Utwórz konto i zacznij spędzać niezapomniane chwile</p>
+                </div>
+            
             <div className="registerForm-container">
                 <h3>Zajerestruj się</h3>
                 <form onSubmit={handleSubmit}>
