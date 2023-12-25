@@ -10,9 +10,11 @@ import {
     faSquareInstagram,
     faSquareTwitter,
 } from "@fortawesome/free-brands-svg-icons";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useRef } from "react";
 
 function WelcomePage() {
+    const ref = useRef(null);
 
     const cards = data.map(item => {
         return (
@@ -24,6 +26,10 @@ function WelcomePage() {
         )
     })
 
+    const scrollToSecondSection = () => {
+        ref.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
 
     return (
         <div>
@@ -31,16 +37,18 @@ function WelcomePage() {
                 <div className="container">
                     <div className="left">
                         <div className="section-title">Poznawaj ludzi z<br></br> twoimi zainteresowaniami</div>
-                        <div className="section-text">Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. Duis luctus feugiat tellus non ultrices. Nullam eget iaculis leo. Mauris et tellus est. Nullam quis risus justo. Curabitur luctus sed elit ac vehicula. Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. </div>
+                        <div className="section-text">Dzięki spersonalizowanym kategoriom odnajdziesz osoby podobne do Ciebie. Dołącz do nas i nawiązuj nowe znajomości.</div>
 
                         <div className="buttons-container">
                             <div className="left">
-                                <div className="section-filled-btn ">
-                                    Stwórz konto
-                                </div>
+                                <Link to="/register">
+                                    <div className="section-filled-btn ">
+                                        Stwórz konto
+                                    </div>
+                                </Link>
                             </div>
                             <div className="right">
-                                <div className="section-outline-btn">
+                                <div className="section-outline-btn" onClick={scrollToSecondSection}>
                                     Dowiedz się więcej
                                 </div>
                             </div>
@@ -53,9 +61,9 @@ function WelcomePage() {
                 </div>
             </div>
 
-            <div className="second-section">
+            <div className="second-section" ref={ref}>
                 <div className="section-title">Tworzenie profilu. Szybkie i proste</div>
-                <div className="section-text">Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. Duis luctus feugiat tellus non ultrices. Nullam eget iaculis leo. Mauris et tellus est. Nullam quis risus justo. Curabitur luctus sed elit ac vehicula. Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. </div>
+                <div className="section-text">Dopasuj profil do twoich potrzeb. Wybieraj spośród wielu kategorii, opisz siebie i wkrocz w świat wydarzeń! </div>
 
                 <div className="cards-container">{cards}</div>
 
@@ -70,8 +78,8 @@ function WelcomePage() {
 
                     <div className="right">
                         <div className="section-title2">Spędź niezapomniane
-wspólne chwile</div>
-                        <div className="section-text2">Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. Duis luctus feugiat tellus non ultrices. Nullam eget iaculis leo. Mauris et tellus est. Nullam quis risus justo. Curabitur luctus sed elit ac vehicula. Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. </div>
+                            wspólne chwile</div>
+                        <div className="section-text2"> Znajdź wydarzenia, które Cię interesują. Dołącz do nich i poznawaj nowych ludzi.  </div>
 
 
                     </div>

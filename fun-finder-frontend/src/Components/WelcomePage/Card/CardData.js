@@ -2,16 +2,16 @@ export default [
     {
         id: 1,
         title: "Podaj swoje dane",
-        text: "Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. Duis luctus feugiat tellus non ultrices. Nullam eget iaculis leo. Mauris et tellus est. Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. Duis luctus feugiat tellus non ultrices. Nullam eget iaculis leo. Mauris et tellus est."
+        text: "Dodaj do profilu podstawowe informacje. Imię i nazwisko oraz adres email. Będzie to pierwszy krok do stworzenia Twojego profilu."
     },
     {
         id: 2,
         title: "Wybierz zainteresowania",
-        text: "Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. Duis luctus feugiat tellus non ultrices. Nullam eget iaculis leo. Mauris et tellus est. Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. Duis luctus feugiat tellus non ultrices. Nullam eget iaculis leo. Mauris et tellus est."
+        text: "Wybierz zainteresowania, które Cię interesują. Dzięki temu będziemy mogli dopasować wydarzenia do Twoich potrzeb. Pamiętaj, że możesz je zmienić w każdej chwili."
     },
     {
         id: 3,
         title: "Przedstaw się",
-        text: "Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. Duis luctus feugiat tellus non ultrices. Nullam eget iaculis leo. Mauris et tellus est. Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. Duis luctus feugiat tellus non ultrices. Nullam eget iaculis leo. Mauris et tellus est."
+        text: "Opisz siebie w kilku zdaniach. Dzięki temu inni użytkownicy będą mogli Cię lepiej poznać. "
     }
 ]

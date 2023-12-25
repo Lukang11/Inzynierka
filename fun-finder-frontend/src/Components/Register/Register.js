@@ -6,6 +6,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
 import { serialize } from 'cookie';
 import "./Register.css";
+import registerImg from "./Images/register-img.png";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -145,10 +146,10 @@ const Register = () => {
 
     return (
         <div className="register-container">
-
+            <img className="mobile-only-image" src={registerImg} />
             <div className="welcomeText-container">
                 <h1>Poznawaj ludzi z FunFinder!</h1>
-                <p>Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. Duis luctus feugiat tellus non ultrices. Nullam eget iaculis leo. Mauris et tellus est. Nullam quis risus justo. Curabitur luctus sed elit ac vehicula.</p>
+                <p>Utwórz konto i zacznij spędzać niezapomniane chwile</p>
             </div>
 
             <div className="registerForm-container">
