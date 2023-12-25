@@ -2,8 +2,7 @@
   background: linear-gradient(90deg, rgb(105, 7, 229), rgb(164, 94, 255));
   color: white;
   padding: 20px;
-  border-radius: 0 0 30px 0;
-  height: 40vh;
+  height: 45vh;
   font-size: 1.25em;
   min-width: 500px;
   display: flex;
@@ -16,8 +15,8 @@
 }
 
 .desc-icon > * {
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
 }
 .desc-icon {
   height: 50px;
