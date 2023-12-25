@@ -14,7 +14,8 @@ const ProfileHobbies = () => {
       if (user && user.email) {
         try {
           const hobbies = await axios.get(`${url}hobbies/${user.email}`);
-          sethobbiesData(() => hobbies.data);
+          const newHobbies = Array.from(new Set(hobbies.data))
+          sethobbiesData(() => newHobbies);
         } catch (error) {
           console.error("Error fetching hobbies:", error);
         }
@@ -24,7 +25,9 @@ const ProfileHobbies = () => {
   }, [user]);
   function onclick() {
     setIsOpen((val) => !val);
+    
   }
+
   return (
     <div className="hobbies-card">
       <div className="hobbies-first-row">
@@ -46,6 +49,7 @@ const ProfileHobbies = () => {
             : null}
         </div>
       </div>
+    
       {isOpen ? <HobbiesModal onClick={onclick} /> : null}
     </div>
   );

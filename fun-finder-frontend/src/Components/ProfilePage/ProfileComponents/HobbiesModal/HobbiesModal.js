@@ -44,6 +44,10 @@ function HobbiesModal({ onClick }) {
     });
   };
 
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
   const sendUserHobbies = () => {
     const fetchData = async () => {
       if (user && user.email) {
@@ -64,7 +68,7 @@ function HobbiesModal({ onClick }) {
   return (
     <div className="hobbies-modal-wrapper">
       <div className="hobbies-wrapper-form">
-        <div className="close-modal" onClick={() => onClick()}>
+        <div className="close-modal" onClick={() => {onClick(); refreshPage()}}>
           X
         </div>
         <div className="hobbies-form">
