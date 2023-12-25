@@ -1,6 +1,6 @@
 .first-section {
   background-color: #FFFF;
-  height: 100vh;
+  height: auto;
 }
 
 .container {
@@ -90,7 +90,7 @@
 
 .second-section {
   background-color: #F5F5F5;
-  height: 120vh;
+  height: auto;
 }
 
 .card {
@@ -124,13 +124,13 @@
 .cards-container {
   padding: 100px;
   display: flex;
-  gap: 200px;
+  gap: 100px;
   justify-content: center;
 }
 
 .third-section {
   background-color: var(--mainpurple);
-  height: 100vh;
+  height: auto;
 }
 
 .footer {
