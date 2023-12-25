@@ -96,7 +96,10 @@
 
 .google-login-button-container-register {
   width: 35vh;
+
 }
+
+
 
 .mobile-only-image {
   display: none;
@@ -131,8 +134,10 @@
   }
 
   .error-message,
-  .password-strength {
+  .password-strength,
+  .google-login-button-container-register {
     margin: auto;
     width: 50%;
   }
+
 }

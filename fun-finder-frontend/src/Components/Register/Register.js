@@ -225,7 +225,7 @@ const Register = () => {
                                 <button
                                     onClick={renderProps.onClick}
                                     disabled={renderProps.disabled}
-                                    className="google-login-button" // Dodaj klasę CSS
+                                    className="google-login-button" 
                                 >
                                     Zaloguj się z Google
                                 </button>
