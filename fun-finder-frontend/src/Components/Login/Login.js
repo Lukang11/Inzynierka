@@ -6,6 +6,7 @@ import { useAuth } from '../../Utils/AuthProvider';
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
 import "./Login.css";
+import loginImg from "./Images/login-img.png";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -76,6 +77,13 @@ const Login = () => {
 
     return (
         <div className="login-container">
+            <div className="img-container">
+                <img className="mobile-only-image-login" src={loginImg} />
+                <div className="welcomeText-container-login">
+                    <h1>Zaloguj</h1>
+                    <p>Sprawdź co nowego znajdziesz w swojej okolicy</p>
+                </div>
+            </div>
             <div className="form-container">
                 <div className="title">
                     <h2>Logowanie</h2>

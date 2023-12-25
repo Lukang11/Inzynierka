@@ -73,5 +73,48 @@
 }
 
 .google-login-button-container-login {
-    padding: 20px;
+    margin: auto;
+    width: 50%;
+}
+
+.mobile-only-image-login {
+    display: none;
+}
+
+.welcomeText-container-login {
+    display: none;
+}
+
+@media (max-width: 767px) {
+
+    .mobile-only-image-login {
+        display: flex;
+    }
+
+    .login-container,
+    .form-container {
+        background-color: white;
+    }
+
+    .form-container {
+        box-shadow: none;
+        padding-top: 50px;
+    }
+
+    .title {
+        display: none;
+    }
+
+    .login-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .welcomeText-container-login {
+        display:inline;
+        position: absolute;
+        top: 100px;
+        left: 50px;
+        color: white;
+    }
 }
