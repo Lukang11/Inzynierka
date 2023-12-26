@@ -32,7 +32,7 @@ const ProfileDescription = () => {
           quis dolor. Curabitur scelerisque volutpat ligula, tristique posuere
         </div>
         <br></br>
-        <div className="desc-links">
+        {/* <div className="desc-links">
           <div className="desc-icon">
             <FontAwesomeIcon icon={faSquareFacebook} />
           </div>
@@ -43,8 +43,8 @@ const ProfileDescription = () => {
           <div className="desc-icon">
             {" "}
             <FontAwesomeIcon icon={faSquareTwitter} />
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
       </div>
     </div>
   );
