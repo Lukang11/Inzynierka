@@ -61,7 +61,7 @@ function EventBattlerView() {
     <div className="event-battler-cont">
       {array.map((val, index) => (
         <EventBattlerItem
-          id={val}
+          id={val.id}
           key={index}
           isActive={val.is_active}
           description={val.description}
