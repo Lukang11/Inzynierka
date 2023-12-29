@@ -13,6 +13,8 @@ import WelcomePageHeader from "./Components/Header/WelcomePageHeader";
 import { EventInfo } from "./Components/Events/EventInfo";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import EventsPageView from "./Components/EventsPageView/EventsPageView";
+import EventBattler from "./Components/EventBattler/EventBattler";
+import EventBattlerView from "./Components/EventBattlerView/EventBattlerView";
 
 function App() {
   return (
@@ -28,6 +30,17 @@ function App() {
                     {" "}
                     <Header />
                     <WelcomePage />{" "}
+                  </>
+                }
+              />
+              <Route
+                path="/battle"
+                element={
+                  <>
+                    <PrivateRoute>
+                      <Header />
+                      <EventBattlerView />
+                    </PrivateRoute>
                   </>
                 }
               />
