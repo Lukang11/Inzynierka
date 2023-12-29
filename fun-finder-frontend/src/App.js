@@ -45,6 +45,17 @@ function App() {
                 }
               />
               <Route
+                path="/battle/*"
+                element={
+                  <>
+                    <PrivateRoute>
+                      <Header />
+                      <EventBattler />
+                    </PrivateRoute>
+                  </>
+                }
+              />
+              <Route
                 path="/profile"
                 element={
                   <PrivateRoute>
