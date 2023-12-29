@@ -28,13 +28,16 @@ export class EventsController {
     fullObject: {
       name: string;
       location: string;
+      geoLocation?:Geolocation;
+      eventStart:Date;
+      eventEnd:Date;
+      eventDescription?:string;
+      eventParticipants?:string[];
       relatedHobbies: string[];
     },
   ) {
     this.eventService.insertEvent(
-      fullObject.name,
-      fullObject.location,
-      fullObject.relatedHobbies,
+      fullObject
     );
   }
   @Post('/find-places-by-localization')
