@@ -1,0 +1,38 @@
+@keyframes blink-active {
+  0% {
+    background-color: green;
+  }
+  50% {
+    background-color: rgba(0, 255, 0, 0.25);
+  }
+  100% {
+    background-color: green;
+  }
+}
+@keyframes blink-not-active {
+  0% {
+    background-color: red;
+  }
+  50% {
+    background-color: rgba(255, 0, 0, 0.25);
+  }
+  100% {
+    background-color: red;
+  }
+}
+
+.is-active {
+  background-color: green;
+  height: 10px;
+  width: 10px;
+  border-radius: 100px;
+  animation: blink-active 3s linear infinite; /* Added duration value (0.3s) */
+}
+
+.is-not-active {
+  background-color: red;
+  height: 10px;
+  width: 10px;
+  border-radius: 100px;
+  animation: blink-not-active 3s linear infinite; /* Added duration value (0.3s) */
+}
