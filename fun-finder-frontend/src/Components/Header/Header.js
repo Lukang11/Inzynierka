@@ -1,21 +1,27 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMessage, faEarthAmericas, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMessage,
+  faEarthAmericas,
+  faSignOutAlt,
+  faUsersRays,
+} from "@fortawesome/free-solid-svg-icons";
 import "./Header.css";
 import { Link } from "react-router-dom";
-import axios from 'axios';
-import { useAuth } from '../../Utils/AuthProvider';
+import axios from "axios";
+import { useAuth } from "../../Utils/AuthProvider";
 
 export default function Header() {
   const { isLoggedIn, logout } = useAuth();
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:7000/users/logout');
-      document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      await axios.post("http://localhost:7000/users/logout");
+      document.cookie =
+        "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       logout();
     } catch (error) {
-      console.error('Błąd wylogowywania:', error.message);
+      console.error("Błąd wylogowywania:", error.message);
     }
   };
   return (
@@ -26,6 +32,14 @@ export default function Header() {
         </li>
         {isLoggedIn ? (
           <div className="flex-cont">
+            <li className="nav-link">
+              <Link to="/battle">
+                <FontAwesomeIcon
+                  icon={faUsersRays}
+                  style={{ color: "white" }}
+                />
+              </Link>
+            </li>
             <li className="nav-link">
               <Link to="/events">
                 <FontAwesomeIcon
@@ -46,7 +60,11 @@ export default function Header() {
             </li>
             <li className="nav-link">
               <Link to="/">
-                <FontAwesomeIcon icon={faSignOutAlt} style={{ color: "white" }} onClick={handleLogout} />
+                <FontAwesomeIcon
+                  icon={faSignOutAlt}
+                  style={{ color: "white" }}
+                  onClick={handleLogout}
+                />
               </Link>
             </li>
           </div>
