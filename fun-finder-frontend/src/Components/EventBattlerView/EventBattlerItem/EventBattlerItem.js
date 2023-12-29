@@ -1,7 +1,7 @@
 import React from "react";
 import "./EventBattlerItem.css";
 import { useNavigate } from "react-router-dom";
-import ActiveCircle from "./ActiveCircle/ActiveCircle";
+import ActiveCircle from "../../ActiveCircle/ActiveCircle";
 
 function EventBattlerItem({
   id,
