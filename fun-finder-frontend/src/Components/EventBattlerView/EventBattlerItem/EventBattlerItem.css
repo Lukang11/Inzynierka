@@ -1,3 +1,28 @@
 .event-battler-item-cont {
   padding: 10px;
+  width: 100%;
+  display: flex;
+  margin: 5px;
+  align-items: center;
+  gap: 5px;
+}
+.event-battle-item-1 {
+  text-align: center;
+  flex-basis: 10px;
+}
+.event-battle-item-2 {
+  text-align: center;
+  flex-basis: calc(100% - 30% - 10px);
+}
+.event-battle-item-3 {
+  text-align: center;
+  flex-basis: 10%;
+}
+.event-battle-item-4 {
+  text-align: center;
+  flex-basis: 10%;
+}
+.event-battle-item-5 {
+  text-align: center;
+  flex-basis: 10%;
 }

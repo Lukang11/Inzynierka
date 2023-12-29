@@ -1,15 +1,29 @@
 import React from "react";
 import "./EventBattlerItem.css";
 import { useNavigate } from "react-router-dom";
+import ActiveCircle from "./ActiveCircle/ActiveCircle";
 
-function EventBattlerItem({ id }) {
+function EventBattlerItem({
+  id,
+  isActive,
+  description,
+  participants,
+  date,
+  location,
+}) {
   const navigate = useNavigate();
   const handleRowClick = (id) => {
     navigate(`/battle/${id}`);
   };
   return (
     <div className="event-battler-item-cont" onClick={() => handleRowClick(id)}>
-      EventBattlerrItem{" "}
+      <div className="event-battle-item-1">
+        <ActiveCircle isActive={isActive} />
+      </div>
+      <div className="event-battle-item-2">{description}</div>
+      <div className="event-battle-item-3">{participants}</div>
+      <div className="event-battle-item-4">{location}</div>
+      <div className="event-battle-item-5">{date}</div>
     </div>
   );
 }
