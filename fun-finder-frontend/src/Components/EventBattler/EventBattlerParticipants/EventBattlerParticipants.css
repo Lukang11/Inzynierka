@@ -14,10 +14,12 @@
     list-style-type: none;
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
 .event-battler-participants-container li{
     margin: 5px;
+    min-width: 175px;
 }
 
 .event-battler-participants-user-details{
@@ -25,4 +27,14 @@
     align-items: center;
     vertical-align: middle;
     flex-direction: column;
+    position: relative;
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
+    word-break: break-word;
+
+}
+
+.event-battler-participants-activeCircle{
+    position: absolute;
+    right: 2px;
 }
