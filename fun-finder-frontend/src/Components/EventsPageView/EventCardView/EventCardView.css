@@ -11,6 +11,9 @@
   display: flex;
   flex-direction: column;
 }
+.events-view-card-item:hover{
+  cursor: pointer;
+}
 .events-view-image {
   background-image: url("./../photo-1526485641275-3b11a42acd44.png");
   background-position: center;
