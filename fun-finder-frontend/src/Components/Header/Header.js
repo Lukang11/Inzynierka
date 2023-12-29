@@ -28,7 +28,7 @@ export default function Header() {
     <div className="header">
       <ul className="header-list flex-cont">
         <li className="logo">
-          <Link to="/">FunFinder</Link>
+          <Link to="/" className="nav-a">FunFinder</Link>
         </li>
         {isLoggedIn ? (
           <div className="flex-cont">
@@ -55,7 +55,7 @@ export default function Header() {
             </li>
             <li className="prof-btn nav-link">
               <div className="profile-login-register-btn">
-                <Link to="/profile"> Profile</Link>
+                <Link to="/profile" className="nav-a"> Profile</Link>
               </div>
             </li>
             <li className="nav-link">
@@ -72,12 +72,12 @@ export default function Header() {
           <div className="flex-cont">
             <li className="nav-link">
               <div className="profile-login-register-btn">
-                <Link to="/register"> Zarejestruj</Link>
+                <Link to="/register" className="nav-a"> Zarejestruj</Link>
               </div>
             </li>
             <li className="nav-link">
               <div className="profile-login-register-btn">
-                <Link to="/login"> Zaloguj</Link>
+                <Link to="/login" className="nav-a"> Zaloguj</Link>
               </div>
             </li>
           </div>
