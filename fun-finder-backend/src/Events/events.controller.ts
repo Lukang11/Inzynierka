@@ -28,17 +28,16 @@ export class EventsController {
     fullObject: {
       name: string;
       location: string;
-      geoLocation?:Geolocation;
-      eventStart:Date;
-      eventEnd:Date;
-      eventDescription?:string;
-      eventParticipants?:string[];
+      geoLocation?: Geolocation;
+      eventStart: Date;
+      eventEnd: Date;
+      eventDescription?: string;
+      eventParticipants?: string[];
       relatedHobbies: string[];
     },
   ) {
-    this.eventService.insertEvent(
-      fullObject
-    );
+    console.log(fullObject);
+    return this.eventService.insertEvent(fullObject);
   }
   @Post('/find-places-by-localization')
   findPlaceByLocalizationGoogleApi(

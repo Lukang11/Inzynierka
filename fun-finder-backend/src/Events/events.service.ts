@@ -25,8 +25,15 @@ export class EventsService {
   ) {}
 
   async insertEvent(fullObject) {
+    console.log(fullObject);
     const newEvent = new this.eventsModel({
-      fullObject
+      name: fullObject.name,
+      location: fullObject.location,
+      eventStart: fullObject.eventStart,
+      eventEnd: fullObject.eventEnd,
+      eventDescription: fullObject.eventDescription,
+      eventParticipants: fullObject.eventParticipants,
+      relatedHobbies: fullObject.relatedHobbies,
     });
     const result = await newEvent.save();
     console.log('Incoming POST request with this body :\n');
