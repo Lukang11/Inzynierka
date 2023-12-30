@@ -9,6 +9,7 @@ export interface User extends Document {
   events: UserEvents[];
   description: string;
   score: number;
+  avatar: string;
 }
 
 export const UserSchema = new Schema<User>({
@@ -20,6 +21,7 @@ export const UserSchema = new Schema<User>({
   events: { type: [Object] },
   description: { type: String, default: "Not set yet" },
   score: { type: Number, default: 0 },
+  avatar: { type: String, default: "https://as1.ftcdn.net/v2/jpg/03/53/11/00/1000_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg" }
 });
 
 export interface UserEvents {
