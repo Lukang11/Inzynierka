@@ -47,6 +47,7 @@ function EventBattler() {
   useEffect(() => {
     // odbieramy aktualizacje po dołączeniu kogos do rooma
     socket?.on("updateParticipants", updateParticipants);
+    console.log("wykonuje");
   }, [updateParticipants]);
 
   useEffect(() => {

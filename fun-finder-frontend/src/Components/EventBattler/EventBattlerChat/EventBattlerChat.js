@@ -36,7 +36,6 @@ function EventBattlerChat() {
     <div className="event-battle-chat-wrapper">
       <div className="event-battle-chat-field">
         {messages.map((message) => {
-          console.log(message);
           return (
             <div
               key={message._id}
