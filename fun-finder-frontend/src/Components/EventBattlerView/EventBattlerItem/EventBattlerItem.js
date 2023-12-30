@@ -13,7 +13,7 @@ function EventBattlerItem({
 }) {
   const navigate = useNavigate();
   const handleRowClick = (id) => {
-    navigate(`/battle/${id}`);
+    navigate(`/battle/id=${id}`);
   };
   return (
     <div className="event-battler-item-cont" onClick={() => handleRowClick(id)}>
