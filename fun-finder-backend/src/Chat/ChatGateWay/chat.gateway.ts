@@ -28,8 +28,6 @@ export class ChatGateway implements OnGatewayConnection {
     @WebSocketServer() server: Server
     private clients = new Map<String, Socket>();
 
-    users: { [key: string]: string } = {}; // przechowujemy liste podłączonych użytkowników
-
     handleConnection(client: Socket) {
         const sender_id = client.handshake.query.sender_id as String;
         console.log(client.handshake.query)
