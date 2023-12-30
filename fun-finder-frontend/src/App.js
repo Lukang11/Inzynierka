@@ -50,7 +50,7 @@ function App() {
                   <>
                     <PrivateRoute>
                       <Header />
-                      <EventBattler />
+                      <EventBattler/>
                     </PrivateRoute>
                   </>
                 }
