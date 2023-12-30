@@ -45,7 +45,7 @@ function App() {
                 }
               />
               <Route
-                path="/battle/*"
+                path="/battle/:id"
                 element={
                   <>
                     <PrivateRoute>
