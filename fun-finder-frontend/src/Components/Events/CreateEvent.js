@@ -80,7 +80,7 @@ function CreateEvent() {
         <div className='label-text'>Data zakończenia</div>
         <input type="datetime-local" className='input-textbox' value={endDate} onChange={e => setEndDate(e.target.value)} />
         <div className='label-text'>Ilość osób:</div>
-        <input type="text" className='input-textbox' value={people} onChange={e => setPeople(e.target.value)} />
+        <input type="number" className='input-textbox' value={people} onChange={e => setPeople(e.target.value)} />
         <div className='label-text'>Opis wydarzenia:</div>
         <textarea id="input-textbox-2" name="input-textbox-2" rows="6" cols="40"> </textarea>
         
