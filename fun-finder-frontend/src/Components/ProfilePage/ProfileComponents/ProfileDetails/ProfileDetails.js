@@ -8,18 +8,7 @@ const ProfileDetails = () => {
       <div className="profile-page-image"></div>
       <div className="profile-page-image-cont">
         <div className="profile-desc-item">
-          <div className="desc-item">81</div>
-          <div className="desc-item">Punkty</div>
-        </div>
-        <div className="profile-desc-item">
-          {" "}
-          <div className="desc-item">32</div>
-          <div className="desc-item">Obserwujących</div>
-        </div>
-        <div className="profile-desc-item">
-          {" "}
-          <div className="desc-item">51</div>
-          <div className="desc-item">Obserwatorów</div>
+          <div className="edit-profile-btn">Edytuj profil</div>
         </div>
       </div>
     </div>
