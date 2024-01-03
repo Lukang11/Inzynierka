@@ -4,9 +4,9 @@ import { faGlobe, faLaptopCode, faMusic, faFilm, faTheaterMasks, faBeer, faGamep
 export const hobbiesData = [
     { id: 1, name: 'Sztuka i rękodzieło', icon: faPaintBrush},
     { id: 2, name: 'Sport', icon: faBasketballBall },
-    { id: 3, name: 'Gotowanie i kulinarne eksperymenty', icon: faUtensils },
-    { id: 4, name: 'Podróże i eksploracja', icon: faGlobe },
-    { id: 5, name: 'Technologia i nowinki techniczne', icon: faLaptopCode },
+    { id: 3, name: 'Gotowanie', icon: faUtensils },
+    { id: 4, name: 'Podróże', icon: faGlobe },
+    { id: 5, name: 'Technologia', icon: faLaptopCode },
     { id: 6, name: 'Muzyka i koncerty', icon: faMusic },
     { id: 7, name: 'Filmy i kino', icon: faFilm },
     { id: 8, name: 'Teatr i sztuka sceniczna', icon: faTheaterMasks },

@@ -31,32 +31,6 @@ const ProfileDescription = () => {
         <p>{`${user.description}`}</p>
       </div>
       <br />
-
-
-      <ul>
-        {hobbiesData.map((hobby) => (
-          <li key={hobby.id}>
-            {/* Wyświetlamy nazwę zainteresowania */}
-            {hobby.name}
-            {/* Dodajemy ikonę z Font Awesome */}
-
-            <FontAwesomeIcon icon={hobby.icon} />
-          </li>
-        ))}
-      </ul>
-
-      {/* 
-      <div className="desc-links">
-        <div className="desc-icon">
-          <FontAwesomeIcon icon={faSquareFacebook} />
-        </div>
-        <div className="desc-icon">
-          <FontAwesomeIcon icon={faSquareInstagram} />
-        </div>
-        <div className="desc-icon">
-          <FontAwesomeIcon icon={faSquareTwitter} />
-        </div>
-      </div> */}
       
     </div>
   );

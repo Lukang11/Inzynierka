@@ -1,17 +1,16 @@
 
 .profile-modal-wrapper {
     background-color: white;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 300;
     width: calc(100vw - 12px);
-    /* Adjust the value as needed */
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .profile-modal-form {
