@@ -6,7 +6,9 @@ import {
   faSquareInstagram,
   faSquareTwitter,
 } from "@fortawesome/free-brands-svg-icons";
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from "../../../../Utils/AuthProvider";
+import { hobbiesData } from "../../../../Data/HobbiesData.js";
 
 const ProfileDescription = () => {
   const { user } = useAuth();
@@ -29,6 +31,20 @@ const ProfileDescription = () => {
         <p>{`${user.description}`}</p>
       </div>
       <br />
+
+
+      <ul>
+        {hobbiesData.map((hobby) => (
+          <li key={hobby.id}>
+            {/* Wyświetlamy nazwę zainteresowania */}
+            {hobby.name}
+            {/* Dodajemy ikonę z Font Awesome */}
+
+            <FontAwesomeIcon icon={hobby.icon} />
+          </li>
+        ))}
+      </ul>
+
       {/* 
       <div className="desc-links">
         <div className="desc-icon">
@@ -41,6 +57,7 @@ const ProfileDescription = () => {
           <FontAwesomeIcon icon={faSquareTwitter} />
         </div>
       </div> */}
+      
     </div>
   );
 };
