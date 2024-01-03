@@ -1,0 +1,60 @@
+
+.profile-modal-wrapper {
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 300;
+    width: calc(100vw - 12px);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+.profile-modal-form {
+    max-width: 90vw;
+    width: 90%;
+    height: 80vh;
+    border-radius: 20px;
+    background-color: white;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.close-profile-modal {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    font-size: xx-large;
+    cursor: pointer;
+
+}
+
+.profile-modal-text {
+    font-size: 28px;
+    margin: 10px;
+}
+
+.profile-description input{
+    width: 500px;
+    height: 400px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.profile-save-btn {
+    color: white;
+    background-color: var(--mainpurple);
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 30px;
+}

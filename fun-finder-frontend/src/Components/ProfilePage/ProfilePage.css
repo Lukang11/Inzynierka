@@ -1,6 +1,6 @@
 .description-wrapper {
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
 }
 .profile-desc {
   -webkit-box-shadow: 0px 15px 48px -10px rgb(169, 166, 166);
@@ -9,6 +9,7 @@
 }
 .profile-card {
   height: 45vh;
+  width: 30vw;
 }
 
 .profile-card {
@@ -35,6 +36,10 @@
 
 
 @media only screen and (max-width: 800px) {
+
+  .profile-card {
+    width: 100vw;
+  }
 
   .description-wrapper {
     flex-direction: column;
