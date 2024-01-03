@@ -6,6 +6,8 @@
   background-size: cover;
   border-radius: 100%;
   margin-top: 30px;
+  margin-left: 60px;
+  margin-right: 60px;
 }
 /* img {
   border-radius: 100%;
@@ -31,4 +33,14 @@
 .desc-item {
   padding: 5px;
   margin: 0 10px 0 10px;
+}
+
+.edit-profile-btn {
+  background-color: white;
+  padding: 10px 50px;
+  border-radius: 100px;
+  border-color: black 1px;
+  border-style: groove;
+  margin-top: 20px;
+    
 }
