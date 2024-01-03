@@ -15,18 +15,14 @@ function EditProfileModal({ onClick }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle form submission logic here
     };
 
     useEffect(() => {
-        // Apply overflow: hidden; to body when the modal is open
         document.body.style.overflow = "hidden";
-        // Cleanup function to remove the style when the component unmounts
         return () => {
             document.body.style.overflow = "auto";
         };
     }, []); 
-    
     return (
         
         <div className="profile-modal-wrapper">

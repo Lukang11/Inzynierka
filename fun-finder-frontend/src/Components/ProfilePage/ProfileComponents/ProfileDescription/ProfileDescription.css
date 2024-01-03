@@ -4,10 +4,11 @@
   padding: 20px;
   height: 45vh;
   font-size: 1.25em;
-  min-width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  width: 75vw
+
 }
 .desc-links {
   display: flex;
@@ -28,4 +29,11 @@
 
 .desc-icon:hover {
   transform: scale(1.2);
+}
+
+@media only screen and (max-width: 800px) {
+
+  .desc-cont {
+    width: 100vw;
+  }
 }
