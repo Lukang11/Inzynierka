@@ -17,6 +17,6 @@ export class EventBattlerService {
 
   async fetchRecomendedPlacesforUserIds(users_id: string[]) {
     // Use this.eventsModel to interact with the EventsModel
-    return this.eventService.fetchTopRatingPlaces();
+    return users_id;
   }
 }
