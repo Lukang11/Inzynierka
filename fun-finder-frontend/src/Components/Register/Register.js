@@ -118,27 +118,33 @@ const Register = () => {
 
     const handleLoginSuccess = async (credentialResponse) => {
         try {
-            const decodedToken = jwtDecode(credentialResponse.credential);
-
-            const adaptedUser = {
-                email: decodedToken.email,
-                fname: decodedToken.given_name,
-                lname: decodedToken.family_name,
-            };
-
-            document.cookie = serialize('accessToken', credentialResponse.credential, { path: '/', maxAge: 3600 });
-
-            if (!decodedToken) {
-                console.error('Failed to decode JWT token.');
-                return;
-            }
-
-            login(adaptedUser);
+          const decodedToken = jwtDecode(credentialResponse.credential);
+      
+          if (!decodedToken) {
+            console.error('Failed to decode JWT token.');
+            return;
+          }
+      
+          const adaptedUser = {
+            email: decodedToken.email,
+            given_name: decodedToken.given_name,
+            family_name: decodedToken.family_name,
+          };
+      
+          document.cookie = serialize('accessToken', credentialResponse.credential, { path: '/', maxAge: 3600 });
+      
+          const response = await axios.post('http://localhost:7000/users/register-google', adaptedUser);
+      
+          if (response.status === 201) {
+            await login(response.data.user);
             navigate("/profile");
+          } else {
+            console.error('Failed to register user:', response.statusText);
+          }
         } catch (error) {
-            console.error('Error decoding JWT token:', error);
+          console.error('Error decoding JWT token or registering user:', error);
         }
-    };
+      };
 
     const handleLoginError = () => {
         console.log('Login Failed');

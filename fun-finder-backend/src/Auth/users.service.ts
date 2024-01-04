@@ -58,14 +58,16 @@ export class UserService {
 
   async createGoogleUser(payload: any): Promise<User> {
     const { email, given_name, family_name } = payload;
-    const newUser = new this.UserModel({
-      email,
-      fname: given_name,
-      lname: family_name,
-    });
-
-    const newUserObject = newUser.toObject() as User;
-    return this.createUser(newUserObject);
+  
+    const updatedUser = await this.UserModel.findOneAndUpdate(
+      { email },
+      { $set: { fname: given_name, lname: family_name } },
+      { new: true, upsert: true }
+    ).exec();
+  
+    const user = await this.findByEmail(email);
+  
+    return user;
   }
 
   async updateGoogleUser(user: User, payload: any): Promise<User> {
