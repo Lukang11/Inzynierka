@@ -10,7 +10,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { UserService } from './users.service';
-import { User } from './AuthInterfaces/users.model';
+import { User, UserHobbies } from './AuthInterfaces/users.model';
 import { parse } from 'cookie';
 import { Response, Request } from 'express';
 import * as jwt from 'jsonwebtoken';
@@ -156,4 +156,39 @@ export class UserController {
     return updatedUser ? { message: 'Score updated successfully', user: updatedUser } : { message: 'User not found' };
   }
 
+  @Get('/user-avatar/:email')
+  async getCurrentUserAvatar(@Param('email') email: string) {
+    const avatar = await this.userService.getUserAvatarByEmail(email);
+    return { avatar };
+  }
+
+  @Post('/update-user-avatar/:email')
+  async updateCurrentUserAvatar(@Param('email') email: string, @Body() body: { avatar: string }) {
+    const updatedUser = await this.userService.updateUserAvatarByEmail(email, body.avatar);
+    return updatedUser ? { message: 'Avatar updated successfully', user: updatedUser } : { message: 'User not found' };
+  }
+
+  @Get('/user-hobbies/:email')
+  async getCurrentUserHobbies(@Param('email') email: string) {
+    const hobbies = await this.userService.getUserHobbiesByEmail(email);
+    return { hobbies };
+  }
+
+  @Post('/update-user-hobbies/:email')
+  async updateCurrentUserHobbies(@Param('email') email: string, @Body() body: { hobbies: UserHobbies[] }) {
+    const updatedUser = await this.userService.updateUserHobbiesByEmail(email, body.hobbies);
+    return updatedUser ? { message: 'Hobbies updated successfully', user: updatedUser } : { message: 'User not found' };
+  }
+
+  @Get('/user-hobbiesById/:_id')
+  async getCurrentUserHobbiesById(@Param('_id') _id: string) {
+    const hobbies = await this.userService.getUserHobbiesById(_id);
+    return { hobbies };
+  }
+
+  @Post('/update-user-hobbiesById/:_id')
+  async updateCurrentUserHobbiesById(@Param('_id') _id: string, @Body() body: { hobbies: UserHobbies[] }) {
+    const updatedUser = await this.userService.updateUserHobbiesById(_id, body.hobbies);
+    return updatedUser ? { message: 'Hobbies updated successfully', user: updatedUser } : { message: 'User not found' };
+  }
 }

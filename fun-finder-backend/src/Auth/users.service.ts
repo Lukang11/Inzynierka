@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './AuthInterfaces/users.model';
+import { User, UserHobbies } from './AuthInterfaces/users.model';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 
@@ -104,5 +104,50 @@ export class UserService {
     ).exec();
 
     return user || null;
+  }
+
+  async getUserAvatarByEmail(email: string): Promise<string | null> {
+    const user = await this.UserModel.findOne({ email }).exec();
+    return user ? user.avatar : null;
+  }
+
+  async updateUserAvatarByEmail(email: string, newAvatar: string): Promise<User | null> {
+    const user = await this.UserModel.findOneAndUpdate(
+      { email },
+      { $set: { avatar: newAvatar } },
+      { new: true },
+    ).exec();
+
+    return user;
+  }
+
+  async getUserHobbiesByEmail(email: string): Promise<UserHobbies[] | null> {
+    const user = await this.UserModel.findOne({ email }).exec();
+    return user ? user.hobbies : null;
+  }
+
+  async updateUserHobbiesByEmail(email: string, newHobbies: UserHobbies[]): Promise<User | null> {
+    const user = await this.UserModel.findOneAndUpdate(
+      { email },
+      { $set: { hobbies: newHobbies } },
+      { new: true },
+    ).exec();
+
+    return user;
+  }
+
+  async getUserHobbiesById(_id: string): Promise<UserHobbies[] | null> {
+    const user = await this.UserModel.findOne({ _id }).exec();
+    return user ? user.hobbies : null;
+  }
+
+  async updateUserHobbiesById(_id: string, newHobbies: UserHobbies[]): Promise<User | null> {
+    const user = await this.UserModel.findOneAndUpdate(
+      { _id },
+      { $set: { hobbies: newHobbies } },
+      { new: true },
+    ).exec();
+
+    return user;
   }
 }
