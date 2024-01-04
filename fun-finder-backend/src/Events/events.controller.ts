@@ -90,8 +90,8 @@ export class EventsController {
   // getAllTypesForPlaces(){
   //   return this.eventService.
   // }
-  @Get('/by-id')
-  getEventById(@Body() id: string) {
-    return this.eventService.getEventById(id);
+  @Post('/by-id')
+  getEventById(@Body() Body: {id:string}) {
+    return this.eventService.getEventById(Body.id);
   }
 }
