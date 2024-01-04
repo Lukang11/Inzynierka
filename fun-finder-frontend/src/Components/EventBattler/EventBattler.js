@@ -14,13 +14,15 @@ function EventBattler() {
   const [socket, setSocket] = useState(null);
   const [participants, setParticipants] = useState([]); // ludzie w roomie
   const [messages, setMessages] = useState([]); // wiadomosci w roomie
-  const [messageToSend, setMessageToSend] = useState(""); // wiadomość do wysłania do grupy
+
 
   const updateParticipants = (obj) => {
     // funkcja aktualizacja po dołączeniu do rooma
-    console.log("podaje to jako uzytkownikow chatu", obj);
-    setParticipants([[...participants, obj]]);
+    setParticipants(obj);
   };
+  const send = async (data) => {
+    await socket?.emit("message",(data));
+}
 
   const messageListener = (obj) => {
     // funkcja zapisująca nową wiadomość
@@ -47,17 +49,26 @@ function EventBattler() {
   useEffect(() => {
     // odbieramy aktualizacje po dołączeniu kogos do rooma
     socket?.on("updateParticipants", updateParticipants);
-    console.log("wykonuje");
   }, [updateParticipants]);
 
   useEffect(() => {
     // odbieranie wiadomości
-    socket?.on("message", messageListener); // odbieranie wiadomości                                         // odbieramy wiadomość
+    socket?.on("message", messageListener);                                         // odbieramy wiadomość
   }, [messageListener]);
+
+  useEffect(() => {
+    // odbieranie wiadomości
+    socket?.on("handleDisconect", updateParticipants); // odbieranie wiadomości                                         // odbieramy wiadomość
+  }, [updateParticipants]);
+
 
   return (
     <div className="battler-container">
-      <EventBattlerChat></EventBattlerChat>
+      <EventBattlerChat
+      passParticipants={participants}
+      passMessages={messages}
+      updateMessage={send}
+      ></EventBattlerChat>
       <EventBattlerWindow></EventBattlerWindow>
       <EventBattlerParticipants></EventBattlerParticipants>
     </div>
