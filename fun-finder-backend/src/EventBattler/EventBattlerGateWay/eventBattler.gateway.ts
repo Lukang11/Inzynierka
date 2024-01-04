@@ -19,6 +19,7 @@ export class EventBattlerGateway implements OnGatewayConnection {
         client.join(room_id); // łaczenie do pokoju 
 
         const participants = this.getParticipantsInRoom(room_id);
+        client.emit('updateParticipants', participants);
         client.to(room_id.toString()).emit('updateParticipants', participants); // przy nowym dołączeniu aktualizujemu liste uzytkownikow
 
         client.on('disconnect', () => {

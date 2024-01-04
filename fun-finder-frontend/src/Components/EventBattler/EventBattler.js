@@ -18,7 +18,7 @@ function EventBattler() {
 
   const updateParticipants = (obj) => {
     // funkcja aktualizacja po dołączeniu do rooma
-    console.log("podaje to", obj);
+    console.log("podaje to jako uzytkownikow chatu", obj);
     setParticipants([[...participants, obj]]);
   };
 
