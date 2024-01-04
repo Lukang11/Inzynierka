@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./EventBattlerParticipants.css";
 import ActiveCircle from "../../ActiveCircle/ActiveCircle";
 
-function EventBattlerParticipants() {
-  const participants = ["65906f227f4e9f27c8031315","65906f9a7f4e9f27c8031322"];
+function EventBattlerParticipants({participants}) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,14 +24,13 @@ function EventBattlerParticipants() {
         setUsers(userData);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setUsers([]);
       } finally {
         setLoading(false);
       }
     };
 
     fetchUserData();
-  }, []);
+  }, [participants]);
 
   if (loading) {
     return <p>Loading...</p>;

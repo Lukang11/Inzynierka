@@ -70,7 +70,7 @@ function EventBattler() {
       updateMessage={send}
       ></EventBattlerChat>
       <EventBattlerWindow></EventBattlerWindow>
-      <EventBattlerParticipants></EventBattlerParticipants>
+      <EventBattlerParticipants participants={participants} />
     </div>
   );
 }
