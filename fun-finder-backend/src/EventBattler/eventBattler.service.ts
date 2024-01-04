@@ -16,7 +16,20 @@ export class EventBattlerService {
   ) {}
 
   async fetchRecomendedPlacesforUserIds(users_id: string[]) {
-    this.userService;
-    return users_id;
+    console.log(users_id);
+
+    const userHobbiesPromises = users_id.map(async (val, index) => {
+      console.log(val);
+      console.log(index);
+
+      const hobbies = await this.userService.getUserHobbiesById(val);
+      console.log(hobbies);
+      return { index, hobbies };
+    });
+
+    // Wait for all promises to resolve
+    const userHobbies = await Promise.all(userHobbiesPromises);
+
+    return userHobbies;
   }
 }

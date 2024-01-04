@@ -170,4 +170,8 @@ export class EventsService {
       .exec();
     return rating_places;
   }
+  async getAllTypesForPlaces() {}
+  async getEventById(event_id) {
+    return await this.eventsModel.findById({ _id: event_id });
+  }
 }
