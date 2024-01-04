@@ -15,11 +15,12 @@ import {
   UserEvents,
   UserHobbies,
 } from 'src/Auth/AuthInterfaces/users.model';
+import { Events } from './EventInterfaces/events.model';
 
 @Injectable()
 export class EventsService {
   constructor(
-    @InjectModel('Events') private readonly eventsModel: Model<Event>,
+    @InjectModel('Events') private readonly eventsModel: Model<Events>,
     @InjectModel('Api_Places') private readonly placeModel: Model<Place>,
     @InjectModel('User') private readonly userModel: Model<User>,
   ) {}

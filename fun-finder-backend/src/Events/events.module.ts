@@ -18,6 +18,6 @@ import { UserModule } from 'src/Auth/users.module';
   ],
   controllers: [EventsController],
   providers: [EventsService],
-  exports: [EventsService],
+  exports: [EventsService], // Export the service if needed
 })
 export class EventsModule {}
