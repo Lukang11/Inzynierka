@@ -6,6 +6,7 @@ import {
 } from './EventInterfaces/eventsInterfaces';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { UserEvents } from 'src/Auth/AuthInterfaces/users.model';
+import { PlacesTags } from './EventInterfaces/place_tags.model';
 
 @Controller('/events')
 export class EventsController {
@@ -86,12 +87,20 @@ export class EventsController {
   getTopRatingPlaces() {
     return this.eventService.fetchTopRatingPlaces();
   }
-  // @Get('/places_types')
-  // getAllTypesForPlaces(){
-  //   return this.eventService.
-  // }
   @Get('/by-id')
   getEventById(@Body() id: string) {
     return this.eventService.getEventById(id);
+  }
+  @Get('/places_types')
+  getAllTypesForPlaces() {
+    return this.eventService.getAllTypesForPlaces();
+  }
+  @Post('/places_types_add')
+  addTypesForPlaces(@Body() Body: PlacesTags) {
+    return this.eventService.addTypesForPlaces(Body);
+  }
+  @Get('/places_types_tag')
+  getPlacesTagByName(@Body() Body: { name: string }) {
+    return this.eventService.getTypeDataByName(Body);
   }
 }
