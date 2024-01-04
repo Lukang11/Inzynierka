@@ -70,7 +70,7 @@ function HobbiesModal({ onClick }) {
         </div>
         <div className="hobbies-form">
           {" "}
-          <h1>Dodaj zainteresowanie</h1>
+          <div className="add-hobby-text">Dodaj zainteresowanie</div>
           <div>
             <div className="sel-hobbies-wrap">
               {hobbies.map((val, index) => {

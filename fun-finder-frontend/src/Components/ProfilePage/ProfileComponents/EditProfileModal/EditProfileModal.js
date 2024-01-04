@@ -29,22 +29,22 @@ function EditProfileModal({ onClick }) {
             <div className="close-profile-modal" onClick={() => onClick()}>
                 X
             </div>
-            <div className="profile-form">
+            <div className="profile-modal-form">
 
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <div className="profile-modal-text">Description:</div>
+                        <div className="profile-modal-text">Edytuj swój opis</div>
                         <div className="profile-description">
-                            <input id="description" value={description} onChange={handleDescriptionChange} />
+                            <textarea id="description" value={description} onChange={handleDescriptionChange} />
                         </div>
                     </div>
                     <div>
-                        <div className="profile-modal-text">Profile Photo:</div>
+                        <div className="profile-modal-text">Ustaw zdjęcie profilowe:</div>
                         <div>
                             <input type="file" id="profilePhoto" onChange={handleProfilePhotoChange} />
                         </div>
                     </div>
-                    <button className="profile-save-btn" type="submit">Save</button>
+                    <button className="profile-save-btn" type="submit">Zapisz</button>
                 </form>
             </div>
         </div>
