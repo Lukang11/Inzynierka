@@ -99,7 +99,7 @@
 }
 .categories-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Dostosuj szerokość ikon */
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
   gap: 10px;
 }
 
@@ -111,12 +111,12 @@
   transition: transform 0.3s ease-in-out;
 }
 .category-item:hover {
-  transform: scale(1.1); /* Powiększ ikonę po najechaniu na nią myszką */
+  transform: scale(1.1); 
 }
 .category-icon {
-  font-size: 40px; /* Zmniejsz lub zwiększ rozmiar ikon */
-  color: black; /* Ustaw kolor domyślny */
-  transition: color 0.3s ease-in-out; /* Dodaj efekt przejścia koloru */
+  font-size: 40px; 
+  color: black; 
+  transition: color 0.3s ease-in-out; 
 
   
 }
