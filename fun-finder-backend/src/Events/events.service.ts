@@ -16,6 +16,7 @@ import {
   UserHobbies,
 } from 'src/Auth/AuthInterfaces/users.model';
 import { Events } from './EventInterfaces/events.model';
+import { PlacesTags } from './EventInterfaces/place_tags.model';
 
 @Injectable()
 export class EventsService {
@@ -23,6 +24,8 @@ export class EventsService {
     @InjectModel('Events') private readonly eventsModel: Model<Events>,
     @InjectModel('Api_Places') private readonly placeModel: Model<Place>,
     @InjectModel('User') private readonly userModel: Model<User>,
+    @InjectModel('api_places_tags')
+    private readonly apiPlacesTags: Model<PlacesTags>,
   ) {}
 
   async insertEvent(fullObject) {
@@ -170,8 +173,21 @@ export class EventsService {
       .exec();
     return rating_places;
   }
-  async getAllTypesForPlaces() {}
+  async getAllTypesForPlaces() {
+    return await this.apiPlacesTags.find().exec();
+  }
   async getEventById(event_id) {
     return await this.eventsModel.findById({ _id: event_id });
+  }
+  async addTypesForPlaces(placeTag: PlacesTags) {
+    return await this.apiPlacesTags.create(placeTag);
+  }
+  async getTypeDataByName(tag_name: { name: string }) {
+    try {
+      console.log(tag_name.name);
+      return await this.apiPlacesTags.findOne({ name: tag_name.name }).exec();
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
