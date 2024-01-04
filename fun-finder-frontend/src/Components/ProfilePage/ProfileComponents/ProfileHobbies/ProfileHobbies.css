@@ -54,6 +54,7 @@
   height: 100px;
   min-width: 150px;
   color: rgb(91, 0, 206);
+  white-space: nowrap;
 }
 .hobbies-second-row {
   padding: 20px;
