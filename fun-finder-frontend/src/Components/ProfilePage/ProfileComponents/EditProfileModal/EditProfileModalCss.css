@@ -47,6 +47,7 @@
     box-sizing: border-box;
     font-size: 16px;
     margin-bottom: 30px;
+    resize: none;
 }
 
 .profile-save-btn {

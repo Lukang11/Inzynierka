@@ -26,8 +26,7 @@ function EditProfileModal({ onClick }) {
 
             if (response.status === 200) {
                 const updatedUser = response.data.user;
-                setDescription((prevUser) => ({ ...prevUser, ...updatedUser }));
-                
+                setDescription((prevUser) => ({ ...prevUser, ...updatedUser }));     
             } 
           
         } catch (error) {
@@ -35,6 +34,9 @@ function EditProfileModal({ onClick }) {
         }
     };
 
+    function refreshPage() {
+        window.location.reload(false);
+    }
 
     useEffect(() => {
         document.body.style.overflow = "hidden";
@@ -62,7 +64,7 @@ function EditProfileModal({ onClick }) {
                             <input type="file" id="profilePhoto" onChange={handleProfilePhotoChange} />
                         </div>
                     </div>
-                    <button className="profile-save-btn" type="submit">
+                    <button className="profile-save-btn" type="submit" onClick={refreshPage}>
                         Zapisz
                     </button>
                 </form>
