@@ -1,4 +1,3 @@
-import { faSquareFacebook, faSquareInstagram, faSquareTwitter, faCoffee } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe, faLaptopCode, faMusic, faFilm, faTheaterMasks, faBeer, faGamepad, faBook, faHeartbeat, faComments, faBasketballBall, faUtensils, faPaintBrush, faCar } from '@fortawesome/free-solid-svg-icons';
 
 export const hobbiesData = [

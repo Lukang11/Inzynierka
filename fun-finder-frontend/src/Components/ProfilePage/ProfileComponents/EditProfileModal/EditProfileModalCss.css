@@ -1,6 +1,6 @@
 
 .profile-modal-wrapper {
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0.608);
     position: fixed;
     top: 0;
     left: 0;
@@ -26,6 +26,7 @@
     justify-content: space-evenly;
 }
 .close-profile-modal {
+    color: white;
     position: absolute;
     top: 30px;
     left: 30px;
@@ -39,13 +40,14 @@
     margin: 10px;
 }
 
-.profile-description input{
-    width: 500px;
+.profile-description textarea{
+    width: 50vw;
     height: 400px;
     padding: 10px;
     box-sizing: border-box;
     font-size: 16px;
     margin-bottom: 30px;
+    resize: none;
 }
 
 .profile-save-btn {

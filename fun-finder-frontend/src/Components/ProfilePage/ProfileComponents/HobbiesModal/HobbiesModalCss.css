@@ -1,63 +1,73 @@
 .hobbies-modal-wrapper {
-    background-color: white;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 300;
-      width: calc(100vw - 12px);
-      /* Adjust the value as needed */
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: auto;
+  background-color: rgba(0, 0, 0, 0.608);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 300;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.add-hobby-text {
+  margin-top: 15 0px;
+  font-size: 21px;
+  font-weight: bold;
+  text-align: left;
 }
 
 .hobbies-form {
-    max-width: 90vw;
-    width: 90%;
-    height: 80vh;
-    border-radius: 20px;
-    background-color: white;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
+  max-width: 90vw;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 20px;
+  background-color: white;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
 }
-
 
 .close-modal {
-  font-size: xx-large;
-  position: relative;
-  left: 10px;
-  top: 40px;
-  width: fit-content;
-  cursor: pointer;
+    color: white;
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      font-size: xx-large;
+      cursor: pointer;
 }
+
 .modal-input {
   width: 300px;
   height: 50px;
   font-size: xx-large;
 }
+
 .hobbies-item-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
 }
+
 .sel-hobbies-wrap {
   display: flex;
   flex-wrap: wrap;
-  overflow: scroll;
   justify-content: center;
 }
+
 .sel-hobbies-item {
   border: var(--mainpurple) solid 3px;
   margin: 10px;
   height: 30px;
   border-radius: 5px;
 }
+
 .modal-send-btn {
   color: white;
   background-color: var(--mainpurple);
@@ -67,4 +77,5 @@
   border-width: 15px;
   font-weight: 700;
   font-size: 1.25rem;
+  margin-top: 15px;
 }

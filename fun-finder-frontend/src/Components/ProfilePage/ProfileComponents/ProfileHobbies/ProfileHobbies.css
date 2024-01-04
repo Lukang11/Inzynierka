@@ -53,9 +53,15 @@
   flex-basis: 10%;
   height: 100px;
   min-width: 150px;
+  color: rgb(91, 0, 206);
+  white-space: nowrap;
 }
 .hobbies-second-row {
   padding: 20px;
+}
+
+.hobby-icon {
+  font-size: 30px;
 }
 
 .hobbies-contener-wrapper-item:hover {
