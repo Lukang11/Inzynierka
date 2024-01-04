@@ -9,11 +9,10 @@ const ProfileDescription = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch user description when the component mounts
     if (user) {
       getUserDescription(user.email);
     }
-  }, [user]); // Make sure to include user as a dependency
+  }, [user]); 
 
   const getUserDescription = async (email) => {
     try {
