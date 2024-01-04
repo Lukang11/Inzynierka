@@ -17,7 +17,7 @@ import { EventBattlerModule } from './EventBattler/eventBattler.module';
     ChatModule,
     UserModule,
     ChatCloudsModule,
-    EventBattlerModule
+    EventBattlerModule,
   ],
   controllers: [AppController],
   providers: [AppService, CronService],

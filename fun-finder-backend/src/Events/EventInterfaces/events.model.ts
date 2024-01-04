@@ -20,7 +20,7 @@ export const EventSchema = new mongoose.Schema({
   },
 });
 
-export class Event {
+export class Events {
   constructor(
     public name: string,
     public location: string,
@@ -29,11 +29,11 @@ export class Event {
     public eventStart: Date,
     public eventEnd: Date,
     public eventDescription: string,
-    public eventParticipants: string[]
+    public eventParticipants: string[],
   ) {}
 }
 
-export interface Event {
+export interface Events {
   name: string;
   location: string;
   geoLocation: GeoLocation;

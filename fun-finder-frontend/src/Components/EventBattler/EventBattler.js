@@ -15,14 +15,13 @@ function EventBattler() {
   const [participants, setParticipants] = useState([]); // ludzie w roomie
   const [messages, setMessages] = useState([]); // wiadomosci w roomie
 
-
   const updateParticipants = (obj) => {
     // funkcja aktualizacja po dołączeniu do rooma
     setParticipants(obj);
   };
   const send = async (data) => {
-    await socket?.emit("message",(data));
-}
+    await socket?.emit("message", data);
+  };
 
   const messageListener = (obj) => {
     // funkcja zapisująca nową wiadomość
@@ -53,7 +52,7 @@ function EventBattler() {
 
   useEffect(() => {
     // odbieranie wiadomości
-    socket?.on("message", messageListener);                                         // odbieramy wiadomość
+    socket?.on("message", messageListener); // odbieramy wiadomość
   }, [messageListener]);
 
   useEffect(() => {
@@ -61,15 +60,14 @@ function EventBattler() {
     socket?.on("handleDisconect", updateParticipants); // odbieranie wiadomości                                         // odbieramy wiadomość
   }, [updateParticipants]);
 
-
   return (
     <div className="battler-container">
       <EventBattlerChat
-      passParticipants={participants}
-      passMessages={messages}
-      updateMessage={send}
+        passParticipants={participants}
+        passMessages={messages}
+        updateMessage={send}
       ></EventBattlerChat>
-      <EventBattlerWindow></EventBattlerWindow>
+      <EventBattlerWindow participants={participants}></EventBattlerWindow>
       <EventBattlerParticipants participants={participants} />
     </div>
   );
