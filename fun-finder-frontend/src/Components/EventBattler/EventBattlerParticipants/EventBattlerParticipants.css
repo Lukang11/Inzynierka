@@ -15,6 +15,7 @@
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    padding: 10px;
 }
 
 .event-battler-participants-container li{
