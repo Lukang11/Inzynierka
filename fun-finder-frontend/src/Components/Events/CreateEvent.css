@@ -97,6 +97,34 @@
   box-sizing: border-box; 
 
 }
+.categories-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Dostosuj szerokość ikon */
+  gap: 10px;
+}
 
+.category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+.category-item:hover {
+  transform: scale(1.1); /* Powiększ ikonę po najechaniu na nią myszką */
+}
+.category-icon {
+  font-size: 40px; /* Zmniejsz lub zwiększ rozmiar ikon */
+  color: black; /* Ustaw kolor domyślny */
+  transition: color 0.3s ease-in-out; /* Dodaj efekt przejścia koloru */
+
+  
+}
+.selected .category-icon {
+  color: purple; 
+}
+.category-name{
+  text-align: center;
+}
   
  
