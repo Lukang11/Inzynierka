@@ -1,20 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./ProfileDescription.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSquareFacebook,
-  faSquareInstagram,
-  faSquareTwitter,
-} from "@fortawesome/free-brands-svg-icons";
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from "../../../../Utils/AuthProvider";
-import { hobbiesData } from "../../../../Data/HobbiesData.js";
+import axios from "axios";
 
 const ProfileDescription = () => {
   const { user } = useAuth();
+  const [description, setDescription] = useState('');
+  const [error, setError] = useState(null);
 
-  console.log('User:', user);
-  console.log('Description:', user ? user.description : 'No description');
+  useEffect(() => {
+    // Fetch user description when the component mounts
+    if (user) {
+      getUserDescription(user.email);
+    }
+  }, [user]); // Make sure to include user as a dependency
+
+  const getUserDescription = async (email) => {
+    try {
+      const response = await axios.get(`http://localhost:7000/users/user-description/${email}`);
+      setDescription(response.data.description);
+    } catch (err) {
+      setError(err.response ? err.response.data : 'An error occurred');
+    }
+  }
+
   if (!user) {
     return (
       <div className="desc-cont">
@@ -22,18 +31,21 @@ const ProfileDescription = () => {
       </div>
     );
   }
-  
 
   return (
     <div className="desc-cont">
       <h3>{`${user.fname} ${user.lname}`}</h3>
       <div>
-        <p>{`${user.description}`}</p>
+        {description ? (
+          <p>{description}</p>
+        ) : (
+          <p>Jeszcze nie ustawiono</p>
+        )}
+        {error && <div>Error: {error}</div>}
       </div>
       <br />
-      
     </div>
   );
-};
+ }
 
 export default ProfileDescription;
