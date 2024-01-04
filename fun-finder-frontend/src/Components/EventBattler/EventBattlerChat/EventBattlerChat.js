@@ -9,6 +9,10 @@ function EventBattlerChat( {passParticipants,passMessages,updateMessage} ) {
   const [usersData,setUsersData] = useState([]);
   const [myData,setMyData] = useState({});
   const inputMesageRef = useRef(null);
+const getMessageSenderFname = (id) => {
+  const userFname = usersData.find(user => user._id === id);
+  return userFname ? userFname.fname : null;
+}
 
 const getMessageSenderAvatar = (id) => {
   const userAvatar = usersData.find(userAvatar => userAvatar._id === id);
@@ -102,7 +106,7 @@ const handleKeyPress = (Event) => {
               )}
               <div className="event-battler-chat-details-wrapper">
                 <p className="event-battler-chat-user-info">
-                  {myData.fname}
+                  {getMessageSenderFname(message.sender_id)}
                 </p>
                 <p className="event-battler-chat-message">
                   {message.text}

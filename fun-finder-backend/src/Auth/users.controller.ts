@@ -122,6 +122,18 @@ export class UserController {
     }
   }
 
+  @Post('/register-google')
+  async registerGoogle(@Body() payload: any, @Res() res: Response) {
+    try {
+      const user = await this.userService.createGoogleUser(payload);
+
+      res.status(201).json({ message: 'Google user registered successfully', user });
+    } catch (error) {
+      console.error('Błąd rejestracji użytkownika Google:', error);
+      res.status(500).json({ message: 'Google user registration failed' });
+    }
+  }
+
   @Get('/user-data-email/:email')
   async getCurrentUserDataByEmail(@Param('email') email: string) {
     return this.userService.findByEmail(email);
