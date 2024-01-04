@@ -86,4 +86,12 @@ export class EventsController {
   getTopRatingPlaces() {
     return this.eventService.fetchTopRatingPlaces();
   }
+  // @Get('/places_types')
+  // getAllTypesForPlaces(){
+  //   return this.eventService.
+  // }
+  @Get('/by-id')
+  getEventById(@Body() id: string) {
+    return this.eventService.getEventById(id);
+  }
 }

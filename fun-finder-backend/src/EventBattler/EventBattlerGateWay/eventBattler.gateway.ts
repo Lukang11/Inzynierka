@@ -19,11 +19,15 @@ export class EventBattlerGateway implements OnGatewayConnection {
         client.join(room_id); // łaczenie do pokoju 
 
         const participants = this.getParticipantsInRoom(room_id);
+        client.emit('updateParticipants', participants);
         client.to(room_id.toString()).emit('updateParticipants', participants); // przy nowym dołączeniu aktualizujemu liste uzytkownikow
 
         client.on('disconnect', () => {
             this.clients.delete(sender_id);
-            console.log('disconect client : ',sender_id)
+            console.log('disconect client : ',sender_id);
+            const participants = this.getParticipantsInRoom(room_id);
+            client.to(room_id.toString()).emit('handleDisconect', participants);
+            console.log('new participants list', participants);
         })
     }
 
@@ -38,7 +42,7 @@ export class EventBattlerGateway implements OnGatewayConnection {
     handleMessage(client: Socket, data: {message: string, user_id: string}): void {
         console.log("o takie ", data, "takie dane przekazuje");
         const message = data.message;
-        const userId = data.user_id;  // subscribe message przyjmuje tylko 2 argumenty socket, i pakuje otrzymane dany do tablicy dlatego tak
+        const userId = data.user_id;
 
         const messageToSendToUser = {
             id: this.generateUniqueId(),
@@ -47,7 +51,8 @@ export class EventBattlerGateway implements OnGatewayConnection {
         }
 
         const roomToSend = this.clients.get(userId)
-        client.to(roomToSend.roomId).emit('message',messageToSendToUser) // wyslanie wiadomości do roomu
+        client.to(roomToSend.roomId.toString()).emit('message',messageToSendToUser) // wyslanie wiadomości do roomu
+        client.emit('message',messageToSendToUser) // wysylam do wysylającego
     }
 
     generateUniqueId(): string {
