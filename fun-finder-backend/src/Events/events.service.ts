@@ -176,8 +176,8 @@ export class EventsService {
   async getAllTypesForPlaces() {
     return await this.apiPlacesTags.find().exec();
   }
-  async getEventById(event_id) {
-    return await this.eventsModel.findById({ _id: event_id });
+  async getEventById(id:string): Promise<Events>{
+    return await this.eventsModel.findById(id);
   }
   async addTypesForPlaces(placeTag: PlacesTags) {
     return await this.apiPlacesTags.create(placeTag);

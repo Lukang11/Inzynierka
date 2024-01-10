@@ -87,9 +87,9 @@ export class EventsController {
   getTopRatingPlaces() {
     return this.eventService.fetchTopRatingPlaces();
   }
-  @Post('/by-id')
-  getEventById(@Body() Body: {id:string}) {
-    return this.eventService.getEventById(Body.id);
+  @Get('/by-id/:id')
+  getEventById(@Param('id') id:string) {
+    return this.eventService.getEventById(id);
   }
   @Get('/places_types')
   getAllTypesForPlaces() {
