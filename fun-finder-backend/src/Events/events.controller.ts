@@ -6,13 +6,14 @@ import {
 } from './EventInterfaces/eventsInterfaces';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { UserEvents } from 'src/Auth/AuthInterfaces/users.model';
+import { PlacesTags } from './EventInterfaces/place_tags.model';
 
 @Controller('/events')
 export class EventsController {
   constructor(private readonly eventService: EventsService) {}
 
   @Get()
-  getAllEvents(): any {
+  getAllEvents() {
     return this.eventService.getAllEvents();
   }
 
@@ -28,15 +29,16 @@ export class EventsController {
     fullObject: {
       name: string;
       location: string;
+      geoLocation?: Geolocation;
+      eventStart: Date;
+      eventEnd: Date;
+      eventDescription?: string;
+      eventParticipants?: string[];
       relatedHobbies: string[];
     },
-  ): any {
-    //Bedzie typ ale nararzie nie dodaje
-    this.eventService.insertEvent(
-      fullObject.name,
-      fullObject.location,
-      fullObject.relatedHobbies,
-    );
+  ) {
+    console.log(fullObject);
+    return this.eventService.insertEvent(fullObject);
   }
   @Post('/find-places-by-localization')
   findPlaceByLocalizationGoogleApi(
@@ -80,5 +82,25 @@ export class EventsController {
   addUsersHobbies(@Param('email') email: string, @Body() object) {
     console.log(object.hobbies);
     return this.eventService.addUsersHobbies(email, object.hobbies);
+  }
+  @Get('/places/top-rating')
+  getTopRatingPlaces() {
+    return this.eventService.fetchTopRatingPlaces();
+  }
+  @Get('/by-id/:id')
+  getEventById(@Param('id') id:string) {
+    return this.eventService.getEventById(id);
+  }
+  @Get('/places_types')
+  getAllTypesForPlaces() {
+    return this.eventService.getAllTypesForPlaces();
+  }
+  @Post('/places_types_add')
+  addTypesForPlaces(@Body() Body: PlacesTags) {
+    return this.eventService.addTypesForPlaces(Body);
+  }
+  @Get('/places_types_tag')
+  getPlacesTagByName(@Body() Body: { name: string }) {
+    return this.eventService.getTypeDataByName(Body);
   }
 }

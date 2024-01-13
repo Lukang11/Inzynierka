@@ -1,0 +1,37 @@
+.events-view-card {
+  height: 300px;
+  width: 280px;
+  border: solid grey 1px;
+  margin: 50px;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px black;
+  transition: transform 0.3s ease-in-out;
+}
+.events-view-card-item {
+  display: flex;
+  flex-direction: column;
+}
+.events-view-card-item:hover{
+  cursor: pointer;
+}
+.events-view-image {
+  background-image: url("./../photo-1526485641275-3b11a42acd44.png");
+  background-position: center;
+  background-size: cover;
+  height: 200px;
+  border-radius: 10px 10px 0 0;
+}
+.events-view-description {
+  display: flex;
+  height: 100px;
+  justify-content: space-around;
+  align-items: center;
+  padding: 3px;
+}
+.events-info-card-name,
+.events-view-card-hour {
+  font-weight: bold;
+}
+.events-view-card:hover {
+  transform: scale(1.2);
+}

@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose';
 
 export interface EventChat extends mongoose.Document {
-    _id: string;
     participants: string[];
     last_message: string;
     name: string;
@@ -9,10 +8,6 @@ export interface EventChat extends mongoose.Document {
 }
 
 export const EventChatSchema = new mongoose.Schema({
-    _id: {
-     type: String,
-     default: mongoose.Types.ObjectId,
-     },
      participants: {
      type: [String],
      required: true,
@@ -32,3 +27,4 @@ export const EventChatSchema = new mongoose.Schema({
 });
 
 export const EventChatModel = mongoose.model<EventChat>('EventChat', EventChatSchema);
+

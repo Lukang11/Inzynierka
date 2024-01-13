@@ -1,8 +1,7 @@
-
 import Header from "./Components/Header/Header";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import PrivateRoute from './Utils/PrivateRoute';
-import { AuthProvider } from './Utils/AuthProvider';
+import PrivateRoute from "./Utils/PrivateRoute";
+import { AuthProvider } from "./Utils/AuthProvider";
 import ProfilePage from "./Components/ProfilePage/ProfilePage";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
@@ -12,7 +11,10 @@ import ChatPageComponent from "./Components/ChatPage/ChatPage";
 import WelcomePage from "./Components/WelcomePage/WelcomePage";
 import WelcomePageHeader from "./Components/Header/WelcomePageHeader";
 import { EventInfo } from "./Components/Events/EventInfo";
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import EventsPageView from "./Components/EventsPageView/EventsPageView";
+import EventBattler from "./Components/EventBattler/EventBattler";
+import EventBattlerView from "./Components/EventBattlerView/EventBattlerView";
 
 function App() {
   return (
@@ -21,7 +23,38 @@ function App() {
         <BrowserRouter>
           <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
             <Routes>
-              <Route path="/" element={<> <Header /><WelcomePage /> </>} />
+              <Route
+                path="/"
+                element={
+                  <>
+                    {" "}
+                    <Header />
+                    <WelcomePage />{" "}
+                  </>
+                }
+              />
+              <Route
+                path="/battle"
+                element={
+                  <>
+                    <PrivateRoute>
+                      <Header />
+                      <EventBattlerView />
+                    </PrivateRoute>
+                  </>
+                }
+              />
+              <Route
+                path="/battle/:id"
+                element={
+                  <>
+                    <PrivateRoute>
+                      <Header />
+                      <EventBattler/>
+                    </PrivateRoute>
+                  </>
+                }
+              />
               <Route
                 path="/profile"
                 element={
@@ -31,14 +64,69 @@ function App() {
                   </PrivateRoute>
                 }
               />
-              <Route path="/login" element={<> <Header /><Login /> </>} />
-              <Route path="/register" element={<> <Header /><Register /> </>} />
-              <Route path="/chat" element={<> <Header /><ChatPageComponent /> </>} />
-              <Route path="/events" element={<> <Header /><EventsPage /> </>} />
-              <Route path="/create-event" element={<> <Header /><CreateEvent /> </>} />
-              <Route path="/event-info/:id" element={<> <Header /><EventInfo /> </>} />
+              <Route
+                path="/login"
+                element={
+                  <>
+                    {" "}
+                    <Header />
+                    <Login />{" "}
+                  </>
+                }
+              />
+              <Route
+                path="/register"
+                element={
+                  <>
+                    {" "}
+                    <Header />
+                    <Register />{" "}
+                  </>
+                }
+              />
+              <Route
+                path="/chat"
+                element={
+                  <>
+                    {" "}
+                    <Header />
+                    <ChatPageComponent />{" "}
+                  </>
+                }
+              />
+              <Route
+                path="/events"
+                element={
+                  <>
+                    {" "}
+                    <Header />
+                    <EventsPageView />{" "}
+                  </>
+                }
+              />
+              <Route
+                path="/create-event"
+                element={
+                  <>
+                    {" "}
+                    <Header />
+                    <CreateEvent />{" "}
+                  </>
+                }
+              />
+              <Route
+                path="/event-info/:id"
+                element={
+                  <>
+                    {" "}
+                    <Header />
+                    <EventInfo />{" "}
+                  </>
+                }
+              />
             </Routes>
-          </GoogleOAuthProvider>;
+          </GoogleOAuthProvider>
+          ;
         </BrowserRouter>
       </AuthProvider>
     </div>

@@ -3,21 +3,13 @@ import "./HobbiesModalCss.css";
 import HobbiesItem from "./HobbiesItem/HobbiesItem";
 import axios from "axios";
 import { useAuth } from "../../../../Utils/AuthProvider";
+import { hobbiesData } from "../../../../Data/HobbiesData.js";
 
 function HobbiesModal({ onClick }) {
   const [hobbies, setHobbies] = useState([]);
   const { user } = useAuth();
 
-  const test_data = [
-    { hobby_name: "sport" },
-    { hobby_name: "kino" },
-    { hobby_name: "pub" },
-    { hobby_name: "punkt widokowy" },
-    { hobby_name: "teatr" },
-    { hobby_name: "teatr" },
-    { hobby_name: "teatr" },
-  ];
-  const [relatedHobbies, setRelatedHobbies] = useState(test_data);
+  const [relatedHobbies, setRelatedHobbies] = useState(hobbiesData);
 
   const addItem = (item) => {
     setHobbies((prevHobbies) => [...prevHobbies, item]);
@@ -37,12 +29,21 @@ function HobbiesModal({ onClick }) {
       return updatedHobbies;
     });
   };
+
+
   const addRelatedItem = (item) => {
     setRelatedHobbies((prevHobbies) => {
-      const updatedState = [...prevHobbies, { hobby_name: item }];
+      const hobbyData = hobbiesData.find((hobby) => hobby.name === item);
+      const updatedState = [...prevHobbies, { name: item, icon: hobbyData?.icon }];
       return updatedState;
     });
   };
+
+
+
+  function refreshPage() {
+    window.location.reload(false);
+  }
 
   const sendUserHobbies = () => {
     const fetchData = async () => {
@@ -64,12 +65,12 @@ function HobbiesModal({ onClick }) {
   return (
     <div className="hobbies-modal-wrapper">
       <div className="hobbies-wrapper-form">
-        <div className="close-modal" onClick={() => onClick()}>
+        <div className="close-modal" onClick={() => {onClick(); refreshPage()}}>
           X
         </div>
         <div className="hobbies-form">
           {" "}
-          <h1>Dodaj zainteresowanie</h1>
+          <div className="add-hobby-text">Dodaj zainteresowanie</div>
           <div>
             <div className="sel-hobbies-wrap">
               {hobbies.map((val, index) => {
@@ -90,18 +91,18 @@ function HobbiesModal({ onClick }) {
               })}
             </div>
           </div>
-          <input className="modal-input"></input>
           <button className="modal-send-btn" onClick={sendUserHobbies}>
             Zapisz
           </button>
           {relatedHobbies.length > 0 && (
             <div>
-              <h3>Inni lubią też:</h3>
+              <h3>Dostępne kategorie:</h3>
               <div className="hobbies-item-wrapper">
                 {relatedHobbies.map((value, index) => (
                   <HobbiesItem
                     key={index} // Add a unique key
-                    name={value.hobby_name}
+                    name={value.name}
+                    icon={value.icon}
                     onClick={addItem}
                     onClickDel={removeRelatedItem}
                     index={index}

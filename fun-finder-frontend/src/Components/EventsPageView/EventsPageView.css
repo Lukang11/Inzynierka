@@ -1,0 +1,57 @@
+.events-view-container {
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5%;
+  overflow-x: scroll;
+}
+
+/* Style horizontal scrollbar in .events-view-container */
+.events-view-container::-webkit-scrollbar,
+.events-view-container::-webkit-scrollbar-horizontal {
+  height: 12px;
+}
+
+.events-view-container::-webkit-scrollbar-track,
+.events-view-container::-webkit-scrollbar-track-horizontal {
+  background: rgb(226, 226, 226);
+}
+
+.events-view-container::-webkit-scrollbar-thumb,
+.events-view-container::-webkit-scrollbar-thumb-horizontal {
+  background-color: var(--mainpurple);
+  border: 3px solid var(--mainpurple);
+}
+
+.events-button-fillter {
+  border: solid var(--mainpurple) 2px;
+  color: var(--mainpurple);
+  background-color: white;
+  padding: 10px 20px 10px 20px;
+  border-radius: 20px;
+  margin: 0 20px 0 20px;
+}
+
+.events-button-add-events {
+  background-color: var(--mainpurple);
+  color: white;
+  padding: 10px 20px 10px 20px;
+  border-radius: 20px;
+  margin: 0 20px 0 20px;
+}
+
+.event-button-group {
+  display: flex;
+  justify-content: end;
+  margin-top: 50px;
+}
+
+.event-view-title {
+  font-size: 2em;
+  padding-left: 20px;
+}
+
+.event-view-title-desc {
+  font-size: 1.7em;
+  padding-left: 40px;
+}

@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose';
 
 export interface GroupChat extends mongoose.Document {
-  _id: string;
   participants: string[];
   last_message: string;
   name: string;
@@ -9,10 +8,6 @@ export interface GroupChat extends mongoose.Document {
 }
 
 export const GroupChatSchema = new mongoose.Schema({
-  _id: {
-    type: String,
-    default: mongoose.Types.ObjectId,
-  },
   participants: {
     type: [String],
     required: true,
@@ -32,3 +27,4 @@ export const GroupChatSchema = new mongoose.Schema({
 });
 
 export const GroupChatModel = mongoose.model<GroupChat>('GroupChat', GroupChatSchema);
+

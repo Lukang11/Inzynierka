@@ -6,6 +6,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
 import { serialize } from 'cookie';
 import "./Register.css";
+import registerImg from "./Images/register-img.png";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -117,27 +118,33 @@ const Register = () => {
 
     const handleLoginSuccess = async (credentialResponse) => {
         try {
-            const decodedToken = jwtDecode(credentialResponse.credential);
-
-            const adaptedUser = {
-                email: decodedToken.email,
-                fname: decodedToken.given_name,
-                lname: decodedToken.family_name,
-            };
-
-            document.cookie = serialize('accessToken', credentialResponse.credential, { path: '/', maxAge: 3600 });
-
-            if (!decodedToken) {
-                console.error('Failed to decode JWT token.');
-                return;
-            }
-
-            login(adaptedUser);
+          const decodedToken = jwtDecode(credentialResponse.credential);
+      
+          if (!decodedToken) {
+            console.error('Failed to decode JWT token.');
+            return;
+          }
+      
+          const adaptedUser = {
+            email: decodedToken.email,
+            given_name: decodedToken.given_name,
+            family_name: decodedToken.family_name,
+          };
+      
+          document.cookie = serialize('accessToken', credentialResponse.credential, { path: '/', maxAge: 3600 });
+      
+          const response = await axios.post('http://localhost:7000/users/register-google', adaptedUser);
+      
+          if (response.status === 201) {
+            await login(response.data.user);
             navigate("/profile");
+          } else {
+            console.error('Failed to register user:', response.statusText);
+          }
         } catch (error) {
-            console.error('Error decoding JWT token:', error);
+          console.error('Error decoding JWT token or registering user:', error);
         }
-    };
+      };
 
     const handleLoginError = () => {
         console.log('Login Failed');
@@ -145,10 +152,10 @@ const Register = () => {
 
     return (
         <div className="register-container">
-
+            <img className="mobile-only-image" src={registerImg} />
             <div className="welcomeText-container">
                 <h1>Poznawaj ludzi z FunFinder!</h1>
-                <p>Dolor sit amet, consectetur adipiscing elit. Fusce hendrerit tincidunt libero ut tempor. Duis luctus feugiat tellus non ultrices. Nullam eget iaculis leo. Mauris et tellus est. Nullam quis risus justo. Curabitur luctus sed elit ac vehicula.</p>
+                <p>Utwórz konto i zacznij spędzać niezapomniane chwile</p>
             </div>
 
             <div className="registerForm-container">
@@ -224,7 +231,7 @@ const Register = () => {
                                 <button
                                     onClick={renderProps.onClick}
                                     disabled={renderProps.disabled}
-                                    className="google-login-button" // Dodaj klasę CSS
+                                    className="google-login-button" 
                                 >
                                     Zaloguj się z Google
                                 </button>

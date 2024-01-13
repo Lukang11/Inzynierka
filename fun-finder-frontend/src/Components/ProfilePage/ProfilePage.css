@@ -1,20 +1,21 @@
 .description-wrapper {
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
 }
 .profile-desc {
-  flex-basis: 60%;
+  -webkit-box-shadow: 0px 15px 48px -10px rgb(169, 166, 166);
+  -moz-box-shadow: 0px 15px 48px -10px rgba(66, 68, 90, 1);
+  box-shadow: 0px 15px 48px -10px rgb(168, 170, 191);
 }
 .profile-card {
-  flex-basis: 30%;
-  height: 50%;
+  height: 45vh;
+  width: 30vw;
 }
 
 .profile-card {
-  border-radius: 0 0 20px 20px;
-  -webkit-box-shadow: 0px 15px 48px -10px rgba(66, 68, 90, 1);
+  -webkit-box-shadow: 0px 15px 48px -10px rgb(169, 166, 166);
   -moz-box-shadow: 0px 15px 48px -10px rgba(66, 68, 90, 1);
-  box-shadow: 0px 15px 48px -10px rgba(66, 68, 90, 1);
+  box-shadow: 0px 15px 48px -10px rgb(168, 170, 191);
 }
 .second-row-wrapper {
   display: flex;
@@ -31,4 +32,30 @@
   flex-basis: 45%;
   justify-content: center;
   align-items: center;
+}
+
+
+@media only screen and (max-width: 800px) {
+
+  .profile-card {
+    width: 100vw;
+  }
+
+  .description-wrapper {
+    flex-direction: column;
+  }
+  
+  .second-row-wrapper {
+    flex-direction: column;
+    margin: 50px;
+  }
+  
+  .profile-event-wrapper {
+    order: 2;     
+  }
+  
+  .profile-hobbies-wrapper {
+    order: 1;
+  }
+  
 }

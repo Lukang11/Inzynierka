@@ -1,8 +1,8 @@
 .hobbies-item {
   border: 2px solid var(--mainpurple);
   border-radius: 5px;
-  height: 60px;
-  width: 100px;
+  height: 80px;
+  width: 140px;
   padding: 10px;
   word-wrap: break-word;
   text-align: center;
@@ -26,6 +26,12 @@
 .hobbies-item-removal-x:hover {
   color: red;
   cursor: pointer;
+}
+
+.hobbies-item-icon {
+  color: var(--mainpurple);
+  padding-bottom: 5px;
+
 }
 
 @keyframes background-switch {

@@ -21,3 +21,18 @@ code {
 * {
   box-sizing: border-box;
 }
+body::-webkit-scrollbar,
+body::-webkit-scrollbar-horizontal {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track-horizontal {
+  background: rgb(226, 226, 226);
+}
+
+body::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb-horizontal {
+  background-color: var(--mainpurple);
+  border: 3px solid var(--mainpurple);
+}

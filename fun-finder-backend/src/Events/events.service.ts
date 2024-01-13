@@ -15,20 +15,29 @@ import {
   UserEvents,
   UserHobbies,
 } from 'src/Auth/AuthInterfaces/users.model';
+import { Events } from './EventInterfaces/events.model';
+import { PlacesTags } from './EventInterfaces/place_tags.model';
 
 @Injectable()
 export class EventsService {
   constructor(
-    @InjectModel('Events') private readonly eventsModel: Model<Event>,
+    @InjectModel('Events') private readonly eventsModel: Model<Events>,
     @InjectModel('Api_Places') private readonly placeModel: Model<Place>,
     @InjectModel('User') private readonly userModel: Model<User>,
+    @InjectModel('api_places_tags')
+    private readonly apiPlacesTags: Model<PlacesTags>,
   ) {}
 
-  async insertEvent(name: string, location: string, relatedHobbies: string[]) {
+  async insertEvent(fullObject) {
+    console.log(fullObject);
     const newEvent = new this.eventsModel({
-      name,
-      location,
-      relatedHobbies,
+      name: fullObject.name,
+      location: fullObject.location,
+      eventStart: fullObject.eventStart,
+      eventEnd: fullObject.eventEnd,
+      eventDescription: fullObject.eventDescription,
+      eventParticipants: fullObject.eventParticipants,
+      relatedHobbies: fullObject.relatedHobbies,
     });
     const result = await newEvent.save();
     console.log('Incoming POST request with this body :\n');
@@ -156,6 +165,29 @@ export class EventsService {
       return user;
     } catch (error) {
       throw error;
+    }
+  }
+  async fetchTopRatingPlaces() {
+    const rating_places = await this.placeModel
+      .find({ rating: { $gt: 4.5, $lt: 5 } })
+      .exec();
+    return rating_places;
+  }
+  async getAllTypesForPlaces() {
+    return await this.apiPlacesTags.find().exec();
+  }
+  async getEventById(id:string): Promise<Events>{
+    return await this.eventsModel.findById(id);
+  }
+  async addTypesForPlaces(placeTag: PlacesTags) {
+    return await this.apiPlacesTags.create(placeTag);
+  }
+  async getTypeDataByName(tag_name: { name: string }) {
+    try {
+      console.log(tag_name.name);
+      return await this.apiPlacesTags.findOne({ name: tag_name.name }).exec();
+    } catch (error) {
+      console.log(error);
     }
   }
 }

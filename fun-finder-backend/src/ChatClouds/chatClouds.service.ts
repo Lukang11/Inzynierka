@@ -102,4 +102,72 @@ export class ChatCloudsService {
     }
     
     }
+
+  async createNewPrivateChat(userCreatingChatId: string, chatParticipantId: string) {
+    const isThisChatArleadyExists = await this.privateChatModel.findOne({
+      participants: {
+        $all: [userCreatingChatId,chatParticipantId]
+      }
+    });
+
+    if (isThisChatArleadyExists) {
+      console.log("this chat exists")
+      return
+    }
+    const newPrivateChatCloud = new this.privateChatModel ({
+        participants: [userCreatingChatId,chatParticipantId],
+        created_at: new Date,
+        last_message: "",
+    })
+    this.sendNewPrivateChat(newPrivateChatCloud);
+  }
+
+  async sendNewPrivateChat(PrivateChatObject: PrivateChat) {
+    try {
+        await PrivateChatObject.save();
+        console.log("created");
+    } catch (err) {
+        console.error("unable to create user", err);
+    }
+  }
+  
+  async createNewGroupChat(userCreatingChatId: string, chatName: string) {
+    const newGroupChatCloud = new this.groupChat ({
+      participants: [userCreatingChatId],
+      last_message: "",
+      name: chatName,
+      created_at: new Date
+    })
+    this.sendNewGroupChat(newGroupChatCloud);
+  }
+  
+  async sendNewGroupChat(groupChatObject: GroupChat){
+    try{
+      await groupChatObject.save();
+      console.log("created");
+    }
+    catch (err) {
+      console.error("unable to create groupChat", err);
+    }
+  }
+
+  async createNewEventChat(userCreatingChatId: string, chatName: string) {
+    const newEventChatCloud = new this.eventChats ({
+      participants: [userCreatingChatId],
+      last_message: "",
+      name: chatName,
+      created_at: new Date
+    });
+    this.sendNewEventChat(newEventChatCloud);
+  }
+
+  async sendNewEventChat(eventChatObject: EventChat) {
+    try {
+      await eventChatObject.save();
+      console.log("created");
+    }
+    catch (err) {
+      console.error("unable to create eventChat", err);
+    }
+  }
 }

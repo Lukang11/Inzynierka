@@ -31,14 +31,12 @@ export const isUserAuthenticated = async () => {
       });
 
       const { isUserAuthenticated: isGoogleAuthenticated } = await googleResponse.json();
-
+      
       if (isGoogleAuthenticated) {
-        const adaptedUser = {
-          email: decodedToken.email,
-          fname: decodedToken.given_name,
-          lname: decodedToken.family_name,
-      };
-        return { isAuthenticated: true, user: adaptedUser };
+        const googleUserDataResponse = await fetch(`http://localhost:7000/users/user-data-email/${decodedToken.email}`);
+        const googleUserData = await googleUserDataResponse.json();
+
+        return { isAuthenticated: true, user: googleUserData };
       }
     }
     else{

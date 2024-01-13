@@ -15,6 +15,6 @@ import { ChatModule } from "src/Chat/chat.module";
       ],
     controllers: [CloudsController],
     providers: [ChatCloudsService],
-    exports: []
+    exports: [MongooseModule.forFeature([{ name: 'Private_Chats', schema: PrivateChatSchema }])]
 })
 export class ChatCloudsModule {}

@@ -1,0 +1,107 @@
+.chat-new-message {
+    display: flex;
+    flex-basis: 5%;
+    justify-content: center;
+}
+.new-chat-btn{
+    background-color: #5908BF;
+    padding: 10px 25px;
+    border-radius: 25px;
+    border: none;
+    color: #FFFFFF;
+    transition: background-color 0.3s ease;
+}
+
+.new-chat-btn:active {
+    background-color: #45078e; /* Nowy kolor tła po kliknięciu */
+}
+
+
+/* Styl dla nakładki modala */
+.modal-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Przezroczysta czarna nakładka */
+}
+
+/* Styl dla samego modala */
+.modal {
+    background-color: #FFFFFF;
+    padding: 5px;
+    border-radius: 10px;
+    width: 400px;
+    height: 300px;
+}
+.close-btn {
+    flex-basis: 5%;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 40px;
+}
+.button-and-header-wrapper{
+    display: flex;
+
+}
+
+.modal-header{
+    display: flex;
+    flex-basis: 95%;
+    justify-content: center;
+}
+
+.message-modal-h2{
+    padding: 0px;
+}
+
+.modal-finding-user-wrapper{
+    display: flex;
+    flex-basis: 100%;
+    flex-direction: column;
+}
+
+.modal-email-input {
+    display: flex;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.modal-user-found{
+    display: flex;
+    justify-content: center;
+}
+
+.modal-user-as-button{
+    display: flex;
+    background-color: #5908BF;
+    padding: 10px 25px;
+    border-radius: 25px;
+    border: none;
+    color: #FFFFFF;
+    transition: background-color 0.3s ease;
+}
+
+.modal-user-as-button:active {
+    background-color: #45078e; /* Nowy kolor tła po kliknięciu */
+}
+.modal-search-button{
+    display: flex;
+    margin: 5px;
+    align-items: flex-end;
+    justify-content: center;
+    background-color: #5908BF;
+    padding: 10px 25px;
+    border-radius: 25px;
+    border: none;
+    color: #FFFFFF;
+    transition: background-color 0.3s ease;
+}
+
