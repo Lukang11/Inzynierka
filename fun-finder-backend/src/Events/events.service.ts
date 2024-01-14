@@ -17,6 +17,7 @@ import {
 } from 'src/Auth/AuthInterfaces/users.model';
 import { Events } from './EventInterfaces/events.model';
 import { PlacesTags } from './EventInterfaces/place_tags.model';
+import { DEFAULT_EAGER_REFRESH_THRESHOLD_MILLIS } from 'google-auth-library/build/src/auth/authclient';
 
 @Injectable()
 export class EventsService {
@@ -176,7 +177,7 @@ export class EventsService {
   async getAllTypesForPlaces() {
     return await this.apiPlacesTags.find().exec();
   }
-  async getEventById(id:string): Promise<Events>{
+  async getEventById(id: string): Promise<Events> {
     return await this.eventsModel.findById(id);
   }
   async addTypesForPlaces(placeTag: PlacesTags) {
@@ -189,5 +190,12 @@ export class EventsService {
     } catch (error) {
       console.log(error);
     }
+  }
+  async getPlacesForBattler(arrayOfTags: string[]) {
+    try {
+      return await this.placeModel.find({
+        types: { $in: arrayOfTags },
+      });
+    } catch (error) {}
   }
 }
