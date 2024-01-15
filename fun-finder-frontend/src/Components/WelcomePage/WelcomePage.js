@@ -93,7 +93,7 @@ function WelcomePage() {
             <div className="footer">
                 <div className="footer-title">FunFinder</div>
                 <div className="footer-text">Copyright © 2024 FunFinder All rights reserved</div>
-                <div className="footer-links">
+                {/* <div className="footer-links">
                     <div className="footer-icon">
                         <FontAwesomeIcon icon={faSquareFacebook} />
                     </div>
@@ -105,7 +105,7 @@ function WelcomePage() {
                         {" "}
                         <FontAwesomeIcon icon={faSquareTwitter} />
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );
