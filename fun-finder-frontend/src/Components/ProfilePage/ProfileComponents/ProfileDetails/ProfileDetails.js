@@ -12,13 +12,11 @@ const ProfileDetails = () => {
   return (
     <div className="profile-page-wrapper">
       <div className="profile-page-image"></div>
-      <div className="profile-page-image-cont">
         <div className="profile-desc-item">
           <div className="edit-profile-btn" onClick={toggleModal}>
             Edytuj profil
           </div>
         </div>
-      </div>
       {isOpen ? <EditProfileModal onClick={toggleModal} /> : null}
     </div>
   );
