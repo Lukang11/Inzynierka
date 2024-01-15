@@ -15,7 +15,6 @@ function EventCardView({ eventInfo, places }) {
       className="events-view-card"
       onClick={() => handleRowClick(eventInfo._id)}
     >
-      {console.log(eventInfo)}
       <div className="events-view-card-item">
         <div className="events-view-image"></div>
         <div className="events-view-description">

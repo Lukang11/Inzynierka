@@ -63,9 +63,8 @@ function EventsPageView() {
         <NearbyEventsComponent />
       </div>
       <h3 className="event-view-title">Miejsca warte odwiedzenia</h3>
-      <div className="event-view-title-desc">
-        Wiemy co misie lubią najbardziej :)
-      </div>
+
+      <div className="event-view-title-desc">Restaruacje blisko ciebie :)</div>
       <div className="events-view-container">
         <HiglyRatedPlaces />
       </div>

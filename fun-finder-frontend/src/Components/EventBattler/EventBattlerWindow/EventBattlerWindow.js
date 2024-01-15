@@ -1,5 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import "./EventBattlerWindow.css";
+import EventBattlerOneUserView from "./EventBattlerOneUserView/EventBattlerOneUserView";
+import EventBattlerMoreUserView from "./EventBattlerMoreUserView/EventBattlerMoreUserView";
 
 function EventBattlerWindow({ participants }) {
   const url_battle = "http://localhost:7000/battle";
@@ -9,11 +12,8 @@ function EventBattlerWindow({ participants }) {
   useEffect(() => {
     const fetchData = async () => {
       if (participants.length > 0) {
-        console.log(participants);
         try {
-          console.log(participants);
           const response = await axios.post(url_battle, { participants });
-          console.log(response.data);
         } catch (error) {
           console.error(error);
         }
@@ -29,7 +29,15 @@ function EventBattlerWindow({ participants }) {
     fetchData();
     fetchApiTags();
   }, [participants]);
-  return <div>EventBattlerWindow</div>;
+  return (
+    <div className="event-battler-window">
+      {participants.length === 0 || participants.length === 1 ? (
+        <EventBattlerOneUserView />
+      ) : (
+        <EventBattlerMoreUserView participants={participants} />
+      )}
+    </div>
+  );
 }
 
 export default EventBattlerWindow;
