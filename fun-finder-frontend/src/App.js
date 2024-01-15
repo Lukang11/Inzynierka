@@ -126,7 +126,7 @@ function App() {
               />
             </Routes>
           </GoogleOAuthProvider>
-          ;
+          
         </BrowserRouter>
       </AuthProvider>
     </div>
