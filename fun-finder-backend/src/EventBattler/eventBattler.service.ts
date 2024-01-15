@@ -47,13 +47,10 @@ export class EventBattlerService {
 
     // Wait for all promises to resolve to get all api_tags from user
     const userHobbies = await Promise.all(userHobbiesPromises);
-    console.log(userHobbies);
 
     const commonHobbies = this.findCommonElements(...userHobbies);
-    console.log(commonHobbies);
     const placesWithTags =
       await this.eventService.getPlacesForBattler(commonHobbies);
-    console.log(placesWithTags);
 
     return placesWithTags;
   }

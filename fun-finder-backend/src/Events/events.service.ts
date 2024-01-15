@@ -30,7 +30,6 @@ export class EventsService {
   ) {}
 
   async insertEvent(fullObject) {
-    console.log(fullObject);
     const newEvent = new this.eventsModel({
       name: fullObject.name,
       location: fullObject.location,
@@ -41,13 +40,10 @@ export class EventsService {
       relatedHobbies: fullObject.relatedHobbies,
     });
     const result = await newEvent.save();
-    console.log('Incoming POST request with this body :\n');
-    console.log(result);
   }
   async getAllEvents() {
     try {
       const allEvents = await this.eventsModel.find().exec();
-      console.log(allEvents);
       return allEvents;
     } catch (error) {
       console.error('Error fetching all events:', error);
@@ -111,7 +107,6 @@ export class EventsService {
       .post(placesUrl, queryObject, { headers })
       .then((res) => {
         response = res.data;
-        console.log(response);
         response.places.map((value) => {
           this.createOfResourceInMongoDbOnlyIfDoesntExist(value);
         });
@@ -128,7 +123,6 @@ export class EventsService {
   async getUsersEvents(email: string) {
     const user = await this.userModel.findOne({ email: email });
     const events = user.events;
-    console.log(user);
     return events;
   }
   async getUsersHobbies(email: string) {
