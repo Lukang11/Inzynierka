@@ -15,15 +15,6 @@ function ChatTypes({ updateWichChatToDisplay, clearDisplayedMessage }) {
         setEventChatBtnClicked(false);
         clearDisplayedMessage("");
     }
-    const changeGroupChatBtnStatus = () => {
-
-        updateWichChatToDisplay("group");
-        setPersonChatBtnClicked(false);
-        setGroupBtnClicked(true);
-        setEventChatBtnClicked(false);
-        clearDisplayedMessage("");
-    }
-
     const changeEventChatBtnStatus = () => {
 
         updateWichChatToDisplay("event");
@@ -41,12 +32,6 @@ function ChatTypes({ updateWichChatToDisplay, clearDisplayedMessage }) {
                 onClick={() => changePersonChatBtnStatus()}
             >
                 Osoby
-            </button>
-            <button
-                className={`buttonNotClicked ${groupChatBtnClicked ? 'buttonClicked' : ''}`}
-                onClick={() => changeGroupChatBtnStatus()}
-            >
-                Grupy
             </button>
             <button
                 className={`buttonNotClicked ${eventChatBtnClicked ? 'buttonClicked' : ''}`}

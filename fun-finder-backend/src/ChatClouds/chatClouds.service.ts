@@ -18,7 +18,6 @@ export class ChatCloudsService {
   async findUserInPrivateChat(userId: string) {
     try {
       const privateChatsWithUser = await this.privateChatModel.find({ participants: userId });
-
       if (!privateChatsWithUser || privateChatsWithUser.length === 0) {
         console.log('User not found in any private chat');
       }
@@ -27,20 +26,21 @@ export class ChatCloudsService {
 
       for (const privateChat of privateChatsWithUser) {
         const otherParticipantsIds = privateChat.participants.filter(participant => participant !== userId);
-        console.log(otherParticipantsIds);
 
           const otherParticipant = await this.getUserInfoById(otherParticipantsIds[0]); // pobranie danych drugiego rozmowcy 
-
           participantInfo.push({
-            _id: otherParticipantsIds[0],
+            id: otherParticipant._id,
             chatId: privateChat.id,
-            name: otherParticipant.fname + " " + otherParticipant.lname,
+            fname: otherParticipant.fname,
+            lname: otherParticipant.lname,
+            avatar: otherParticipant.avatar,
             lastMessage: privateChat.last_message,
           });
 
       }
       return participantInfo;
     } catch (error) {
+      console.log(error)
       throw new Error('Failed to find user in private chat');
     }
   }
@@ -80,6 +80,7 @@ export class ChatCloudsService {
 
       for ( const eventChat of eventChatsForUser) {
         const eventChatData = {
+          participants: eventChat.participants,
           chatId: eventChat._id,
           name: eventChat.name,
           lastMessage: eventChat.last_message

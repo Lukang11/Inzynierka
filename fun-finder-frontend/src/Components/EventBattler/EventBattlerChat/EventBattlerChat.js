@@ -9,6 +9,7 @@ function EventBattlerChat( {passParticipants,passMessages,updateMessage} ) {
   const [usersData,setUsersData] = useState([]);
   const [myData,setMyData] = useState({});
   const inputMesageRef = useRef(null);
+  
 const getMessageSenderFname = (id) => {
   const userFname = usersData.find(user => user._id === id);
   return userFname ? userFname.fname : null;
@@ -19,7 +20,7 @@ const getMessageSenderAvatar = (id) => {
   return userAvatar ? userAvatar.avatar : null;
 }
 const getMessageSenderEmail = (id) => {
-  if(id === user._id){
+  if(user && id === user._id){
     return true;
   }
   else return false;
@@ -57,7 +58,7 @@ const handleKeyPress = (Event) => {
           participantsIds.map(async (participant) => {
             const response = await fetch(`http://localhost:7000/users/user-data-id/${participant}`);
             const data = await response.json();
-            if(participant === user._id){
+            if(user && participant === user._id){
               setMyData({
                 fname: data.fname,
                 avatar: data.avatar
