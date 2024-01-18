@@ -49,11 +49,12 @@ function HobbiesModal({ onClick }) {
     const fetchData = async () => {
       if (user && user.email) {
         try {
-          let url = "http://localhost:7000/events/";
-          await axios.post(`${url}hobbies/add/${user.email}`, { hobbies });
+          let url = "http://localhost:7000/users/";
+          await axios.post(`${url}update-user-hobbies/${user.email}`, { hobbies });
         } catch (error) {
           console.error("Error fetching hobbies:", error);
         }
+        refreshPage();
       }
     };
     fetchData();
@@ -73,8 +74,8 @@ function HobbiesModal({ onClick }) {
           <div className="add-hobby-text">Dodaj zainteresowanie</div>
           <div>
             <div className="sel-hobbies-wrap">
+              {console.log(hobbies)}
               {hobbies.map((val, index) => {
-                console.log(val);
                 return (
                   <div
                     key={index}
@@ -83,7 +84,7 @@ function HobbiesModal({ onClick }) {
                       addRelatedItem(val);
                       removeItem(index);
                     }}
-                    className="sel-hobbies-item"
+                    className="hobbies-item"
                   >
                     {val}
                   </div>

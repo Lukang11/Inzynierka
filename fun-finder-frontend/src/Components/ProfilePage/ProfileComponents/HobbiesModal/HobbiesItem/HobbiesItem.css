@@ -9,6 +9,7 @@
   margin: 10px;
   position: relative;
   font-weight: 600;
+  cursor: pointer;
 }
 .hobbies-item:hover {
   animation: background-switch 0.3s ease forwards;

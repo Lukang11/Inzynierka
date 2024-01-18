@@ -18,7 +18,7 @@ function HobbiesItem(props) {
         {props.icon && <FontAwesomeIcon icon={props.icon} />}
       </div>
       <div className="hobbies-item-name">{props.name}</div>
-      <div className={"hobbies-item-removal-x"}>X</div>
+      {/* <div className={"hobbies-item-removal-x"}>X</div> */}
     </div>
   );
 }
