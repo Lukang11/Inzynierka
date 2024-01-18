@@ -22,10 +22,11 @@ function ChatClouds({ passChatCloudsDBData, updateWichMessagesToDisplay }){
             onClick={() => {changeWichMessageToUpdate(item.chatId); console.log("ile razy sie wykonuje")}}
             className="btn-chat-clouds">
                 <div className="chat-item">
-                    <div className="chat-avatar">
+                    <div className="chat-avatar"
+                    style={{backgroundImage: `url(${item.avatar})`}}>
                     </div>
                     <div className="chat-info">
-                        <p>{item.name}</p>
+                        <p>{item.fname} {item.lname}</p>
                         <div className="chat-info-message">
                             <p>{item.lastMessage}</p>
                         </div>

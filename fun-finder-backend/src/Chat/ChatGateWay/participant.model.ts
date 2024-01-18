@@ -1,5 +1,5 @@
 export interface Participant {
-    _id: string;
+    id: string;
     chatId: string;
     name: string;
     lastMessage: string;
