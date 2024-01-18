@@ -1,13 +1,15 @@
 .profile-page-image {
-  height: 250px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 10px;
+}
+
+.profile-page-image img {
   width: 100%;
-  background-image: url("../../../../Images/Monkey_test.jpg");
-  background-position: center;
-  background-size: cover;
-  border-radius: 100%;
-  margin-top: 30px;
-  margin-left: 60px;
-  margin-right: 60px;
+  height: 100%;
+  object-fit: cover;
 }
 /* img {
   border-radius: 100%;
@@ -42,5 +44,5 @@
   border-color: black 1px;
   border-style: groove;
   margin-top: 20px;
-    
+  cursor: pointer;
 }

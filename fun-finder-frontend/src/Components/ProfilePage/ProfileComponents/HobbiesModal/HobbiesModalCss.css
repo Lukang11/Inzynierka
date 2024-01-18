@@ -66,6 +66,7 @@
   margin: 10px;
   height: 30px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .modal-send-btn {
@@ -78,4 +79,5 @@
   font-weight: 700;
   font-size: 1.25rem;
   margin-top: 15px;
+  cursor: pointer;
 }

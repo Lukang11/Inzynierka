@@ -46,9 +46,15 @@
     margin: 10px;
 }
 
+.profile-modal-avatar input {
+    width: 50vw;
+    min-width: 200px;
+}
+
 .profile-description textarea{
     width: 50vw;
     height: 200px;
+    min-width: 200px;
     padding: 10px;
     box-sizing: border-box;
     font-size: 16px;

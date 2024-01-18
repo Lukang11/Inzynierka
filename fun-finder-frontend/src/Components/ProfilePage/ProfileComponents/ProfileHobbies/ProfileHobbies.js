@@ -42,9 +42,7 @@ const ProfileHobbies = () => {
     <div className="hobbies-card">
       <div className="hobbies-first-row">
         <h2>Zainteresowania</h2>
-        <div className="hobbies-add-button" onClick={onClick}>
-          +
-        </div>
+        <div className="hobbies-add-button" onClick={onClick}></div>
       </div>
       <div className="hobbies-second-row">
         <div className="hobbies-contener-wrapper">
