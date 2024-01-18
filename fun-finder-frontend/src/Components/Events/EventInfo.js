@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { GoogleMap, Marker,LoadScript,Gecoder } from '@react-google-maps/api';
+import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
 import "./EventInfo.css";
 
 export const EventInfo = () => {
-  const currentURL=window.location.href
+  const currentURL = window.location.href;
   const parts = currentURL.split('/event-info/');
   const eventId = parts[1]; 
-  const [map, setMap] = useState(null);
+  const [isMapsLoaded, setIsMapsLoaded] = useState(false); 
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-  console.log(eventId); 
   const [eventData, setEventData] = useState(null);
-  console.log(eventId);
-  const apiKey= process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
- 
+  const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+  const mapContainerStyle = {
+    width: '100%',
+    height: '450px',
+  };
 
+  
   useEffect(() => {
-    const fetchEventData = async (id) => {
+    const fetchEventData = async () => {
       try {
-        const response = await fetch(`http://localhost:7000/events/by-id/${id}`);
+        const response = await fetch(`http://localhost:7000/events/by-id/${eventId}`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -31,56 +32,52 @@ export const EventInfo = () => {
     };
 
     if (eventId) {
-      fetchEventData(eventId);
+      fetchEventData();
     }
   }, [eventId]);
 
-  const onLoad=(map)=> {
-    setMap(map);
-  };
-
-  const handleCoordinates = () => {
-    const geocoder = new window.google.maps.Geocoder();
-    if (eventData && eventData.location) {
+  
+  useEffect(() => {
+    const geocodeAddress = () => {
+      const geocoder = new window.google.maps.Geocoder();
       geocoder.geocode({ address: eventData.location }, (results, status) => {
-        if (status === 'OK') {
-          if (results[0]) {
-            const location = results[0].geometry.location;
-            setLatitude(location.lat());
-            setLongitude(location.lng());
-          } else {
-            console.log('Brak wyników');
-          }
+        if (status === 'OK' && results[0]) {
+          const location = results[0].geometry.location;
+          setLatitude(location.lat());
+          setLongitude(location.lng());
         } else {
-          console.log('Geokoder nie działa z powodu: ' + status);
+          console.error('Geocoding failed:', status);
         }
       });
+    };
+
+    if (eventData && eventData.location && isMapsLoaded) {
+      geocodeAddress();
     }
-  };
-
-  useEffect(() => {
-    handleCoordinates();
-  }, [eventData]);
-
-
-  
- 
+  }, [eventData, isMapsLoaded]);
 
   return (
     <div className="event-info-container">
       {eventData ? (
         <>
           <div className="overlap">
-            <p className="event-information">{eventData.description}</p>
+            <p className="event-information">{eventData.eventDescription}</p>
           </div>
           <div className="event-map-container">
-          <LoadScript googleMapsApiKey={apiKey}>
-              <GoogleMap className = "event-map"
-                center={{ lat: latitude, lng: longitude }}
-                zoom={15}
-              >
-                <Marker position={{ lat: eventData.latitude, lng: eventData.longitude }} />
-              </GoogleMap>
+            <LoadScript 
+              googleMapsApiKey={apiKey}
+              onLoad={() => setIsMapsLoaded(true)} 
+            >
+              {latitude !== null && longitude !== null && (
+                <GoogleMap 
+                  mapContainerClassName="event-map"
+                  className="event-map"
+                  center={{ lat: latitude, lng: longitude }}
+                  zoom={15}
+                >
+                  <Marker position={{ lat: latitude, lng: longitude }} />
+                </GoogleMap>
+              )}
             </LoadScript>
           </div>
           <div className="event-name">{eventData.name}</div>
