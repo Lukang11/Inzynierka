@@ -10,7 +10,11 @@ function GooglePlaceSquare({ eventInfo }) {
   };
   return (
     <div className="google-square-cont">
-      <a className="google-square-link" href={eventInfo.websiteUri}>
+      <a
+        className="google-square-link"
+        href={eventInfo.websiteUri}
+        target="_blank"
+      >
         <div className="google-square-header">{eventInfo.displayName.text}</div>
         <div className="google-square-adress">
           {split_address.map((val, index) => (
