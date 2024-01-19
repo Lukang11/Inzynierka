@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
 import "./EventInfo.css";
+import { jwtDecode } from "jwt-decode";
 
 export const EventInfo = () => {
   const currentURL = window.location.href;
@@ -11,12 +12,16 @@ export const EventInfo = () => {
   const [longitude, setLongitude] = useState(null);
   const [eventData, setEventData] = useState(null);
   const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+  const [currentUser, setCurrentUser] = useState(null);
+  const JwtToken = localStorage.getItem('token');
   const mapContainerStyle = {
     width: '100%',
     height: '450px',
   };
-
+   
   
+
+   console.log(JwtToken)
   useEffect(() => {
     const fetchEventData = async () => {
       try {
@@ -55,6 +60,44 @@ export const EventInfo = () => {
       geocodeAddress();
     }
   }, [eventData, isMapsLoaded]);
+  const fetchCurrentUserData = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:7000/user-data-id/${userId}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const userData = await response.json();
+      setCurrentUser(userData);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+
+  const addUserToEvent = async () => {
+    if (!currentUser) {
+      console.error('No user data available');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:7000/events/add-user-to-event/${eventId}/${currentUser.id}`, {
+        method: 'POST',
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log('User added to event:', data);
+      
+    } catch (error) {
+      console.error('Error adding user to event:', error);
+    }
+  };
+
+  useEffect(() => {
+    const currentUserId = 'current-user-id';
+    fetchCurrentUserData(currentUserId);
+  }, []);
 
   return (
     <div className="event-info-container">
@@ -82,6 +125,7 @@ export const EventInfo = () => {
           </div>
           <div className="event-name">{eventData.name}</div>
           <div className="event-address">{eventData.location}</div>
+          <button className="event-join-button" onClick={addUserToEvent}>Dołącz do wydarzenia</button>
           <p className="event-enrolled-users">
             <span className="enrolled-users">Zapisanych uczestników: </span>
             <span className="event-number-of-users">{eventData.numberOfUsers}</span>

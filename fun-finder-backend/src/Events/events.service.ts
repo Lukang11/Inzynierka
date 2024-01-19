@@ -40,6 +40,7 @@ export class EventsService {
       relatedHobbies: fullObject.relatedHobbies,
     });
     const result = await newEvent.save();
+    return result;
     console.log('Incoming POST request with this body :\n');
     console.log(result);
   }
@@ -190,4 +191,23 @@ export class EventsService {
       console.log(error);
     }
   }
+  async addUserToEvent(event_id: string, user_id: string): Promise<Events> {
+    try {
+        const event = await this.eventsModel.findById(event_id);
+        if (!event) {
+            throw new Error('Event not found');
+        }
+
+        if (event.eventParticipants.includes(user_id)) {
+            throw new Error('User already added to this event');
+        }
+        event.eventParticipants.push(user_id);
+        const updatedEvent = await event.save();
+
+        return updatedEvent;
+    } catch (error) {
+        console.error('Error in adding user to event:', error);
+        throw error;
+    }
+}
 }

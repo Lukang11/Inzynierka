@@ -103,4 +103,16 @@ export class EventsController {
   getPlacesTagByName(@Body() Body: { name: string }) {
     return this.eventService.getTypeDataByName(Body);
   }
+  @Post('/add-user-to-event/:eventId/:userId')
+  async addUserToEvent(
+    @Param('eventId') eventId: string,
+    @Param('userId') userId: string
+  ) {
+    try {
+      return await this.eventService.addUserToEvent(eventId, userId);
+    } catch (error) {
+      console.error('Error adding user to event:', error);
+      throw new HttpException('Failed to add user to event', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 }
