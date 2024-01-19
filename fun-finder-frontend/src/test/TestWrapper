@@ -1,0 +1,8 @@
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+const TestWrapper = ({ children }) => {
+  return <Router>{children}</Router>;
+};
+
+export default TestWrapper;
