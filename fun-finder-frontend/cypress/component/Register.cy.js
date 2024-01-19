@@ -3,3 +3,4 @@ describe('Register.cy.js', () => {
     // cy.mount()
   })
 })
+configure({ mount: mount.bind(null, { Router }) });

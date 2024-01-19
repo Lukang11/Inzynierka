@@ -1,9 +1,14 @@
 import React from 'react'
 import Login from './Login'
+import TestWrapper from '../../test/TestWrapper'
+describe('Login Component', () => {
+  it('Should log in successfully', () => {
+    cy.mount(
+      <TestWrapper>
+        <Login />
+      </TestWrapper>
+    );
 
-describe('<Login />', () => {
-  it('renders', () => {
-    // see: https://on.cypress.io/mounting-react
-    cy.mount(<Login />)
-  })
-})
+    // Your test assertions here
+  });
+});

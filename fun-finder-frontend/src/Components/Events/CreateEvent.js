@@ -25,7 +25,7 @@ function CreateEvent() {
   const [address,setAddress]=useState('')
   const [description,setDescription]=useState('')
   const apiKey= process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-  
+  const [defaultCenter,setDefaultLocation] = useState({ lat: 0, lng: 0 });
 
   const [clickedLatLng, setClickedLatLng] = useState(null);
   const handleCategorySelect = (categoryName) => {
@@ -61,11 +61,27 @@ function CreateEvent() {
     width: '100%',
     height: '450px',
   };
+  useEffect(() => {
+    // Get user's geolocation
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          (setDefaultLocation(userLocation));
+        },
+        (error) => {
+          console.error('Error getting geolocation:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  }, [map]);
 
-  const defaultCenter = {
-    lat: 52.2297,
-    lng: 21.0122,
-  };
+
 
   const onLoad = (map) => {
     setMap(map);
@@ -116,7 +132,7 @@ function CreateEvent() {
 
   return (
     <div>
-    <div className='events-header'> Wydarzenia</div>
+    <div className='events-header'> Dodaj wydarzenie</div>
     <div className='container'> 
       <div className='events-card'>
         <div className='info-header'>Informacje</div>
