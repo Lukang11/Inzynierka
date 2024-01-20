@@ -37,18 +37,19 @@ export class EventsController {
       relatedHobbies: string[];
     },
   ) {
-    console.log(fullObject);
     return this.eventService.insertEvent(fullObject);
   }
   @Post('/find-places-by-localization')
   findPlaceByLocalizationGoogleApi(
     @Body() queryObject: GoogleApiQueryObject,
-  ): Promise<GoogleApiQueryResponse> {
+  ): any {
     try {
-      console.log(queryObject);
-      const result =
-        this.eventService.getEventsByLocationFromGoogleApi(queryObject);
-      return result;
+      console.log(
+        'Wysłałem płatny request uwaga!!!!!!!!!!!!! trzeba odkomentować przed pokazywaniem events.controller.ts/ =>   findPlaceByLocalizationGoogleApi',
+      );
+      // const result =
+      //   this.eventService.getEventsByLocationFromGoogleApi(queryObject);
+      // return result;
     } catch (error) {
       console.error('Error processing request:', error);
       throw new HttpException('Invalid data format', HttpStatus.BAD_REQUEST);
@@ -71,7 +72,6 @@ export class EventsController {
     @Param('id') user_id: string,
     @Body() user_events: UserEvents,
   ) {
-    console.log(user_events);
     return this.eventService.addUsersEvent(user_id, user_events);
   }
   @Get('/hobbies/:email')
@@ -80,16 +80,15 @@ export class EventsController {
   }
   @Post('/hobbies/add/:email')
   addUsersHobbies(@Param('email') email: string, @Body() object) {
-    console.log(object.hobbies);
     return this.eventService.addUsersHobbies(email, object.hobbies);
   }
   @Get('/places/top-rating')
   getTopRatingPlaces() {
     return this.eventService.fetchTopRatingPlaces();
   }
-  @Post('/by-id')
-  getEventById(@Body() Body: {id:string}) {
-    return this.eventService.getEventById(Body.id);
+  @Get('/by-id/:id')
+  getEventById(@Param('id') id: string) {
+    return this.eventService.getEventById(id);
   }
   @Get('/places_types')
   getAllTypesForPlaces() {

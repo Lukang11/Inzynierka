@@ -29,6 +29,7 @@
     "react-icons": "^4.12.0",
     "react-router-dom": "^6.16.0",
     "react-scripts": "5.0.1",
+    "react-spinners": "^0.13.8",
     "socket.io": "^4.7.2",
     "socket.io-client": "^4.7.2",
     "universal-cookie": "^6.1.1",
@@ -57,5 +58,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cypress": "^13.6.2"
   }
 }

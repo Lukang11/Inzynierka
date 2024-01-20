@@ -1,0 +1,28 @@
+.google-square-cont {
+  width: 200px;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--mainpurple);
+  border-radius: 10px;
+  padding: 10px;
+}
+.google-square-link {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.google-square-header {
+}
+.google-square-adress {
+  font-size: 0.7em;
+}
+.google-square-adress-item {
+}
+.google-square-rating {
+}

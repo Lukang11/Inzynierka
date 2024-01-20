@@ -54,7 +54,7 @@
 
 .input-textbox {
     width: 80%;
-    padding: 12px 20px;
+    padding: 12px 15px;
     margin-top: 10px;
     margin-left: 50px;
     box-sizing: border-box;
@@ -126,5 +126,11 @@
 .category-name{
   text-align: center;
 }
-  
+.error {
+  border: 1px solid red;
+}
+
+.error-message {
+  color: red;
+}
  

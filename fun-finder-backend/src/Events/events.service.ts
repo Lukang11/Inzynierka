@@ -17,6 +17,7 @@ import {
 } from 'src/Auth/AuthInterfaces/users.model';
 import { Events } from './EventInterfaces/events.model';
 import { PlacesTags } from './EventInterfaces/place_tags.model';
+import { DEFAULT_EAGER_REFRESH_THRESHOLD_MILLIS } from 'google-auth-library/build/src/auth/authclient';
 
 @Injectable()
 export class EventsService {
@@ -29,7 +30,6 @@ export class EventsService {
   ) {}
 
   async insertEvent(fullObject) {
-    console.log(fullObject);
     const newEvent = new this.eventsModel({
       name: fullObject.name,
       location: fullObject.location,
@@ -40,13 +40,10 @@ export class EventsService {
       relatedHobbies: fullObject.relatedHobbies,
     });
     const result = await newEvent.save();
-    console.log('Incoming POST request with this body :\n');
-    console.log(result);
   }
   async getAllEvents() {
     try {
       const allEvents = await this.eventsModel.find().exec();
-      console.log(allEvents);
       return allEvents;
     } catch (error) {
       console.error('Error fetching all events:', error);
@@ -110,7 +107,6 @@ export class EventsService {
       .post(placesUrl, queryObject, { headers })
       .then((res) => {
         response = res.data;
-        console.log(response);
         response.places.map((value) => {
           this.createOfResourceInMongoDbOnlyIfDoesntExist(value);
         });
@@ -127,7 +123,6 @@ export class EventsService {
   async getUsersEvents(email: string) {
     const user = await this.userModel.findOne({ email: email });
     const events = user.events;
-    console.log(user);
     return events;
   }
   async getUsersHobbies(email: string) {
@@ -176,8 +171,8 @@ export class EventsService {
   async getAllTypesForPlaces() {
     return await this.apiPlacesTags.find().exec();
   }
-  async getEventById(event_id) {
-    return await this.eventsModel.findById({ _id: event_id });
+  async getEventById(id: string): Promise<Events> {
+    return await this.eventsModel.findById(id);
   }
   async addTypesForPlaces(placeTag: PlacesTags) {
     return await this.apiPlacesTags.create(placeTag);
@@ -208,5 +203,13 @@ export class EventsService {
     catch(error){
       console.log(error);
     }
+  }
+
+  async getPlacesForBattler(arrayOfTags: string[]) {
+    try {
+      return await this.placeModel.find({
+        types: { $in: arrayOfTags },
+      });
+    } catch (error) {}
   }
 }
