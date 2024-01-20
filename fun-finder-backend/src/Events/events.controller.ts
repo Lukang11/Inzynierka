@@ -102,4 +102,8 @@ export class EventsController {
   getPlacesTagByName(@Body() Body: { name: string }) {
     return this.eventService.getTypeDataByName(Body);
   }
+  @Post('/add/user')
+  addUserToEvent(@Body() Body: {eventId: string, userEmail: string} ) {
+    return this.eventService.addUserToEvent(Body.eventId, Body.userEmail);
+  }
 }
