@@ -185,18 +185,21 @@ export class EventsService {
       console.log(error);
     }
   }
-  async addUserToEvent(eventId: string,email: string) {
+  async addUserToEvent(body: { eventId: string; userEmail: string }) {
+    console.log(body.eventId);
     try {
-      const event = await this.eventsModel.findById(eventId).exec();
+      const event = await this.eventsModel.findById(body.eventId).exec();
+      console.log(event,body.eventId,body.userEmail);
+      console.log(event.eventParticipantsEmail)
 
       if(!event){
         throw new Error("could not find event")
       }
-      const userExists = event.eventParticipants.some(participant => participant === email)
-      if(userExists) {
+      const participantIndex = event.eventParticipantsEmail.indexOf(body.userEmail);
+      if(participantIndex !== -1 ) {
         throw new Error("user arleady in event")
       }
-      event.eventParticipants.push(email)
+      event.eventParticipantsEmail.push(body.userEmail)
       console.log('dodaje uzytkownika')
       await event.save();
     }

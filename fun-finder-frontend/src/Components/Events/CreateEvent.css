@@ -126,11 +126,15 @@
 .category-name{
   text-align: center;
 }
-.error {
-  border: 1px solid red;
+.input-error {
+  border-color: red;
+}
+.input-textbox::placeholder {
+  color: inherit;
+  opacity: 1;
+}
+#input-textbox-2::placeholder {
+  color: inherit;
+  opacity: 1;
 }
 
-.error-message {
-  color: red;
-}
- 

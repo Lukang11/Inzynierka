@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
 import "./EventInfo.css";
+import { useAuth } from "../../Utils/AuthProvider";
 
 export const EventInfo = () => {
   const currentURL = window.location.href;
+  const { user } = useAuth();
   const parts = currentURL.split('/event-info/');
-  const eventId = parts[1]; 
-  const [isMapsLoaded, setIsMapsLoaded] = useState(false); 
+  const eventId = parts[1];
+  const [isMapsLoaded, setIsMapsLoaded] = useState(false);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [eventData, setEventData] = useState(null);
+  const [isUserRegistered, setIsUserRegistered] = useState(false);
   const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-  const mapContainerStyle = {
-    width: '100%',
-    height: '450px',
-  };
-
   
+
   useEffect(() => {
     const fetchEventData = async () => {
       try {
@@ -36,7 +35,6 @@ export const EventInfo = () => {
     }
   }, [eventId]);
 
-  
   useEffect(() => {
     const geocodeAddress = () => {
       const geocoder = new window.google.maps.Geocoder();
@@ -54,16 +52,59 @@ export const EventInfo = () => {
     if (eventData && eventData.location && isMapsLoaded) {
       geocodeAddress();
     }
+    console.log(eventId,user)
   }, [eventData, isMapsLoaded]);
+  const handleRegisterEvent = async () => {
+    if (eventData && eventData.users && eventData.users.includes(user.email))  {
+      setIsUserRegistered(true);
+      alert('Jesteś już zarejestrowany na to wydarzenie!');
+      return;
+    }
+  
+    try {
+      const userEmail = user.email;
+  
+      const response = await fetch(`http://localhost:7000/events/add/user`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
 
+        },
+        body: JSON.stringify({ eventId: eventId, userEmail: userEmail }),
+        
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Błąd HTTP! Status: ${response.status}`);
+      }
+  
+      const result = await response.json();
+      setIsUserRegistered(true); 
+      alert('Pomyślnie zarejestrowano na wydarzenie!');
+    } catch (error) {
+      console.error('Błąd rejestracji na wydarzenie:', error);
+      alert('Nie udało się zarejestrować na wydarzenie.');
+    }
+  };
+  
   return (
     <div className="event-info-container">
       {eventData ? (
         <>
           <div className="overlap">
-            <p className="event-information">{eventData.eventDescription}</p>
+            
+            <div className="event-name">{eventData.name}</div>
+          <div className="event-address">{eventData.location}</div>
+          <p className="event-information">{eventData.eventDescription}</p>
+          <button className="register-on-event-button" onClick={handleRegisterEvent} disabled={isUserRegistered}>
+              {isUserRegistered ? 'Zapisany' : 'Zapisz się na wydarzenie'}
+            </button>
           </div>
           <div className="event-map-container">
+          <p className="event-enrolled-users">
+            <span className="enrolled-users">Zapisanych uczestników: </span>
+            <span className="event-number-of-users">{eventData.numberOfUsers}</span>
+          </p>
             <LoadScript 
               googleMapsApiKey={apiKey}
               onLoad={() => setIsMapsLoaded(true)} 
@@ -79,13 +120,9 @@ export const EventInfo = () => {
                 </GoogleMap>
               )}
             </LoadScript>
+            
           </div>
-          <div className="event-name">{eventData.name}</div>
-          <div className="event-address">{eventData.location}</div>
-          <p className="event-enrolled-users">
-            <span className="enrolled-users">Zapisanych uczestników: </span>
-            <span className="event-number-of-users">{eventData.numberOfUsers}</span>
-          </p>
+         
         </>
       ) : (
         <p>Ładowanie danych...</p>
