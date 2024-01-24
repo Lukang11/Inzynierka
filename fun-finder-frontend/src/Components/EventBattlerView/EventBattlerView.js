@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import EventBattler from "../EventBattler/EventBattler";
 import "./EventBattlerView.css";
 import EventBattlerItem from "./EventBattlerItem/EventBattlerItem";
+import EventBattlerCreateRoom from "./EventBattlerCreateRoomModal/CreateRoomModal";
 
 function EventBattlerView() {
+  const [showModal, setShowModal] = useState(false);
   const array = [
     {
       id: 1,
@@ -56,22 +57,47 @@ function EventBattlerView() {
       date: "2023-12-17T15:30:00",
     },
   ];
-  const id = 1;
+
+  const  handleRefreshClick = async () => {
+    // Tutaj dodać ponowne zaciąganie z bazy
+    console.log("Odświeżam...");
+  };
+  const handleCreateGroupClick = () => {
+    setShowModal(true);
+    console.log(showModal);
+
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  }
+
   return (
-    <div className="event-battler-cont">
-      {array.map((val, index) => (
-        <EventBattlerItem
-          id={val.id}
-          key={index}
-          isActive={val.is_active}
-          description={val.description}
-          participants={val.participants}
-          location={val.location}
-          date={val.date}
-        ></EventBattlerItem>
-      ))}
+    <div className="event-battler-container">
+      <div className="event-battler-rooms">
+        <div className="event-battler-tools">
+          <button className="create-group-button" onClick={handleCreateGroupClick}>Stwórz pokój</button>
+          <button className="refresh-button" onClick={handleRefreshClick}>Odśwież</button>
+        </div>
+        <div className="event-battler-H2">
+          <h2>Dołącz do pokoju !</h2>
+        </div>
+        {array.map((val, index) => (
+          <EventBattlerItem
+            id={val.id}
+            key={index}
+            description={val.description}
+            participants={val.participants}
+            location={val.location}
+            date={val.date}
+          ></EventBattlerItem>
+        ))}
+      </div>
+      {showModal && (
+        <EventBattlerCreateRoom updateModalShow={handleCloseModal}/>
+      )}
     </div>
   );
 }
+
 
 export default EventBattlerView;

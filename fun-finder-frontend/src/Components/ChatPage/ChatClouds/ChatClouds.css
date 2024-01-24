@@ -21,6 +21,7 @@
   background-position: center;
   background-size: cover;
   border-radius: 100%;
+flex-shrink: 0;
 }
 .chat-item {
     display: flex;
@@ -36,7 +37,8 @@
     text-align: left;
 }
 
-.chat-info-message {
+.chat-info-message a {
     display: flex;
+    word-break: break-all;
     
 }
