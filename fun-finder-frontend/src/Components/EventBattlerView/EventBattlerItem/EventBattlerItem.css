@@ -1,28 +1,27 @@
 .event-battler-item-cont {
-  padding: 10px;
+  padding: 15px;
   width: 100%;
   display: flex;
-  margin: 5px;
+  margin: 10px 0;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
+  border: 3px solid #ddd;
+  border-radius: 5px;
 }
-.event-battle-item-1 {
-  text-align: center;
-  flex-basis: 10px;
-}
-.event-battle-item-2 {
-  text-align: center;
-  flex-basis: calc(100% - 30% - 10px);
-}
-.event-battle-item-3 {
-  text-align: center;
-  flex-basis: 10%;
-}
-.event-battle-item-4 {
-  text-align: center;
-  flex-basis: 10%;
-}
+
+.event-battle-item-1,
+.event-battle-item-2,
+.event-battle-item-3,
+.event-battle-item-4,
 .event-battle-item-5 {
   text-align: center;
-  flex-basis: 10%;
+  flex: 1; /* Ustawiono flex: 1, aby elementy miały równą szerokość */
+  min-width: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .event-battler-item-cont {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 }
