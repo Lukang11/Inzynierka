@@ -4,7 +4,7 @@ import './CreateEvent.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../Utils/AuthProvider"; 
-import { GoogleMap, Marker,LoadScript,Gecoder } from '@react-google-maps/api';
+import { GoogleMap, Marker,LoadScript,StandaloneSearchBox} from '@react-google-maps/api';
 import { hobbiesData } from '../../Data/HobbiesData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 
@@ -12,12 +12,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 
-function CreateEvent() {
-  const { user } = useAuth(); // do pobierania id uz
+
+function CreateEvent( ) {
+  const { user } = useAuth(); 
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [errors, setErrors] = useState([]); 
   const [name, setName] = useState('');
+  const libraries = process.env.REACT_APP_GOOGLE_MAPS_LIBRARIES.split(',');
   const [people, setPeople] = useState('');
-  const [category, setCategory] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [latLng, setLatLng] = useState({ lat: 0, lng: 0 });
@@ -25,20 +27,37 @@ function CreateEvent() {
   const [address,setAddress]=useState('')
   const [description,setDescription]=useState('')
   const apiKey= process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-  const [defaultCenter,setDefaultLocation] = useState({ lat: 0, lng: 0 });
-
+  const [addressSearch, setAddressSearch] = useState(null);
   const [clickedLatLng, setClickedLatLng] = useState(null);
   const handleCategorySelect = (categoryName) => {
     setSelectedCategory(categoryName);
   };
-
-  const mapClickHandler = (event) => {
-    setClickedLatLng({
-      lat: event.latLng.lat(),
-      lng: event.latLng.lng(),
-    });
-    setLatLng(clickedLatLng);
+  const validate = () => {
+    let tempErrors = {};
+    tempErrors.name = name ? "" : "Pole jest wymagane";
+    tempErrors.people = people ? "" : "Pole jest wymagane";
+    tempErrors.category = selectedCategory ? "" : "Nie wybrano kategorii";
+    tempErrors.startDate = startDate ? "" : "Pole jest wymagane";
+    tempErrors.endDate = endDate ? "" : "Pole jest wymagane";
+    tempErrors.description = description ? "" : "Pole jest wymagane";
+    tempErrors.address = address ? "" : "Pole jest wymagane";
+    setErrors(tempErrors);
+    return Object.values(tempErrors).every(x => x == "");
   };
+
+
+
+
+  
+    const mapClickHandler = (event) => {
+      const newLatLng = {
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng(),
+      };
+      setClickedLatLng(newLatLng); 
+      setLatLng(newLatLng); 
+    };
+  
 
   useEffect(() => {
     if (clickedLatLng) {
@@ -61,35 +80,32 @@ function CreateEvent() {
     width: '100%',
     height: '450px',
   };
-  useEffect(() => {
-    // Get user's geolocation
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const userLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          (setDefaultLocation(userLocation));
-        },
-        (error) => {
-          console.error('Error getting geolocation:', error);
-        }
-      );
-    } else {
-      console.error('Geolocation is not supported by this browser.');
-    }
-  }, [map]);
+  const handleSelectAddress = () => {
+    if (!addressSearch) {
+      console.error("addressSearch nie został zainicjowany");
+      return;
+  }
+    const places = addressSearch.getPlaces();
+    if (places && places.length > 0) {
+      const location = places[0].geometry.location;
+      const updatedLatLng = { lat: location.lat(), lng: location.lng() };
+      console.log("Selected location:", updatedLatLng);
+      setLatLng(updatedLatLng);
+      setAddress(places[0].formatted_address);
 
+      if (map) {
+        map.panTo(updatedLatLng);
+      }
+    }
+  };
 
 
   const onLoad = (map) => {
     setMap(map);
   };
 
-  const handleIconClick = (category) => {
-    setCategory(category);
-  };
+  
+  
   const navigate = useNavigate(); 
 
   const createNewEventChat = async (userCreatingChatId, chatName) => {
@@ -107,7 +123,11 @@ function CreateEvent() {
 
   
     const handleSubmit = async (event) => {
+      createNewEventChat(user.id, name)
       event.preventDefault();
+      if (!validate()) {
+        return;
+      }
       try {
         const response = await axios.post('http://localhost:7000/events/add', {
           name: name,
@@ -117,7 +137,7 @@ function CreateEvent() {
           eventEnd:endDate,
           eventDescription:description,
           eventParticipants:people,
-          relatedHobbies:category
+          relatedHobbies:selectedCategory
 
           
         });
@@ -131,35 +151,50 @@ function CreateEvent() {
     };
 
   return (
+    
     <div>
     <div className='events-header'> Dodaj wydarzenie</div>
     <div className='container'> 
       <div className='events-card'>
         <div className='info-header'>Informacje</div>
         <div className='label-text'>Nazwa:</div>
-        <input type="text" className='input-textbox' value={name} onChange={e => setName(e.target.value)} />
+        <input type="text" className={`input-textbox ${errors.name ? 'input-error' : ''}`}  value={name} placeholder={errors.name||'Podaj nazwę wydarzenia'} onChange={e => {setName(e.target.value);setErrors({...errors, name: ''});}} />
         <div className='label-text'>Data rozpoczęcia:</div>
-        <input type="datetime-local" className='input-textbox' value={startDate} onChange={e => setStartDate(e.target.value)} />
+        <input type="datetime-local" className='input-textbox' value={startDate} placeholder={errors.startDate||'Podaj datę rozpoczęcia'} onChange={e => {setStartDate(e.target.value);setErrors({...errors, name: ''});}} />
         <div className='label-text'>Data zakończenia</div>
-        <input type="datetime-local" className='input-textbox' value={endDate} onChange={e => setEndDate(e.target.value)} />
+        <input type="datetime-local" className={`input-textbox ${errors.name ? 'input-error' : ''}`}  value={endDate} placeholder={errors.endDate||'Podaj datę zakończenia'} onChange={e => {setEndDate(e.target.value);setErrors({...errors, name: ''});}} />
         <div className='label-text'>Ilość osób:</div>
-        <input type="number" className='input-textbox' value={people} onChange={e => setPeople(e.target.value)} />
+        <input type="number" className={`input-textbox ${errors.name ? 'input-error' : ''}`}  value={people} placeholder={errors.people||'Podaj ilość osób'} onChange={e => {setPeople(e.target.value);setErrors({...errors, name: ''});}}  />
         <div className='label-text'>Opis wydarzenia:</div>
-        <textarea id="input-textbox-2" name="input-textbox-2" rows="6" cols="40" value={description} onChange={e=>setDescription(e.target.value)}> </textarea>
+        <textarea id="input-textbox-2" name={`input-textbox-2 ${errors.name ? 'input-error' : ''}`}  rows="6" cols="40" value={description} placeholder={errors.description||'Napisz coś o swoim wydarzeniu'} onChange={e => {setDescription(e.target.value);setErrors({...errors, name: ''});}}> </textarea>
         
       </div>
       <div className='events-card'>
         <div className='info-header'>Lokalizacja</div>
-        <LoadScript googleMapsApiKey={apiKey}>
+        
+        <LoadScript 
+        googleMapsApiKey={apiKey}
+        libraries = {libraries}
+        >
+         <StandaloneSearchBox
+            onLoad={(ref) => setAddressSearch(ref)}
+            onPlacesChanged={handleSelectAddress}
+          >
+            <input
+              type="text"
+              placeholder="Search for places"
+              style={{ width: "100%", padding: "12px" }}
+            />
+          </StandaloneSearchBox>
           <div style={mapContainerStyle}>
             <GoogleMap
               mapContainerStyle={mapContainerStyle}
-              center={defaultCenter}
               zoom={10}
               onClick={mapClickHandler}
               onLoad={onLoad}
             >
-                {clickedLatLng && <Marker position={{ lat: clickedLatLng.lat, lng: clickedLatLng.lng }} />}
+                
+                {latLng && <Marker position={latLng} />}
 
             </GoogleMap>
           </div>

@@ -29,7 +29,7 @@ export class Events {
     public eventStart: Date,
     public eventEnd: Date,
     public eventDescription: string,
-    public eventParticipants: string[],
+    public eventParticipantsEmail: string[],
   ) {}
 }
 
