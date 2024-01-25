@@ -62,13 +62,20 @@ function EventBattler() {
 
   return (
     <div className="battler-container">
-      <EventBattlerWindow participants={participants}></EventBattlerWindow>
+      <EventBattlerWindow
+        participants={participants}
+        className="battler-window-container"
+      ></EventBattlerWindow>
       <EventBattlerChat
         passParticipants={participants}
         passMessages={messages}
         updateMessage={send}
+        className="battler-chat-container"
       ></EventBattlerChat>
-      <EventBattlerParticipants participants={participants} />
+      <EventBattlerParticipants
+        participants={participants}
+        className="battler-participants-container"
+      />
     </div>
   );
 }
