@@ -183,7 +183,10 @@ export class EventsService {
       return await this.apiPlacesTags.findOne({ name: tag_name.name }).exec();
     } catch (error) {
       console.log(error)
-  async addUserToEvent(eventId: string,email: string) {
+    }
+  }
+  async addUserToEvent(body: { eventId: string; userEmail: string }) {
+    console.log(body.eventId);
     try {
       const event = await this.eventsModel.findById(body.eventId).exec();
       console.log(event,body.eventId,body.userEmail);
@@ -199,8 +202,7 @@ export class EventsService {
       event.eventParticipantsEmail.push(body.userEmail)
       console.log('dodaje uzytkownika')
       await event.save();
-    }
-    catch(error){
+    } catch (error) {
       console.log(error);
     }
   }
@@ -212,5 +214,4 @@ export class EventsService {
       });
     } catch (error) {}
   }
-}
 }

@@ -103,7 +103,7 @@ export class EventsController {
     return this.eventService.getTypeDataByName(Body);
   }
   @Post('/add/user')
-  addUserToEvent(@Body() body: {eventId: string, userEmail: string} ) {
+  addUsersToEvent(@Body() body: {eventId: string, userEmail: string} ) {
     console.log(body);
     return this.eventService.addUserToEvent(body);
   }
