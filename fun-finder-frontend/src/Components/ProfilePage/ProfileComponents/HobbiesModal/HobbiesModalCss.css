@@ -13,7 +13,7 @@
 }
 
 .add-hobby-text {
-  margin-top: 15 0px;
+  margin: 15px;
   font-size: 21px;
   font-weight: bold;
   text-align: left;
@@ -27,10 +27,6 @@
   border-radius: 20px;
   background-color: white;
   margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
 }
 
 .close-modal {
@@ -80,4 +76,14 @@
   font-size: 1.25rem;
   margin-top: 15px;
   cursor: pointer;
+}
+
+.hobbies-added-items {
+  text-align: center;
+  width: 100%;
+}
+
+.hobbies-items {
+  text-align: center;
+  width: 100%;
 }
