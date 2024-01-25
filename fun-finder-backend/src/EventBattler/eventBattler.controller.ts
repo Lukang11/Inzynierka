@@ -7,6 +7,7 @@ export class EventBattler {
 
   @Post()
   getRecommendedPlacesByUserIds(@Body() Body: { participants: string[] }) {
+    console.log(Body);
     return this.eventBattlerService.fetchRecomendedPlacesforUserIds(
       Body.participants,
     );

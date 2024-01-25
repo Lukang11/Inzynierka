@@ -17,7 +17,7 @@ export class EventBattlerService {
 
   findCommonElements(...arrays) {
     if (arrays.length < 2) {
-      throw new Error('At least two arrays are required for comparison.');
+      return [];
     }
 
     // Check if all arrays are non-empty
@@ -48,7 +48,6 @@ export class EventBattlerService {
     // Wait for all promises to resolve to get all api_tags from user
     const userHobbies = await Promise.all(userHobbiesPromises);
     const commonHobbies = this.findCommonElements(...userHobbies);
-    console.log(commonHobbies);
     if (commonHobbies.length < 2) {
       return [];
     } else {
