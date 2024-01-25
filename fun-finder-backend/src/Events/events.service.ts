@@ -182,9 +182,7 @@ export class EventsService {
       console.log(tag_name.name);
       return await this.apiPlacesTags.findOne({ name: tag_name.name }).exec();
     } catch (error) {
-      console.log(error);
-    }
-  }
+      console.log(error)
   async addUserToEvent(eventId: string,email: string) {
     try {
       const event = await this.eventsModel.findById(eventId).exec();
@@ -212,4 +210,5 @@ export class EventsService {
       });
     } catch (error) {}
   }
+}
 }
