@@ -2,22 +2,41 @@ import React, { useState, useEffect } from "react";
 import "./ProfileDescription.css";
 import { useAuth } from "../../../../Utils/AuthProvider";
 import axios from "axios";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
+
 
 const ProfileDescription = () => {
   const { user } = useAuth();
   const [description, setDescription] = useState('');
   const [error, setError] = useState(null);
+  const [avatar, setAvatar] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsOpen((val) => !val);
+  };
 
   useEffect(() => {
     if (user) {
       getUserDescription(user.email);
+      getUserAvatar(user.email)
     }
   }, [user]); 
+
 
   const getUserDescription = async (email) => {
     try {
       const response = await axios.get(`http://localhost:7000/users/user-description/${email}`);
       setDescription(response.data.description);
+    } catch (err) {
+      setError(err.response ? err.response.data : 'An error occurred');
+    }
+  }
+
+  const getUserAvatar = async (email) => {
+    try {
+      const response = await axios.get(`http://localhost:7000/users/user-avatar/${email}`);
+      setAvatar(response.data.avatar);
     } catch (err) {
       setError(err.response ? err.response.data : 'An error occurred');
     }
@@ -32,6 +51,8 @@ const ProfileDescription = () => {
   }
 
   return (
+    <>
+    <div className="profile-desc-avatar-container">
     <div className="desc-cont">
       <h3>{`${user.fname} ${user.lname}`}</h3>
       <div>
@@ -44,6 +65,21 @@ const ProfileDescription = () => {
       </div>
       <br />
     </div>
+
+
+
+    <div className="avatar-box">
+      <div className="profile-page-avatar">
+        <img src={avatar} alt="Avatar" />
+      </div>
+      <div className="edit-profile-button" onClick={toggleModal}>
+            <span>Edytuj profil</span>
+      </div>
+
+      {isOpen ? <EditProfileModal onClick={toggleModal} /> : null}
+    </div>
+    </div>
+    </>
   );
  }
 

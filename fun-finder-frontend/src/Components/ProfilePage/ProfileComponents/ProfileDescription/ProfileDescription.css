@@ -2,12 +2,30 @@
   background: linear-gradient(90deg, rgb(105, 7, 229), rgb(164, 94, 255));
   color: white;
   padding: 20px;
-  height: 45vh;
+
   font-size: 1.25em;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 75vw
+  width: 68.5vw
+
+}
+
+.profile-desc-avatar-container {
+  display: flex;
+}
+
+.avatar-box {
+  background: white;
+  color: white;
+  padding: 20px;
+
+  font-size: 1.25em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 30vw;
+  align-items: center;
 
 }
 .desc-links {
@@ -31,9 +49,45 @@
   transform: scale(1.2);
 }
 
-@media only screen and (max-width: 800px) {
+
+.edit-profile-button {
+  background-color: white;
+  padding: 10px 50px;
+  border-radius: 100px;
+  border-color: black 1px;
+  border-style: groove;
+  margin-top: 20px;
+  cursor: pointer;
+  color: black;
+  text-align: center;
+  font-size: 17px;
+}
+
+.profile-page-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.profile-page-avatar{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 10px;
+
+}
+
+@media only screen and (max-width: 767px) {
 
   .desc-cont {
-    width: 100vw;
+    width: 100%;
+  }
+
+  .profile-desc-avatar-container {
+    flex-direction: column;
+  }
+  
+  .avatar-box {
+    padding-left: 50%;
   }
 }

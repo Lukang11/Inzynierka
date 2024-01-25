@@ -17,6 +17,7 @@ import {
 } from 'src/Auth/AuthInterfaces/users.model';
 import { Events } from './EventInterfaces/events.model';
 import { PlacesTags } from './EventInterfaces/place_tags.model';
+import { DEFAULT_EAGER_REFRESH_THRESHOLD_MILLIS } from 'google-auth-library/build/src/auth/authclient';
 
 @Injectable()
 export class EventsService {
@@ -29,7 +30,6 @@ export class EventsService {
   ) {}
 
   async insertEvent(fullObject) {
-    console.log(fullObject);
     const newEvent = new this.eventsModel({
       name: fullObject.name,
       location: fullObject.location,
@@ -40,14 +40,10 @@ export class EventsService {
       relatedHobbies: fullObject.relatedHobbies,
     });
     const result = await newEvent.save();
-    return result;
-    console.log('Incoming POST request with this body :\n');
-    console.log(result);
   }
   async getAllEvents() {
     try {
       const allEvents = await this.eventsModel.find().exec();
-      console.log(allEvents);
       return allEvents;
     } catch (error) {
       console.error('Error fetching all events:', error);
@@ -111,7 +107,6 @@ export class EventsService {
       .post(placesUrl, queryObject, { headers })
       .then((res) => {
         response = res.data;
-        console.log(response);
         response.places.map((value) => {
           this.createOfResourceInMongoDbOnlyIfDoesntExist(value);
         });
@@ -128,7 +123,6 @@ export class EventsService {
   async getUsersEvents(email: string) {
     const user = await this.userModel.findOne({ email: email });
     const events = user.events;
-    console.log(user);
     return events;
   }
   async getUsersHobbies(email: string) {
@@ -177,7 +171,7 @@ export class EventsService {
   async getAllTypesForPlaces() {
     return await this.apiPlacesTags.find().exec();
   }
-  async getEventById(id:string): Promise<Events>{
+  async getEventById(id: string): Promise<Events> {
     return await this.eventsModel.findById(id);
   }
   async addTypesForPlaces(placeTag: PlacesTags) {
@@ -188,26 +182,33 @@ export class EventsService {
       console.log(tag_name.name);
       return await this.apiPlacesTags.findOne({ name: tag_name.name }).exec();
     } catch (error) {
+      console.log(error)
+  async addUserToEvent(eventId: string,email: string) {
+    try {
+      const event = await this.eventsModel.findById(eventId).exec();
+
+      if(!event){
+        throw new Error("could not find event")
+      }
+      const userExists = event.eventParticipants.some(participant => participant === email)
+      if(userExists) {
+        throw new Error("user arleady in event")
+      }
+      event.eventParticipants.push(email)
+      console.log('dodaje uzytkownika')
+      await event.save();
+    }
+    catch(error){
       console.log(error);
     }
   }
-  async addUserToEvent(event_id: string, user_id: string): Promise<Events> {
+
+  async getPlacesForBattler(arrayOfTags: string[]) {
     try {
-        const event = await this.eventsModel.findById(event_id);
-        if (!event) {
-            throw new Error('Event not found');
-        }
-
-        if (event.eventParticipants.includes(user_id)) {
-            throw new Error('User already added to this event');
-        }
-        event.eventParticipants.push(user_id);
-        const updatedEvent = await event.save();
-
-        return updatedEvent;
-    } catch (error) {
-        console.error('Error in adding user to event:', error);
-        throw error;
-    }
+      return await this.placeModel.find({
+        types: { $in: arrayOfTags },
+      });
+    } catch (error) {}
+  }
 }
 }

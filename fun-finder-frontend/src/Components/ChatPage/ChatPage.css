@@ -9,6 +9,8 @@
     flex-direction: column;
     background-color: #FFFFFF;
     display: flex;
+    min-width: 200px;
+    max-width: 300px;
 }
 
 .chat-messages-section{

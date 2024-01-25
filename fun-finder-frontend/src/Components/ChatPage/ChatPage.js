@@ -22,35 +22,26 @@ const ChatPageComponent = () => {
             setInitialRender(false);
             return;
         }
-        const userId = user._id; // id zalogowanego usera
         switch (whichChatToDisplay) {
             case "person":
-                axios.get(`http://localhost:7000/clouds/participants/${userId}`)
-                .then(response => {
-                setParticipantInfo(response.data);
-                console.log(response.data);
-                console.log("dodaje?")
-                })
-                .catch(error => {
-                console.error('Error fetching participant info:', error);
-                });
-
-                break;
-        
-            case "group":
-                axios.get(`http://localhost:7000/clouds/group/${userId}`)
-                .then(response => {
+                if(user){
+                    console.log(user)
+                    axios.get(`http://localhost:7000/clouds/participants/${user._id}`)
+                    .then(response => {
                     setParticipantInfo(response.data);
                     console.log(response.data);
-                })
-                .catch(error => {
-                    console.error('Error fetching group info;', error);
-                })
+                    console.log("dodaje? tak?")
+                    })
+                    .catch(error => {
+                    console.error('Error fetching participant info:', error);
+                    });
 
                 break;
+                }
 
             case "event":
-                axios.get(`http://localhost:7000/clouds/event/${userId}`)
+                if(user) {
+                    axios.get(`http://localhost:7000/clouds/event/${user._id}`)
                 .then(response => {
                     setParticipantInfo(response.data);
                     console.log(response.data);
@@ -60,8 +51,9 @@ const ChatPageComponent = () => {
                 })
 
                 break;
+                }
         }
-      }, [whichChatToDisplay,initialRender,newChat]);
+      }, [whichChatToDisplay,initialRender,newChat,user]);
 
     useEffect(() => { //use effect do wyswietlenia wiadomości z chatu
         if(whichMessagesToDisplay !== ""){

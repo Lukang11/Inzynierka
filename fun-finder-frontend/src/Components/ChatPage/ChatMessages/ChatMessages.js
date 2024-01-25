@@ -8,11 +8,31 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
 
     const [socket, setSocket ] = useState(null);
     const [messages, setMessages] = useState([]);
-    const [singleMessage, setSingleMessage] = useState("");
     const [participants, SetParticipants] = useState("");
     const [conversationId, setConversationId] = useState("");
     const inputMesageRef = useRef(null);
 
+    const getParticipantImage = (id) => {
+        const foundParticipant = participants.find(participant => participant.id === id);
+        if (foundParticipant) {
+            return foundParticipant.avatar
+        }
+        else {
+            return user.avatar
+        }
+        
+    }
+
+    const getParticipantsName = (id) => {
+        const foundParticipant = participants.find(participant => participant.id === id);
+        if(foundParticipant) {
+            return foundParticipant.fname + " " + foundParticipant.lname
+        }
+        else {
+            return user.fname + " " + user.lname
+        }
+    }
+    
 
     const messageListener = (obj) => {
         console.log("co ja ci tu podaje ", obj);
@@ -22,7 +42,7 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
     }
     
      const send = async (data) => {
-        console.log(data);
+        console.log(data + "to są dane do wysłania");
         await socket?.emit("message",(data));
     }
     const handleMessageInput = () => {
@@ -49,6 +69,7 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
         }
     }
     useEffect(() => {
+        console.log(participants)
         setMessages(passWichMessageToDisplay);
         setConversationId(passConversationId);
         SetParticipants(participantsInfo);
@@ -81,10 +102,22 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
         <div className="chat-wrapper">
             <div className="chat-field">
                 {messages.map((message)=>{
-                    console.log(message)
-                return (<div  key={message._id}
-                    className={ user._id === message.sender_id ? "chat-item-owner" : "chat-item-other"}>
-                    <p>{message.text}</p>
+                return (
+                <div  key={message._id} 
+                className={ user._id === message.sender_id ? "chat-item-owner" : "chat-item-other"}>
+                    <img
+                    className="event-battler-chat-avatar"
+                    src={getParticipantImage(message.sender_id)}
+                    alt="Avatar"
+                    />
+                    <div className="event-battler-chat-details-wrapper">
+                        <p className="event-battler-chat-user-info">
+                            {getParticipantsName(message.sender_id)}
+                        </p>
+                        <p className="event-battler-chat-message">
+                        {message.text}
+                        </p>
+                </div>
                 </div>)
 
                 })}

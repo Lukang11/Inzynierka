@@ -126,5 +126,11 @@
 .category-name{
   text-align: center;
 }
-  
+.error {
+  border: 1px solid red;
+}
+
+.error-message {
+  color: red;
+}
  

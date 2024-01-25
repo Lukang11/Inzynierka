@@ -13,9 +13,7 @@ const ProfilePage = () => {
         <div className="profile-desc">
           <ProfileDescription></ProfileDescription>
         </div>
-        <div className="profile-card">
-          <ProfileDetails></ProfileDetails>
-        </div>
+
       </div>
       <div className="second-row-wrapper">
         <div className="profile-event-wrapper">

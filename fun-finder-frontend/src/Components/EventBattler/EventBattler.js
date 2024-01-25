@@ -6,6 +6,7 @@ import EventBattlerParticipants from "./EventBattlerParticipants/EventBattlerPar
 import io from "socket.io-client";
 import { useAuth } from "../../Utils/AuthProvider";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function EventBattler() {
   const { user } = useAuth(); // do pobierania id uz
@@ -40,8 +41,10 @@ function EventBattler() {
       },
     });
     setSocket(newSocket);
+
     return () => {
       newSocket.disconnect();
+
     };
   }, [setSocket, user._id]);
 
@@ -62,13 +65,20 @@ function EventBattler() {
 
   return (
     <div className="battler-container">
+      <EventBattlerWindow
+        participants={participants}
+        className="battler-window-container"
+      ></EventBattlerWindow>
       <EventBattlerChat
         passParticipants={participants}
         passMessages={messages}
         updateMessage={send}
+        className="battler-chat-container"
       ></EventBattlerChat>
-      <EventBattlerWindow participants={participants}></EventBattlerWindow>
-      <EventBattlerParticipants participants={participants} />
+      <EventBattlerParticipants
+        participants={participants}
+        className="battler-participants-container"
+      />
     </div>
   );
 }

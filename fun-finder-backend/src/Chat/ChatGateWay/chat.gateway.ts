@@ -69,7 +69,7 @@ export class ChatGateway implements OnGatewayConnection {
           client.emit('message',messageToSendToUser) // wyslanie wiadomosci do wysylającego
 
           data.participants.forEach( participant => {
-            const sendTo = this.clients.get(participant._id);
+            const sendTo = this.clients.get(participant.id);
             if(sendTo) {
                 sendTo.emit('message',messageToSendToUser);
             }

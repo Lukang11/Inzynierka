@@ -16,7 +16,7 @@ export const ChatNewMessage = ({handleNewChat}) => {
 
     const searchForUser = async (email) => {
         console.log(email);
-        axios.get(`http://localhost:7000/users/user-data/${email}`)
+        axios.get(`http://localhost:7000/users/user-data-email/${email}`)
                 .then(response => {
                 setSearchedUser(response.data);
                 console.log(response.data);
@@ -74,7 +74,7 @@ export const ChatNewMessage = ({handleNewChat}) => {
                                     className='modal-user-as-button'
                                      onClick={ () => createNewChat(searchedUser._id) }
                                     >
-                                    <p>tomasz bachleda </p>
+                                    <p>{searchedUser.fname} {searchedUser.lname} </p>
                                 </button>
                                 ): (
                                     <p>Nie znaleziono</p>
