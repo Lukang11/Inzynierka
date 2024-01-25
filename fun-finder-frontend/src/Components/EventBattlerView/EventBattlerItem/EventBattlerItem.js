@@ -12,6 +12,7 @@ function EventBattlerItem({
 }) {
   const navigate = useNavigate();
   const handleRowClick = (id) => {
+    console.log(id);
     navigate(`/battle/${id}`);
   };
   return (
