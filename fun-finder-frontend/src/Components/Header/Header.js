@@ -66,7 +66,7 @@ export default function Header() {
               <li className={`nav-link ${showMenu ? "active" : ""}`}>
                 <Link to="/events">
                   {showMenu ? (
-                    <span onClick={() => setShowMenu(false)}>Events</span>
+                    <span onClick={() => setShowMenu(false)}>Wydarzenia</span>
                   ) : (
                     <FontAwesomeIcon icon={faEarthAmericas} style={{ color: "white" }} />
                   )}
@@ -76,7 +76,7 @@ export default function Header() {
               <li className={`nav-link ${showMenu ? "active" : ""}`}>
                 <Link to="/chat">
                   {showMenu ? (
-                    <span onClick={() => setShowMenu(false)}>Chat</span>
+                    <span onClick={() => setShowMenu(false)}>Czat</span>
                   ) : (
                     <FontAwesomeIcon icon={faMessage} style={{ color: "white" }} />
                   )}
@@ -85,7 +85,7 @@ export default function Header() {
               </li>
               <li className={`prof-btn nav-link ${showMenu ? "active" : ""}`}>
                 <div className="profile-login-register-btn">
-                  <Link to="/profile" className="nav-a"><span onClick={() => setShowMenu(false)}>Profile</span> </Link>
+                  <Link to="/profile" className="nav-a"><span onClick={() => setShowMenu(false)}>Profil</span> </Link>
                 </div>
                 {showMenu && <hr />}
               </li>
