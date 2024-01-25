@@ -6,10 +6,14 @@ import { EventBattlerService } from './eventBattler.service';
 import { UserModule } from 'src/Auth/users.module';
 import { UserService } from 'src/Auth/users.service';
 import { EventsModule } from 'src/Events/events.module';
-import { EventsService } from 'src/Events/events.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { EventBattlerRoomsSchema } from './EventBattlerInterfaces/room.module';
 
 @Module({
   imports: [
+    MongooseModule.forFeature([
+      { name: 'Event_Battler_Rooms', schema: EventBattlerRoomsSchema}
+    ]),
     UserModule,
     forwardRef(() => EventsModule),
     JwtModule.register({

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import "./CreateRoomModal.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function EventBattlerCreateRoom({updateModalShow}) {
-  
+    const navigate = useNavigate();
     const [roomName, setRoomtName] = useState("");
     const [roomLocation, setRoomLocation] = useState("");
     const [roomDate, setRoomDate] = useState("");
+    const [createdRoomId,setCreatedRoomId] = useState("");
 
     const handleRoomNameChange = (e) => {
         setRoomtName(e.target.value);
@@ -19,10 +22,16 @@ function EventBattlerCreateRoom({updateModalShow}) {
         setRoomDate(e.target.value);
       };
     
-      const handleSubmit = () => {
-        // tutaj przekazac do rodzica dodanie do bazy pokoju
-
-        updateModalShow();
+       const handleSubmit = async () => {
+        await axios.post(`http://localhost:7000/battle/createRoom`, {
+          description: roomName,
+          participants: 0,
+          location: roomLocation,
+          date: roomDate
+        }).then(response => {
+          console.log(response);
+          navigate(`/battle/${response.data}`);
+        })
       };
     
     return (
@@ -43,7 +52,7 @@ function EventBattlerCreateRoom({updateModalShow}) {
             </label>
             <label>
               Data:
-              <input type="date" value={roomDate} onChange={handleRoomDateChange} />
+              <input type="datetime-local" value={roomDate} onChange={handleRoomDateChange} />
             </label>
             <button type="button" onClick={handleSubmit}>Utwórz</button>
             <button type="button">Anuluj</button>

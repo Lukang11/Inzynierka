@@ -11,6 +11,7 @@
 .btn-chat-clouds{
     border: none;
     background: none;
+    cursor: pointer;
 }
 
 .chat-avatar {
