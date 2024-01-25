@@ -1,0 +1,21 @@
+.battler-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: 4fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  width: 90vw;
+  height: 90vh;
+  margin: auto;
+  vertical-align: middle;
+}
+
+.battler-window-container {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.battler-participants-container {
+  grid-area: 2 / 1 / 3 / 2;
+}
+.battler-chat-container {
+  grid-area: 1 / 2 / 3 / 3;
+}
