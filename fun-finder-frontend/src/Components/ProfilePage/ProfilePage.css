@@ -35,7 +35,7 @@
 }
 
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 767px) {
 
   .profile-card {
     width: 100vw;
@@ -47,7 +47,7 @@
   
   .second-row-wrapper {
     flex-direction: column;
-    margin: 50px;
+    margin: 5vw;
   }
   
   .profile-event-wrapper {

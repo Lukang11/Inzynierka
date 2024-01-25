@@ -13,13 +13,20 @@ function ChatClouds({ passChatCloudsDBData, updateWichMessagesToDisplay }){
             updateWichMessagesToDisplay(id);
     }
 
+    const replaceLongLastMessage = (message) => {
+        if(message.length > 15) {
+            const newLastMessage = message.substring(0,12) + "...";
+            return newLastMessage
+        }
+        return message
+    }
     return (
     <div className="chat-clouds">
             <hr></hr>
             {passChatCloudsDBData.map((item) => (
             <button 
             key = {item.chatId}
-            onClick={() => {changeWichMessageToUpdate(item.chatId); console.log("ile razy sie wykonuje")}}
+            onClick={() => {changeWichMessageToUpdate(item.chatId)}}
             className="btn-chat-clouds">
                 <div className="chat-item">
                     <div className="chat-avatar"
@@ -28,7 +35,7 @@ function ChatClouds({ passChatCloudsDBData, updateWichMessagesToDisplay }){
                     <div className="chat-info">
                         <p>{item.fname} {item.lname}</p>
                         <div className="chat-info-message">
-                            <p>{item.lastMessage}</p>
+                            <a>{replaceLongLastMessage(item.lastMessage)}</a>
                         </div>
                     </div>
                     </div>

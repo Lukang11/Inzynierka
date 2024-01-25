@@ -1,13 +1,69 @@
-.event-battler-cont {
-  width: 800px;
-  height: 1200px;
-  margin: auto;
-  margin-top: 10px;
-  border-radius: 5px;
-  -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
-  -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
-  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+.event-battler-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
+}
+
+.event-battler-tools {
+  display: flex;
+  justify-content: end;
+  flex-basis: 20%;
+}
+
+.refresh-button {
+  padding: 10px 20px;
+  background-color: #5908bf;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  }
+  
+  .refresh-button:hover {
+    background-color: #6d0ce4;
+  }
+  .create-group-button {
+    padding: 10px 20px;
+    background-color: var(--mainpurple);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 5px;
+    transition: background-color 0.3s ease;
+  }
+  .create-group-button:hover {
+    background-color: #6d0ce4;
+  }
+  
+  .event-battler-rooms {
+    width: 800px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 20px 16px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    background-color: #fdfbfbb7;
+    flex-basis: 80%;
+  }
+  
+  .event-battler-H2 {
+    display: flex;
+    font-size: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .event-battler-rooms p {
+    margin-bottom: 10px;
+  }
+  
+@media only screen and (max-width: 800px) {
+  .event-battler-rooms {
+    width: 100%;
+    padding: 10px;
+    align-items: center;
+  }
 }

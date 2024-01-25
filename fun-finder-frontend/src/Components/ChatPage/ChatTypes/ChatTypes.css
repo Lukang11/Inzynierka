@@ -12,6 +12,7 @@
     padding: 10px 25px;
     border-radius: 25px;
     border-color: #5908BF;
+    cursor: pointer;
 }
 
 
@@ -21,5 +22,6 @@
     border-radius: 25px;
     border: none;
     color: #FFFFFF;
+    cursor: pointer;
 }
 

@@ -1,6 +1,5 @@
 .event-battler-window {
-  width: 60%;
-  height: 40vh;
   border: 2px solid var(--mainpurple);
+  margin: 2px;
   border-radius: 5px;
 }

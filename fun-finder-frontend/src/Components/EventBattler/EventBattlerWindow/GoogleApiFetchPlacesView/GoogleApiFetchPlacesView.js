@@ -4,7 +4,7 @@ import axios from "axios";
 import EventCardView from "../../../EventsPageView/EventCardView/EventCardView";
 import GooglePlaceSquare from "./GooglePlaceSquare/GooglePlaceSquare";
 
-function GoogleApiFetchPlacesView() {
+function GoogleApiFetchPlacesView({ data }) {
   const [palces, setPlaces] = useState();
   const url = "http://localhost:7000/events/find-places-by-localization";
   const mock = [
@@ -74,7 +74,9 @@ function GoogleApiFetchPlacesView() {
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(function (position) {
-        fetchEvents(position.coords.latitude, position.coords.longitude);
+        if (data.length === 0) {
+          fetchEvents(position.coords.latitude, position.coords.longitude);
+        }
       });
     } else {
       console.log("Geolocation is not available in your browser.");
@@ -82,23 +84,32 @@ function GoogleApiFetchPlacesView() {
   }, []);
   return (
     <div className="google-api-view">
-      <h4>Niestety nie znaleźlismy żadnych miejsc które by do was pasowały</h4>
-      <div>Może coś z tych miejsc cie zainteresuje?</div>
-      <div className="google-api-places-view-wrapper">
-        {/* {palces
-          ? palces.places.map((palce) => (
-              <GooglePlaceSquare
-                eventInfo={palce}
-                places={true}
-                key={palce._id}
-              />
-            ))
-          : "Couldnt fetch events at the moment, try later"} */}
-        {mock.map((place) => {
-          console.log(place);
-          return <GooglePlaceSquare eventInfo={place} key={place._id} />;
-        })}
-      </div>
+      {console.log(data.length)}
+      {data.length === 0 ? (
+        <div>
+          <h4>
+            Niestety nie znaleźlismy żadnych miejsc które by do was pasowały
+          </h4>
+          <div>Może coś z tych miejsc cie zainteresuje?</div>
+          <div className="google-api-places-view-wrapper">
+            {palces
+              ? palces.places.map((palce) => (
+                  <GooglePlaceSquare
+                    eventInfo={palce}
+                    places={true}
+                    key={palce._id}
+                  />
+                ))
+              : "Couldnt fetch events at the moment, try later"}
+          </div>
+        </div>
+      ) : (
+        <div>
+          {data.map((place) => (
+            <GooglePlaceSquare eventInfo={place} key={place._id} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

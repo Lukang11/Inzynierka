@@ -2,9 +2,13 @@ import { OnGatewayConnection, SubscribeMessage, WebSocketGateway, WebSocketServe
 import { Server } from "http";
 import { Socket } from "socket.io";
 import { v4 as uuidv4 } from 'uuid';
+import { EventBattlerService } from "../eventBattler.service";
 
 @WebSocketGateway(8002, {cors: true})
 export class EventBattlerGateway implements OnGatewayConnection {
+    constructor(
+        private readonly eventBattlerService : EventBattlerService
+      ) {}
 
     @WebSocketServer() server: Server
     private clients: Map<string, { socket: Socket, roomId: string }> = new Map();
@@ -17,6 +21,7 @@ export class EventBattlerGateway implements OnGatewayConnection {
         console.log(`nowe połączenie: ${sender_id}`);
         console.log(`connecting to room: ${room_id}`)
         client.join(room_id); // łaczenie do pokoju 
+        this.eventBattlerService.addToRoom(room_id);
 
         const participants = this.getParticipantsInRoom(room_id);
         client.emit('updateParticipants', participants);
@@ -27,6 +32,8 @@ export class EventBattlerGateway implements OnGatewayConnection {
             console.log('disconect client : ',sender_id);
             const participants = this.getParticipantsInRoom(room_id);
             client.to(room_id.toString()).emit('handleDisconect', participants);
+            this.eventBattlerService.removeFromRoom(room_id);
+
             console.log('new participants list', participants);
         })
     }

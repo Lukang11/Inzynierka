@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./ProfileDescription.css";
 import { useAuth } from "../../../../Utils/AuthProvider";
 import axios from "axios";
-import ProfileDetails from "../ProfileDetails/ProfileDetails";
-import "../ProfileDetails/ProfileDetails.css";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 
 
@@ -75,7 +73,7 @@ const ProfileDescription = () => {
         <img src={avatar} alt="Avatar" />
       </div>
       <div className="edit-profile-button" onClick={toggleModal}>
-            Edytuj profil
+            <span>Edytuj profil</span>
       </div>
 
       {isOpen ? <EditProfileModal onClick={toggleModal} /> : null}

@@ -14,7 +14,6 @@ export const EventInfo = () => {
   const [eventData, setEventData] = useState(null);
   const [isUserRegistered, setIsUserRegistered] = useState(false);
   const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-  
 
   useEffect(() => {
     const fetchEventData = async () => {
@@ -67,7 +66,7 @@ export const EventInfo = () => {
       const response = await fetch(`http://localhost:7000/events/add/user`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/jso
 
         },
         body: JSON.stringify({ eventId: eventId, userEmail: userEmail }),
@@ -122,7 +121,6 @@ export const EventInfo = () => {
             </LoadScript>
             
           </div>
-         
         </>
       ) : (
         <p>Ładowanie danych...</p>

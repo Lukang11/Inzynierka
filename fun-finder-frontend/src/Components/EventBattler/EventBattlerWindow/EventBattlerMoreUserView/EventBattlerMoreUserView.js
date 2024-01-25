@@ -13,30 +13,18 @@ const override = {
 function EventBattlerMoreUserView({ participants }) {
   const [loading, setLoading] = useState(false);
   const [placesFound, setPlacesFound] = useState(false);
-  const [placesFromDB, setPlacesDB] = useState(false);
+  const [resData, setResData] = useState();
   const color = "#5908bf";
   const user_url = "http://localhost:7000/battle";
   const handleFetch = async () => {
-    setLoading((val) => !val);
     const participantsHobbiesList = await axios.post(`${user_url}`, {
       participants,
     });
-    console.log("lalala");
-    console.log(participantsHobbiesList.data.length);
-    if (participantsHobbiesList.data.length === 0) {
-      console.log("list is empty");
-      setPlacesFound(true);
-      setPlacesDB(false);
-    }
-    if (participantsHobbiesList.data.length > 0) {
-      console.log("hello");
-      setPlacesFound(false);
-      setPlacesDB(true);
-    }
+    setResData(participantsHobbiesList.data);
+    setPlacesFound(true);
   };
   return (
     <div className="event-battler-more-user-view-cont">
-      {console.log(participants)}
       {!placesFound ? (
         <div>
           <div> Grupa liczy : {participants.length} </div>
@@ -48,7 +36,7 @@ function EventBattlerMoreUserView({ participants }) {
           </div>
           <div>
             {" "}
-            {loading ? (
+            {/* {loading ? (
               <ClipLoader
                 color={color}
                 loading={loading}
@@ -57,11 +45,11 @@ function EventBattlerMoreUserView({ participants }) {
                 aria-label="Loading Spinner"
                 data-testid="loader"
               />
-            ) : null}
+            ) : null} */}
           </div>
         </div>
       ) : (
-        <GoogleApiFetchPlacesView />
+        <GoogleApiFetchPlacesView data={resData} />
       )}
     </div>
   );
