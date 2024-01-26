@@ -19,3 +19,10 @@
 .battler-chat-container {
   grid-area: 1 / 2 / 3 / 3;
 }
+@media only screen and (max-width: 1150px) {
+  .battler-container {
+    display: flex;
+    flex-direction: column;
+    
+  }
+}
