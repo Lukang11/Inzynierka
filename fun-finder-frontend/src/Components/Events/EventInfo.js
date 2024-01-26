@@ -66,7 +66,7 @@ export const EventInfo = () => {
       const response = await fetch(`http://localhost:7000/events/add/user`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/jso
+          'Content-Type': 'application/json'
 
         },
         body: JSON.stringify({ eventId: eventId, userEmail: userEmail }),

@@ -6,6 +6,7 @@ import ChatNewMessageComponent from "./ChatNewMessage/ChatNewMessage";
 import { useAuth } from "../../Utils/AuthProvider"
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const ChatPageComponent = () => {
     const { user } = useAuth(); // do pobierania id uz
@@ -16,6 +17,21 @@ const ChatPageComponent = () => {
     const [messages, SetMessages] = useState([]);
     const [newChat, setNewChat] = useState(false);
     const [initialRender, setInitialRender] = useState(true); // Dodatkowy stan
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+            setWichMessagesToDisplay("");
+        };
+    
+        window.addEventListener("resize", handleResize);
+    
+        return () => {
+          window.removeEventListener("resize", handleResize);
+        };
+      }, []); 
+
 
     useEffect(() => { //use effect do wyświetlania dymkow czatu
         if (initialRender) {
@@ -72,9 +88,10 @@ const ChatPageComponent = () => {
     const updateWichChatToDisplay = (data) => {
         setWichChatToDisplay(data);
     };
-    const updateWichMessagesToDisplay = (chatId) => {
+    const updateWichMessagesToDisplay =  (chatId) => {
         if(chatId !== whichMessagesToDisplay){
             setWichMessagesToDisplay(chatId);
+            console.log(chatId);
             SetMessages([]);   
         }
     };
@@ -84,6 +101,21 @@ const ChatPageComponent = () => {
             setNewChat(!newChat);
           }, 1000);
     }
+    const checkIfUsingMobileVersion = () => {
+        return window.innerWidth < 800;
+    }
+
+    const displayChatClouds = () => {
+        if (checkIfUsingMobileVersion() && whichMessagesToDisplay !== ""){
+            return false;
+        }
+        else if (checkIfUsingMobileVersion() && whichMessagesToDisplay === "") {
+            return true;
+        }
+        if (!checkIfUsingMobileVersion()) {
+            return true;
+        }
+    }
 
 
     return (
@@ -92,10 +124,11 @@ const ChatPageComponent = () => {
                 <ChatTypes
                     updateWichChatToDisplay={updateWichChatToDisplay}
                     clearDisplayedMessage={updateWichMessagesToDisplay}/>
+                {displayChatClouds() && (
                 <ChatClouds 
                     passChatCloudsDBData={participantInfo} 
-                    updateWichMessagesToDisplay={updateWichMessagesToDisplay}/>
-                {whichChatToDisplay === "person" && (
+                    updateWichMessagesToDisplay={updateWichMessagesToDisplay}/>)}
+                {whichChatToDisplay === "person" && displayChatClouds() && (
                     <ChatNewMessageComponent
                     handleNewChat={handleNewChatAdded}/>
                 )}

@@ -11,6 +11,8 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
     const [participants, SetParticipants] = useState("");
     const [conversationId, setConversationId] = useState("");
     const inputMesageRef = useRef(null);
+    const lastItemRef = useRef(null);
+
 
     const getParticipantImage = (id) => {
         const foundParticipant = participants.find(participant => participant.id === id);
@@ -97,30 +99,51 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
         }                                               // odbieramy wiadomość
     },[messageListener])
 
+    useEffect(() => {
+        if (lastItemRef.current) {
+          lastItemRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, [messages]);
+
 
     return (
         <div className="chat-wrapper">
             <div className="chat-field">
-                {messages.map((message)=>{
+                {messages.map((message,index)=>{
                 return (
-                <div  key={message._id} 
-                className={ user._id === message.sender_id ? "chat-item-owner" : "chat-item-other"}>
+                <div  key={index} 
+                ref={index === messages.length - 1 ? lastItemRef : null}
+                className={ user._id === message.sender_id ? "chat-item-owner" : "chat-item-other"}
+                >
+                {user._id !== message.sender_id ? (
+                    <>
+                    <div className="event-battler-chat-details-wrapper">
+                        <p className="event-battler-chat-user-info-other">
+                            {getParticipantsName(message.sender_id)}
+                        </p>
+                        <p className="event-battler-chat-message">{message.text}</p>
+                    </div>
+                    <img
+                    className="event-battler-chat-avatar"
+                    src={getParticipantImage(message.sender_id)}
+                    alt="Avatar"/></>
+                ) : (
+                    <>
                     <img
                     className="event-battler-chat-avatar"
                     src={getParticipantImage(message.sender_id)}
                     alt="Avatar"
                     />
                     <div className="event-battler-chat-details-wrapper">
-                        <p className="event-battler-chat-user-info">
+                        <p className="event-battler-chat-user-info-owner">
                             {getParticipantsName(message.sender_id)}
                         </p>
-                        <p className="event-battler-chat-message">
-                        {message.text}
-                        </p>
-                </div>
+                        <p className="event-battler-chat-message">{message.text}</p>
+                    </div>
+                    </>
+                )}
                 </div>)
-
-                })}
+            })}
             </div>
             <div className="message-field">
                     <input
@@ -132,6 +155,7 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
                     <button
                         className="message-send-btn"
                         onClick={ () => handleData(inputMesageRef.current.value,user._id,passConversationId,participantsInfo,passChatType)}>
+                            <a>+</a>
                     </button>
             </div>
         </div>

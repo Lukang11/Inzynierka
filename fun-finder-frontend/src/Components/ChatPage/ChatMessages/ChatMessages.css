@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-    max-height: 79vh;
+    max-height: 84vh;
 }
 
 .chat-item-owner{
@@ -15,6 +15,7 @@
     padding: 10px 25px;
     border-radius: 25px;
     word-break: break-word;
+    align-self: flex-start;
 }
 
 .chat-item-other{
@@ -25,18 +26,19 @@
     padding: 10px 25px;
     border-radius: 25px;
     word-break: break-word;
+    align-self: flex-end;
 }
 .message-field {
+    margin-top: auto;
+    margin-bottom: 10px;
+    margin-inline: 10px;
     display: flex;
     flex-basis: 5%;
-    margin: 20px;
     justify-content: flex-start;
-    background-color: #D9D9D9;
     background-color: #FFFFFF;
     padding: 15px 25px;
     border-radius: 25px;
-    border-color: #5908BF;
-
+    border: 1px solid #b6b6b6;
 }
 
 .chat-wrapper {
@@ -51,9 +53,26 @@
 }
 
 .message-send-btn {
-    flex-basis: 3%;
+    flex-basis: auto;
     background-color: #5908BF;
     width: 35px;
     height: 35px;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    color: #ffffffd6;
+    border: 1px solid #b6b6b6;
+
+}
+@media (max-width: 800px) {
+    .chat-field {
+        flex-basis: 95%;
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+        max-height: 78vh;
+        min-height: 75vh;
+    }
 }
