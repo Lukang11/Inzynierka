@@ -23,6 +23,7 @@
   padding: 10px 25px;
   border-radius: 25px;
   word-break: break-word;
+  align-self: flex-start;
 }
 
 .event-battle-chat-item-other {
@@ -33,6 +34,7 @@
   padding: 10px 25px;
   border-radius: 25px;
   word-break: break-word;
+  align-self: flex-end;
 }
 
 .event-battle-message-field {
@@ -72,15 +74,28 @@
 }
 .event-battler-chat-user-info {
   font-size: 15px;
-  margin: 0px;
+  margin: 4px;
   font-weight: bold;
 }
+
+.event-battler-chat-user-info-owner {
+  font-size: 15px;
+  margin: 4px;
+  font-weight: bold;
+  align-self: flex-start;
+}
+.event-battler-chat-user-info-other {
+  font-size: 15px;
+  margin: 4px;
+  font-weight: bold;
+  align-self: flex-end;
+}
+
 .event-battler-chat-message {
   margin: 0px;
 }
 .event-battler-chat-avatar {
-  margin-top: 7px;
-  margin-right: 5px;
+  margin: 5px;
   display: flex;
   width: 25px;
   height: 25px;

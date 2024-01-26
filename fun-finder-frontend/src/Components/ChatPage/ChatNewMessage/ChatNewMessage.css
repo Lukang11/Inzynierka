@@ -4,12 +4,13 @@
     justify-content: center;
 }
 .new-chat-btn{
+    margin-bottom: 5px;
     background-color: #5908BF;
     padding: 10px 25px;
     border-radius: 25px;
     border: none;
     color: #FFFFFF;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
 }
 
 .new-chat-btn:active {
@@ -105,3 +106,8 @@
     transition: background-color 0.3s ease;
 }
 
+@media (max-width: 800px) {
+    .chat-new-message {
+        margin-bottom: 5px;
+    }
+}

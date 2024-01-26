@@ -1,5 +1,5 @@
 .chat-page {
-    height: calc(100vh - 100px);
+    height: calc(100vh - 70px);
     display: flex;
     justify-content: flex-start;
 }
@@ -10,7 +10,6 @@
     background-color: #FFFFFF;
     display: flex;
     min-width: 200px;
-    max-width: 300px;
 }
 
 .chat-messages-section{
@@ -21,5 +20,13 @@
     display: flex;
 }
 
+/* Styl dla małych ekranów (do 768px) */
+@media (max-width: 800px) {
+    .chat-page {
+        flex-direction: column;
+        height: auto;
+    }
 
+
+}
 

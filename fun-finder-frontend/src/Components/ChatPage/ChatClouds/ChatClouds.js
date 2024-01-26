@@ -22,7 +22,6 @@ function ChatClouds({ passChatCloudsDBData, updateWichMessagesToDisplay }){
     }
     return (
     <div className="chat-clouds">
-            <hr></hr>
             {passChatCloudsDBData.map((item) => (
             <button 
             key = {item.chatId}
