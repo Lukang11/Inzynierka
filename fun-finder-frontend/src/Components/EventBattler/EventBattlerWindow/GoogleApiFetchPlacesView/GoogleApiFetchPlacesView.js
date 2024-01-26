@@ -104,7 +104,7 @@ function GoogleApiFetchPlacesView({ data }) {
           </div>
         </div>
       ) : (
-        <div>
+        <div className="google-api-places-view-wrapper">
           {data.map((place) => (
             <GooglePlaceSquare eventInfo={place} key={place._id} />
           ))}

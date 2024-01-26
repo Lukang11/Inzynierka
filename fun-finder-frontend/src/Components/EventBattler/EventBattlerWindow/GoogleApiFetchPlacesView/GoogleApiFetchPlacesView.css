@@ -1,8 +1,9 @@
 .google-api-view {
-  overflow-y: scroll;
+  max-width: 900px;
 }
 .google-api-places-view-wrapper {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  overflow-x: scroll;
 }
