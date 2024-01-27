@@ -1,0 +1,45 @@
+.events-preview-card {
+    height: 300px;
+    width: 280px;
+    border: solid grey 1px;
+    margin: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px black;
+    transition: transform 0.3s ease-in-out;
+  }
+  .events-preview-card-item {
+    display: flex;
+    flex-direction: column;
+  }
+  .events-preview-card-item:hover{
+    cursor: pointer;
+  }
+  .events-preview-image {
+    background-position: center;
+    background-size: cover;
+    height: 200px;
+    border-radius: 10px 10px 0 0;
+  }
+  .events-preview-description {
+    display: flex;
+    height: 100px;
+    justify-content: space-around;
+    align-items: center;
+    padding: 3px;
+  }
+  .events-prewiev-info-card-name,
+  .events-preview-card-hour {
+    font-weight: bold;
+  }
+  
+.preview-placeholder {
+  text-align: center;
+  color: #555; 
+  font-size: 20px; 
+  font-weight: bold; 
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px; 
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+  
