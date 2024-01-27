@@ -150,7 +150,7 @@ function CreateEvent( ) {
           eventStart:startDate,
           eventEnd:endDate,
           eventDescription:description,
-          eventParticipants:people,
+          maxEventParticipants:people,
           relatedHobbies:selectedCategory,
           eventPhoto:imageUrl,
 

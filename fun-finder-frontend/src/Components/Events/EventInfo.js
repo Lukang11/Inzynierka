@@ -20,6 +20,7 @@ export const EventInfo = () => {
     const loader = new Loader({
       apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
       version: "weekly",
+      libraries: ["places"],
     });
 
     loader.load().then(() => {

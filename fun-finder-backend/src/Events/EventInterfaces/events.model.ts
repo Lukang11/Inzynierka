@@ -13,6 +13,7 @@ export const EventSchema = new mongoose.Schema({
   eventEnd: { type: Date, required: false },
   eventDescription: { type: String },
   eventParticipantsEmail: { type: [String] },
+  maxEventParticipants: { type: Number, required: true },
   relatedHobbies: {
     type: [String],
     default: [],
@@ -31,6 +32,7 @@ export class Events {
     public eventEnd: Date,
     public eventDescription: string,
     public eventParticipantsEmail: string[],
+    public maxEventParticipants: number,
     public eventPhoto: string,
   ) {}
 }
