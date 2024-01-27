@@ -2,6 +2,7 @@ import React from "react";
 import "./SearchPage.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {    faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import UserCard from "./UserCard";
 
 function SearchPage() {
     const handleSubmit = (e) => e.preventDefault()
@@ -29,6 +30,8 @@ function SearchPage() {
                 </button>
             </form>
         </div>
+
+        <UserCard />
 
     </div>
     )
