@@ -5,6 +5,7 @@ import {
   faEarthAmericas,
   faSignOutAlt,
   faUsersRays,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Header.css";
 import { Link } from "react-router-dom";
@@ -53,6 +54,16 @@ export default function Header() {
           {isLoggedIn ? (
             <div className="flex-cont">
               {showMenu && <hr />}
+              <li className={`nav-link ${showMenu ? "active" : ""}`}>
+                <Link to="/search">
+                  {showMenu ? (
+                    <span onClick={() => setShowMenu(false)}>Znajdź</span>
+                  ) : (
+                    <FontAwesomeIcon icon={faSearch} style={{ color: "white" }} />
+                  )}
+                </Link>
+                {showMenu && <hr />}
+              </li>
               <li className={`nav-link ${showMenu ? "active" : ""}`}>
                 <Link to="/battle">
                   {showMenu ? (

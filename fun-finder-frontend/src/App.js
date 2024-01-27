@@ -15,6 +15,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import EventsPageView from "./Components/EventsPageView/EventsPageView";
 import EventBattler from "./Components/EventBattler/EventBattler";
 import EventBattlerView from "./Components/EventBattlerView/EventBattlerView";
+import SearchPage from "./Components/SearchPage/SearchPage";
 
 function App() {
   return (
@@ -23,13 +24,22 @@ function App() {
         <BrowserRouter>
           <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
             <Routes>
-              <Route
+            <Route
                 path="/"
                 element={
                   <>
                     {" "}
                     <Header />
                     <WelcomePage />{" "}
+                  </>
+                }
+              />
+              <Route
+                path="/search"
+                element={
+                  <>
+                    <Header />
+                    <SearchPage />
                   </>
                 }
               />
