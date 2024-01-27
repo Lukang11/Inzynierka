@@ -38,6 +38,7 @@ export class EventsService {
       eventDescription: fullObject.eventDescription,
       eventParticipants: fullObject.eventParticipants,
       relatedHobbies: fullObject.relatedHobbies,
+      eventPhoto: fullObject.eventPhoto,
     });
     const result = await newEvent.save();
   }

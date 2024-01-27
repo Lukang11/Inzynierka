@@ -1,16 +1,12 @@
-import React, { useState,useEffect } from 'react';
-import { FaMusic, FaFootballBall, FaPaintBrush } from 'react-icons/fa';
+import React, { useState,useEffect,useRef } from 'react';
+import { Loader } from "@googlemaps/js-api-loader";
 import './CreateEvent.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../Utils/AuthProvider"; 
-import { GoogleMap, Marker,LoadScript,StandaloneSearchBox} from '@react-google-maps/api';
 import { hobbiesData } from '../../Data/HobbiesData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
-
-
-
-
+import EventCardPrewiev from './EventCardPrewiev';
 
 
 function CreateEvent( ) {
@@ -18,17 +14,18 @@ function CreateEvent( ) {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [errors, setErrors] = useState([]); 
   const [name, setName] = useState('');
-  const libraries = process.env.REACT_APP_GOOGLE_MAPS_LIBRARIES.split(',');
   const [people, setPeople] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [latLng, setLatLng] = useState({ lat: 0, lng: 0 });
-  const [map, setMap] = useState(null);
   const [address,setAddress]=useState('')
   const [description,setDescription]=useState('')
   const apiKey= process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-  const [addressSearch, setAddressSearch] = useState(null);
-  const [clickedLatLng, setClickedLatLng] = useState(null);
+  const [marker, setMarker] = useState(null);
+  const mapRef = useRef(null);
+  const searchBoxRef = useRef(null);
+  const [imageUrl, setImageUrl] = useState('');
+  const [map, setMap] = useState(null);
   const handleCategorySelect = (categoryName) => {
     setSelectedCategory(categoryName);
   };
@@ -45,67 +42,84 @@ function CreateEvent( ) {
     return Object.values(tempErrors).every(x => x == "");
   };
 
-
-
-
+  useEffect(() => {
+    const loader = new Loader({
+      apiKey: apiKey,
+      version: "weekly",
+      libraries: ["places"],
+    });
   
-    const mapClickHandler = (event) => {
-      const newLatLng = {
-        lat: event.latLng.lat(),
-        lng: event.latLng.lng(),
-      };
-      setClickedLatLng(newLatLng); 
-      setLatLng(newLatLng); 
-    };
+    loader.load().then(() => {
+      const map = new window.google.maps.Map(mapRef.current, {
+        zoom: 8, 
+      });
+      setMap(map);
+  
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const userLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          map.setCenter(userLocation);
+          map.setZoom(15);
+  
+          new window.google.maps.Marker({
+            position: userLocation,
+            map: map,
+            title: "Twoja lokalizacja"
+          });
+        }, (error) => {
+          console.error("Błąd geolokalizacji:", error)
+        });
+      }
+  
+      const searchBox = new window.google.maps.places.SearchBox(searchBoxRef.current);
+      searchBox.addListener('places_changed', () => {
+        const places = searchBox.getPlaces();
+        if (places.length === 0) return;
+  
+        const bounds = new window.google.maps.LatLngBounds();
+        places.forEach(place => {
+          if (!place.geometry) return;
+          if (place.geometry.viewport) {
+            bounds.union(place.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
+          }
+        });
+  
+        map.fitBounds(bounds);
+        const selectedPlace = places[0];
+        const selectedLatLng = { lat: selectedPlace.geometry.location.lat(), lng: selectedPlace.geometry.location.lng() };
+        setLatLng(selectedLatLng);
+        setAddress(selectedPlace.formatted_address);
+  
+        if (marker) {
+          marker.setPosition(selectedLatLng);
+        } else {
+          const newMarker = new window.google.maps.Marker({
+            position: selectedLatLng,
+            map: map,
+          });
+          setMarker(newMarker);
+        }
+      });
+  
+    });
+  }, [apiKey]);
   
 
   useEffect(() => {
-    if (clickedLatLng) {
-      const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode({ location: clickedLatLng }, (results, status) => {
-        if (status === 'OK') {
-          if (results[0]) {
-            setAddress(results[0].formatted_address);
-            console.log(address)
-          } else {
-            console.log('No results found');
-          }
-        } else {
-          console.log('Geocoder failed due to: ' + status);
-        }
-      });
+    if (marker && latLng.lat !== 0 && latLng.lng !== 0) {
+      marker.setPosition(latLng);
     }
-  }, [clickedLatLng]);
-  const mapContainerStyle = {
-    width: '100%',
-    height: '450px',
-  };
-  const handleSelectAddress = () => {
-    if (!addressSearch) {
-      console.error("addressSearch nie został zainicjowany");
-      return;
-  }
-    const places = addressSearch.getPlaces();
-    if (places && places.length > 0) {
-      const location = places[0].geometry.location;
-      const updatedLatLng = { lat: location.lat(), lng: location.lng() };
-      console.log("Selected location:", updatedLatLng);
-      setLatLng(updatedLatLng);
-      setAddress(places[0].formatted_address);
-
-      if (map) {
-        map.panTo(updatedLatLng);
-      }
-    }
-  };
-
-
-  const onLoad = (map) => {
-    setMap(map);
-  };
-
+  }, [latLng, marker]);
+  
+ 
   
   
+
   const navigate = useNavigate(); 
 
   const createNewEventChat = async (userCreatingChatId, chatName) => {
@@ -137,7 +151,8 @@ function CreateEvent( ) {
           eventEnd:endDate,
           eventDescription:description,
           eventParticipants:people,
-          relatedHobbies:selectedCategory
+          relatedHobbies:selectedCategory,
+          eventPhoto:imageUrl,
 
           
         });
@@ -167,39 +182,16 @@ function CreateEvent( ) {
         <input type="number" className={`input-textbox ${errors.name ? 'input-error' : ''}`}  value={people} placeholder={errors.people||'Podaj ilość osób'} onChange={e => {setPeople(e.target.value);setErrors({...errors, name: ''});}}  />
         <div className='label-text'>Opis wydarzenia:</div>
         <textarea id="input-textbox-2" name={`input-textbox-2 ${errors.name ? 'input-error' : ''}`}  rows="6" cols="40" value={description} placeholder={errors.description||'Napisz coś o swoim wydarzeniu'} onChange={e => {setDescription(e.target.value);setErrors({...errors, name: ''});}}> </textarea>
-        
+
       </div>
       <div className='events-card'>
-        <div className='info-header'>Lokalizacja</div>
-        
-        <LoadScript 
-        googleMapsApiKey={apiKey}
-        libraries = {libraries}
-        >
-         <StandaloneSearchBox
-            onLoad={(ref) => setAddressSearch(ref)}
-            onPlacesChanged={handleSelectAddress}
-          >
-            <input
-              type="text"
-              placeholder="Search for places"
-              style={{ width: "100%", padding: "12px" }}
-            />
-          </StandaloneSearchBox>
-          <div style={mapContainerStyle}>
-            <GoogleMap
-              mapContainerStyle={mapContainerStyle}
-              zoom={10}
-              onClick={mapClickHandler}
-              onLoad={onLoad}
-            >
-                
-                {latLng && <Marker position={latLng} />}
-
-            </GoogleMap>
-          </div>
-        </LoadScript>
-        <div className='photo-display'>Tu będzie dodawane zdjęcie ale jeszcze nie ma serwisu</div>
+        <div className='info-header'>Lokalizacja i Podgląd</div>
+      <div>
+      <input className='input-textbox' ref={searchBoxRef} type="text" placeholder="Podaj adres wydarzenia" />
+      </div>
+      <div className='events-map' ref={mapRef} ></div>
+      <input className='input-textbox' type="text" placeholder='Dodaj URL zdjęcia' value={imageUrl} onChange={e => {setImageUrl(e.target.value) }}/> 
+      <EventCardPrewiev name={name} location={address} description={description} startDate={startDate} endDate={endDate} people={people} category={selectedCategory} imageUrl={imageUrl} />
       </div>
       <div className='events-card'>
         <div className='info-header'>Kategoria</div>

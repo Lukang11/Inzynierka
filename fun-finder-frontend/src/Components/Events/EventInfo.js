@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
 import "./EventInfo.css";
 import { useAuth } from "../../Utils/AuthProvider";
+import { Loader } from "@googlemaps/js-api-loader";
 
 export const EventInfo = () => {
   const currentURL = window.location.href;
@@ -16,6 +17,15 @@ export const EventInfo = () => {
   const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
   useEffect(() => {
+    const loader = new Loader({
+      apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+      version: "weekly",
+    });
+
+    loader.load().then(() => {
+      setIsMapsLoaded(true);
+    });
+
     const fetchEventData = async () => {
       try {
         const response = await fetch(`http://localhost:7000/events/by-id/${eventId}`);
@@ -35,6 +45,12 @@ export const EventInfo = () => {
   }, [eventId]);
 
   useEffect(() => {
+    const checkIfUserIsRegistered = () => {
+      if (eventData && eventData.eventParticipantsEmail && user) {
+        setIsUserRegistered(eventData.eventParticipantsEmail.includes(user.email));
+      }
+    };
+
     const geocodeAddress = () => {
       const geocoder = new window.google.maps.Geocoder();
       geocoder.geocode({ address: eventData.location }, (results, status) => {
@@ -51,8 +67,11 @@ export const EventInfo = () => {
     if (eventData && eventData.location && isMapsLoaded) {
       geocodeAddress();
     }
-    console.log(eventId,user)
-  }, [eventData, isMapsLoaded]);
+
+    checkIfUserIsRegistered();
+  }, [eventData, isMapsLoaded, user]);
+
+
   const handleRegisterEvent = async () => {
     if (eventData && eventData.users && eventData.users.includes(user.email))  {
       setIsUserRegistered(true);
@@ -66,7 +85,7 @@ export const EventInfo = () => {
       const response = await fetch(`http://localhost:7000/events/add/user`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/jso
+          'Content-Type': 'application/json'
 
         },
         body: JSON.stringify({ eventId: eventId, userEmail: userEmail }),
@@ -95,19 +114,15 @@ export const EventInfo = () => {
             <div className="event-name">{eventData.name}</div>
           <div className="event-address">{eventData.location}</div>
           <p className="event-information">{eventData.eventDescription}</p>
-          <button className="register-on-event-button" onClick={handleRegisterEvent} disabled={isUserRegistered}>
-              {isUserRegistered ? 'Zapisany' : 'Zapisz się na wydarzenie'}
+          <button className={`register-on-event-button ${isUserRegistered ? 'register-on-event-button-disabled' : ''}`} onClick={handleRegisterEvent} disabled={isUserRegistered}>
+              {isUserRegistered ? 'Jesteś już zapisany na to wydarzenie' : 'Zapisz się na wydarzenie'}
             </button>
           </div>
           <div className="event-map-container">
           <p className="event-enrolled-users">
             <span className="enrolled-users">Zapisanych uczestników: </span>
-            <span className="event-number-of-users">{eventData.numberOfUsers}</span>
+            <span className="event-number-of-users">{eventData.eventParticipantsEmail.length}</span>
           </p>
-            <LoadScript 
-              googleMapsApiKey={apiKey}
-              onLoad={() => setIsMapsLoaded(true)} 
-            >
               {latitude !== null && longitude !== null && (
                 <GoogleMap 
                   mapContainerClassName="event-map"
@@ -118,7 +133,6 @@ export const EventInfo = () => {
                   <Marker position={{ lat: latitude, lng: longitude }} />
                 </GoogleMap>
               )}
-            </LoadScript>
             
           </div>
         </>

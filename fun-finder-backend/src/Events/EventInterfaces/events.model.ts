@@ -18,6 +18,7 @@ export const EventSchema = new mongoose.Schema({
     default: [],
     required: true,
   },
+  eventPhoto: { type: String, required: true },
 });
 
 export class Events {
@@ -30,6 +31,7 @@ export class Events {
     public eventEnd: Date,
     public eventDescription: string,
     public eventParticipantsEmail: string[],
+    public eventPhoto: string,
   ) {}
 }
 
@@ -42,4 +44,5 @@ export interface Events {
   eventDescription: string;
   eventParticipants: string[];
   relatedHobbies: string[];
+  eventPhoto: string;
 }
