@@ -153,5 +153,7 @@ export class UserService {
     return user;
   }
 
-
+  async findUsersByHobby(hobby: string): Promise<User[]> {
+    return this.UserModel.find({ hobbies: { $all: hobby  } }).select('-password').limit(20).exec();
+  }
 }

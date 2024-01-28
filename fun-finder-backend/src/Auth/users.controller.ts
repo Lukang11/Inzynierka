@@ -204,5 +204,8 @@ export class UserController {
     return updatedUser ? { message: 'Hobbies updated successfully', user: updatedUser } : { message: 'User not found' };
   }
 
-
+  @Get('/users-by-hobby/:hobby')
+  async getUsersByHobby(@Param('hobby') hobby: string): Promise<User[]> {
+    return this.userService.findUsersByHobby(hobby);
+  }
 }
