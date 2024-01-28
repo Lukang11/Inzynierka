@@ -54,3 +54,54 @@
     display: grid;
     place-content: center;
   }
+
+  .users-section {
+
+    margin: 100px;
+  }
+  
+
+  label {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+  
+  select {
+    width: 200px;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #5908bf;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+  }
+
+  select option {
+    font-size: 14px;
+    color: #5908bf;
+  }
+  
+  .sp-result-btn {
+    margin-top: 10px;
+    border: 2px solid var(--mainpurple);
+    border-radius: 100px;
+    width: 200px;
+    height: 50px;
+    color: var(--mainpurple);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    background-color: white;
+  }
+
+  .sp-result-btn:hover {
+    background-color: var(--mainpurple);
+    color: #FFF;
+  }
+
+  .sp-results {
+    text-align: center;
+    color: black;
+    font-size: 20px;
+  }

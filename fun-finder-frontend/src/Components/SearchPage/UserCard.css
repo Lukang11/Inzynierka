@@ -2,11 +2,12 @@
     width: 300px;
     height: 400px;
     border-radius: 20px;
+    margin-top: 50px;
   }
   
   .info-box {
-    margin-top: 320px;
-    margin-left: 30px;
+    padding-top: 320px;
+    padding-left: 30px;
   }
   
   .item-fullname {
@@ -22,3 +23,7 @@
     margin-top: 5px;
   }
   
+  .users-section-header {
+    font-size: 25px;
+    font-weight: bold;
+  }
