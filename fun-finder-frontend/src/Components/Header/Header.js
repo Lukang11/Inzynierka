@@ -115,7 +115,6 @@ export default function Header() {
                   <Link to="/login" className="nav-a"> <span onClick={() => setShowMenu(false)}>Zaloguj</span></Link>
                 </div>
               </li>
-              {showMenu && <hr />}
             </div>
           )}
         </div>
