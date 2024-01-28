@@ -110,6 +110,7 @@ const Register = () => {
                 console.log('Użytkownik zarejestrowany pomyślnie!');
                 navigate('/login');
             } catch (error) {
+                setError("Użytkownik o tym adresie email już istnieje!")
                 console.error('Błąd podczas wysyłania danych do serwera:', error.message);
             }
         }
