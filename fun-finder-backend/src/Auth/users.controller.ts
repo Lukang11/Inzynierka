@@ -203,4 +203,9 @@ export class UserController {
     const updatedUser = await this.userService.updateUserHobbiesById(_id, body.hobbies);
     return updatedUser ? { message: 'Hobbies updated successfully', user: updatedUser } : { message: 'User not found' };
   }
+
+  @Get('/users-by-hobby/:hobby')
+  async getUsersByHobby(@Param('hobby') hobby: string): Promise<User[]> {
+    return this.userService.findUsersByHobby(hobby);
+  }
 }
