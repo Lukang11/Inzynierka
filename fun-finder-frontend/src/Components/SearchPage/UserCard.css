@@ -1,0 +1,29 @@
+.user-card-item {
+    width: 300px;
+    height: 400px;
+    border-radius: 20px;
+    margin-top: 50px;
+  }
+  
+  .info-box {
+    padding-top: 320px;
+    padding-left: 30px;
+  }
+  
+  .item-fullname {
+    font-size: 23px;
+    color: white;
+  }
+  
+  .item-hobbies-count {
+    color: white;
+    -ms-flex-align: center;
+    align-items: center;
+    font-size: 13px;
+    margin-top: 5px;
+  }
+  
+  .users-section-header {
+    font-size: 25px;
+    font-weight: bold;
+  }
