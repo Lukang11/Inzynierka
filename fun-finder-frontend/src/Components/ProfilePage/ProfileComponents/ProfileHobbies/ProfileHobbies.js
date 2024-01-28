@@ -17,19 +17,21 @@ const ProfileHobbies = () => {
       if (user && user.email) {
         try {
           const hobbiesResponse = await axios.get(`${url}hobbies/${user.email}`);
-          const userHobbies = Array.from(new Set(hobbiesResponse.data));
+          const userHobbies = Array.from(new Set(hobbiesResponse.data.map(hobby => hobby.name)));
           sethobbies(() => userHobbies);
         } catch (error) {
           console.error("Error fetching hobbies:", error);
         }
       }
     };
-
+  
     fetchData();
   }, [user]);
 
-  function onClick() {
+
+  function onClick(element) {
     setIsOpen((val) => !val);
+    console.log(element); // You can access the entire object here
   }
 
   function getHobbyIcon(hobbyName) {

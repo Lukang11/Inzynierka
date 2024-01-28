@@ -12,7 +12,9 @@ function HobbiesModal({ onClick }) {
   const [relatedHobbies, setRelatedHobbies] = useState(hobbiesData);
 
   const addItem = (item) => {
-    setHobbies((prevHobbies) => [...prevHobbies, item]);
+    const correctItem = hobbiesData.find((hobby) => hobby.name === item)
+
+    setHobbies((prevHobbies) => [...prevHobbies, { name: correctItem.name, data: correctItem.data }]);
   };
 
   const removeItem = (index) => {
@@ -34,7 +36,8 @@ function HobbiesModal({ onClick }) {
   const addRelatedItem = (item) => {
     setRelatedHobbies((prevHobbies) => {
       const hobbyData = hobbiesData.find((hobby) => hobby.name === item);
-      const updatedState = [...prevHobbies, { name: item, icon: hobbyData?.icon }];
+      const updatedState = [...prevHobbies, hobbyData];
+      
       return updatedState;
     });
   };
@@ -44,13 +47,13 @@ function HobbiesModal({ onClick }) {
   function refreshPage() {
     window.location.reload(false);
   }
-
   const sendUserHobbies = () => {
     const fetchData = async () => {
       if (user && user.email) {
         try {
           let url = "http://localhost:7000/users/";
-          await axios.post(`${url}update-user-hobbies/${user.email}`, { hobbies });
+          console.log(hobbies)
+          await axios.post(`${url}update-user-hobbies/${user.email}`, { hobbies: hobbies });
         } catch (error) {
           console.error("Error fetching hobbies:", error);
         }
@@ -59,8 +62,9 @@ function HobbiesModal({ onClick }) {
     };
     fetchData();
   };
+
   useEffect(() => {
-    console.log(hobbies);
+
   }, [hobbies, relatedHobbies]);
 
   return (
@@ -75,19 +79,19 @@ function HobbiesModal({ onClick }) {
             <div className="add-hobby-text">Dodaj zainteresowanie</div>
             <div>
               <div className="sel-hobbies-wrap">
-                {console.log(hobbies)}
+                {/* {console.log(hobbies)} */}
                 {hobbies.map((val, index) => {
                   return (
                     <div
                       key={index}
                       onClick={() => {
-                        console.log(val);
-                        addRelatedItem(val);
+
+                        addRelatedItem(val.name);
                         removeItem(index);
                       }}
                       className="hobbies-item"
                     >
-                      {val}
+                      {val.name}
                     </div>
                   );
                 })}
@@ -101,9 +105,9 @@ function HobbiesModal({ onClick }) {
             <div className="hobbies-items">
               <h3>Dostępne kategorie:</h3>
               <div className="hobbies-item-wrapper">
-                {relatedHobbies.map((value, index) => (
+              {relatedHobbies.map((value, index) => (
                   <HobbiesItem
-                    key={index} // Add a unique key
+                    key={index} 
                     name={value.name}
                     icon={value.icon}
                     onClick={addItem}
