@@ -31,15 +31,39 @@ function CreateEvent( ) {
   };
   const validate = () => {
     let tempErrors = {};
+    let isValid = true;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+  
     tempErrors.name = name ? "" : "Pole jest wymagane";
-    tempErrors.people = people ? "" : "Pole jest wymagane";
+    tempErrors.people = people > 0 ? "" : "Pole jest wymagane i musi być dodatnią liczbą";
     tempErrors.category = selectedCategory ? "" : "Nie wybrano kategorii";
     tempErrors.startDate = startDate ? "" : "Pole jest wymagane";
     tempErrors.endDate = endDate ? "" : "Pole jest wymagane";
     tempErrors.description = description ? "" : "Pole jest wymagane";
     tempErrors.address = address ? "" : "Pole jest wymagane";
+    tempErrors.imageUrl = imageUrl ? "" : "URL obrazu jest wymagany";
+  
+    
+    if (startDate && new Date(startDate) < today) {
+      tempErrors.startDate = "Data rozpoczęcia nie może być wcześniejsza niż dzisiejsza data";
+      isValid = false;
+    }
+  
+    
+    if (startDate && endDate && new Date(endDate) < new Date(startDate)) {
+      tempErrors.endDate = "Data zakończenia nie może być wcześniejsza niż data rozpoczęcia";
+      isValid = false;
+    }
+  
+    
+    if (imageUrl && !imageUrl.startsWith('http')) {
+      tempErrors.imageUrl = "URL powinien zaczynać się od http";
+      isValid = false;
+    }
+  
     setErrors(tempErrors);
-    return Object.values(tempErrors).every(x => x == "");
+    return isValid && Object.values(tempErrors).every(x => x === "");
   };
 
   useEffect(() => {
@@ -151,6 +175,7 @@ function CreateEvent( ) {
           eventEnd:endDate,
           eventDescription:description,
           maxEventParticipants:people,
+          eventParticipantsEmail: [user.email],
           relatedHobbies:selectedCategory,
           eventPhoto:imageUrl,
 
@@ -175,38 +200,39 @@ function CreateEvent( ) {
         <div className='label-text'>Nazwa:</div>
         <input type="text" className={`input-textbox ${errors.name ? 'input-error' : ''}`}  value={name} placeholder={errors.name||'Podaj nazwę wydarzenia'} onChange={e => {setName(e.target.value);setErrors({...errors, name: ''});}} />
         <div className='label-text'>Data rozpoczęcia:</div>
-        <input type="datetime-local" className='input-textbox' value={startDate} placeholder={errors.startDate||'Podaj datę rozpoczęcia'} onChange={e => {setStartDate(e.target.value);setErrors({...errors, name: ''});}} />
+        <input type="datetime-local" className={`input-textbox ${errors.startDate ? 'input-error' : ''}`} value={startDate} placeholder={errors.startDate || 'Podaj datę rozpoczęcia'} onChange={e => {setStartDate(e.target.value); setErrors({...errors, startDate: ''});}} />
         <div className='label-text'>Data zakończenia</div>
-        <input type="datetime-local" className={`input-textbox ${errors.name ? 'input-error' : ''}`}  value={endDate} placeholder={errors.endDate||'Podaj datę zakończenia'} onChange={e => {setEndDate(e.target.value);setErrors({...errors, name: ''});}} />
+        <input type="datetime-local" className={`input-textbox ${errors.endDate ? 'input-error' : ''}`} value={endDate} placeholder={errors.endDate || 'Podaj datę zakończenia'} onChange={e => {setEndDate(e.target.value); setErrors({...errors, endDate: ''});}} />
         <div className='label-text'>Ilość osób:</div>
         <input type="number" className={`input-textbox ${errors.name ? 'input-error' : ''}`}  value={people} placeholder={errors.people||'Podaj ilość osób'} onChange={e => {setPeople(e.target.value);setErrors({...errors, name: ''});}}  />
         <div className='label-text'>Opis wydarzenia:</div>
-        <textarea id="input-textbox-2" name={`input-textbox-2 ${errors.name ? 'input-error' : ''}`}  rows="6" cols="40" value={description} placeholder={errors.description||'Napisz coś o swoim wydarzeniu'} onChange={e => {setDescription(e.target.value);setErrors({...errors, name: ''});}}> </textarea>
+        <textarea id="input-textbox-2" className={`input-textbox ${errors.description ? 'input-error' : ''}`} rows="6" cols="40" value={description} placeholder={errors.description || 'Napisz coś o swoim wydarzeniu'} onChange={e => {setDescription(e.target.value); setErrors({...errors, description: ''});}}></textarea>
 
       </div>
       <div className='events-card'>
         <div className='info-header'>Lokalizacja i Podgląd</div>
       <div>
-      <input className='input-textbox' ref={searchBoxRef} type="text" placeholder="Podaj adres wydarzenia" />
+      <input className={`input-textbox ${errors.address ? 'input-error' : ''}`} ref={searchBoxRef} type="text" placeholder={errors.address || "Podaj adres wydarzenia"} value={address} onChange={e => { setAddress(e.target.value); setErrors({...errors, address: ''}); }} />
       </div>
       <div className='events-map' ref={mapRef} ></div>
-      <input className='input-textbox' type="text" placeholder='Dodaj URL zdjęcia' value={imageUrl} onChange={e => {setImageUrl(e.target.value) }}/> 
+      <input className={`input-textbox ${errors.imageUrl ? 'input-error' : ''}`} type="text" placeholder={errors.imageUrl || 'Dodaj URL zdjęcia'} value={imageUrl} onChange={e => {setImageUrl(e.target.value); setErrors({...errors, imageUrl: ''});}} />
       <EventCardPrewiev name={name} location={address} description={description} startDate={startDate} endDate={endDate} people={people} category={selectedCategory} imageUrl={imageUrl} />
       </div>
       <div className='events-card'>
         <div className='info-header'>Kategoria</div>
         <div className='categories-container'>
-        {hobbiesData.map((category) => (
-      <div
-        key={category.id}
-        className={`category-item ${selectedCategory === category.name ? 'selected' : ''}`}
-        onClick={() => handleCategorySelect(category.name)}
-      >
-        <FontAwesomeIcon icon={category.icon} className='category-icon' />
-        <span className='category-name'>{category.name}</span>
-      </div>
-    ))}
-      </div>
+  {hobbiesData.map((category) => (
+    <div
+      key={category.id}
+      className={`category-item ${selectedCategory === category.name ? 'selected' : ''}`}
+      onClick={() => handleCategorySelect(category.name)}
+    >
+      <FontAwesomeIcon icon={category.icon} className='category-icon' />
+      <span className='category-name'>{category.name}</span>
+    </div>
+  ))}
+  {errors.category && <div className="error-message">{errors.category}</div>}
+</div>
       </div>
     </div>
     <div className='create-eventt-button-container'>

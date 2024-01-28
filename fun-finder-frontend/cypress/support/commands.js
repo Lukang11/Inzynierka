@@ -24,6 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+
 Cypress.Commands.add('registerUser', (firstName, lastName, email, password) => {
     cy.visit('localhost:3000');
     cy.get(':nth-child(1) > .profile-login-register-btn').click();
@@ -36,14 +37,14 @@ Cypress.Commands.add('registerUser', (firstName, lastName, email, password) => {
     cy.url().should('include', '/login');
     
   });
-  Cypress.Commands.add('registerUser2', (firstName, lastName, email, password) => {
+  Cypress.Commands.add('registerUser2', (firstName, lastName, email, password,password2) => {
     cy.visit('localhost:3000');
     cy.get(':nth-child(1) > .profile-login-register-btn').click();
     cy.get(':nth-child(1) > input').type(firstName);
     cy.get(':nth-child(2) > input').type(lastName);
     cy.get(':nth-child(3) > input').type(email);
     cy.get(':nth-child(4) > input').type(password);
-    cy.get(':nth-child(5) > input').type(password);
+    cy.get(':nth-child(5) > input').type(password2);
     cy.get('button').click();
     cy.url().should('include', '/register');
   });
