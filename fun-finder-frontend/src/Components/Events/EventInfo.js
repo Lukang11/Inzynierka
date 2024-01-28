@@ -15,7 +15,9 @@ export const EventInfo = () => {
   const [eventData, setEventData] = useState(null);
   const [isUserRegistered, setIsUserRegistered] = useState(false);
   const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-
+  function refreshPage() {
+    window.location.reload(false);
+}
   useEffect(() => {
     const loader = new Loader({
       apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -74,6 +76,7 @@ export const EventInfo = () => {
 
 
   const handleRegisterEvent = async () => {
+    refreshPage();
     if (eventData && eventData.users && eventData.users.includes(user.email))  {
       setIsUserRegistered(true);
       alert('Jesteś już zarejestrowany na to wydarzenie!');
@@ -101,8 +104,7 @@ export const EventInfo = () => {
       setIsUserRegistered(true); 
       alert('Pomyślnie zarejestrowano na wydarzenie!');
     } catch (error) {
-      console.error('Błąd rejestracji na wydarzenie:', error);
-      alert('Nie udało się zarejestrować na wydarzenie.');
+      console.error('Błąd rejestracji na wydarzenie:', error)
     }
   };
   
