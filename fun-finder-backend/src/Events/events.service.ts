@@ -191,8 +191,6 @@ export class EventsService {
     console.log(body.eventId);
     try {
       const event = await this.eventsModel.findById(body.eventId).exec();
-      console.log(event,body.eventId,body.userEmail);
-      console.log(event.eventParticipantsEmail)
 
       if(!event){
         throw new Error("could not find event")
