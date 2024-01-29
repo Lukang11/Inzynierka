@@ -32,7 +32,10 @@ function EventCardView({ eventInfo, places }) {
       onClick={() => handleRowClick(eventInfo._id)}
     >
       <div className="events-view-card-item">
-        <div className="events-view-image"></div>
+        <div className="events-view-image" style={{
+          backgroundImage: eventInfo.eventPhoto ? `url(${eventInfo.eventPhoto})` : 'url(https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg)'
+        }}>
+        </div>
         <div className="events-view-description">
           <div className="events-view-card-item-spec-left">
             <div className="events-info-card-name">

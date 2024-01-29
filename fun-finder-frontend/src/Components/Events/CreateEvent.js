@@ -227,7 +227,7 @@ function CreateEvent( ) {
     <div
       key={category.id}
       className={`category-item ${selectedCategory === category.name ? 'selected' : ''}`}
-      onClick={() => handleCategorySelect(category.name)}
+      onClick={() => handleCategorySelect(category.data)}
     >
       <FontAwesomeIcon icon={category.icon} className='category-icon' />
       <span className='category-name'>{category.name}</span>
