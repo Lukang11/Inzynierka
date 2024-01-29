@@ -22,7 +22,11 @@ export class CloudsController {
         this.chatCloudsService.createNewPrivateChat(data.userCreatingChatId,data.chatParticipantId);
     }
     @Post('event/createEventChat')
-    createEventChat(@Body() data: {userCreatingChatId: string, chatName: string, imageUrl: string}) {
-        this.chatCloudsService.createNewEventChat(data.userCreatingChatId,data.chatName,data.imageUrl);
+    createEventChat(@Body() data: {userCreatingChatId: string, chatName: string, imageUrl: string, event_id: string}) {
+        this.chatCloudsService.createNewEventChat(data.userCreatingChatId,data.chatName,data.imageUrl,data.event_id);
+    }
+    @Post('event/addUserToChat')
+    addUserToEventChat(@Body() data: {userId: string, eventId: string}) {
+        this.chatCloudsService.addUserToEventChat(data.userId, data.eventId);
     }
 }
