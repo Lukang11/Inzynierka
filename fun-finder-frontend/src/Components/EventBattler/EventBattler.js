@@ -44,7 +44,6 @@ function EventBattler() {
 
     return () => {
       newSocket.disconnect();
-
     };
   }, [setSocket, user._id]);
 
@@ -65,16 +64,24 @@ function EventBattler() {
 
   return (
     <div className="battler-container">
-      <EventBattlerWindow
-        participants={participants}
-        className="battler-window-container"
-      ></EventBattlerWindow>
-      <EventBattlerChat
-        passParticipants={participants}
-        passMessages={messages}
-        updateMessage={send}
-        className="battler-chat-container"
-      ></EventBattlerChat>
+      <div className="battler-window-chat-container">
+        <div className="battler-flex-window-item">
+          {" "}
+          <EventBattlerWindow
+            participants={participants}
+            className="battler-window-container"
+          ></EventBattlerWindow>
+        </div>
+        <div className="battler-flex-chat-item">
+          {" "}
+          <EventBattlerChat
+            passParticipants={participants}
+            passMessages={messages}
+            updateMessage={send}
+            className="battler-chat-container"
+          ></EventBattlerChat>
+        </div>
+      </div>
       <EventBattlerParticipants
         participants={participants}
         className="battler-participants-container"

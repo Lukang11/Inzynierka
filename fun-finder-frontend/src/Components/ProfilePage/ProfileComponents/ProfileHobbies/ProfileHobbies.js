@@ -9,27 +9,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const ProfileHobbies = () => {
   const [hobbies, sethobbies] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const url = "http://localhost:7000/events/";
+  const url = "http://localhost:7000/users/";
   const { user } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
       if (user && user.email) {
         try {
-          const hobbiesResponse = await axios.get(`${url}hobbies/${user.email}`);
-          const userHobbies = Array.from(new Set(hobbiesResponse.data));
+          const hobbiesResponse = await axios.get(`${url}user-hobbies-names/${user.email}`);
+          const userHobbies = hobbiesResponse.data.hobbiesNames
+
           sethobbies(() => userHobbies);
         } catch (error) {
           console.error("Error fetching hobbies:", error);
         }
       }
     };
-
+  
     fetchData();
   }, [user]);
 
-  function onClick() {
+
+  function onClick(element) {
     setIsOpen((val) => !val);
+    console.log(element);
   }
 
   function getHobbyIcon(hobbyName) {
