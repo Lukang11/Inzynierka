@@ -1,7 +1,5 @@
 .google-square-cont {
-  margin: 20px;
-  width: 100px;
-
+  margin: 10px;
 }
 .google-square-link {
   text-decoration: none;
@@ -13,13 +11,25 @@
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
+  height: 100%;
+  background-color: rgba(128, 128, 128, 0.041);
+  transition: background-color 0.4s ease;
+  border-radius: 15px;
 }
 .google-square-header {
+  flex-basis: 40%;
+  width: 150px;
+  font-size: 0.8em;
 }
 .google-square-adress {
-  font-size: 0.7em;
-}
-.google-square-adress-item {
+  flex-basis: 40%;
+  font-size: 0.6em;
 }
 .google-square-rating {
+  flex-basis: 20%;
+  color: gold;
+}
+.google-square-link:hover {
+  background-color: var(--mainpurple); /* Black background on hover */
+  color: white;
 }

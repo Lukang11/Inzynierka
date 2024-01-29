@@ -39,7 +39,7 @@ export class EventsController {
   ) {
     return this.eventService.insertEvent(fullObject);
   }
- /* @Post('/find-places-by-localization')
+  @Post('/find-places-by-localization')
   findPlaceByLocalizationGoogleApi(
     @Body() queryObject: GoogleApiQueryObject,
   ): any {
@@ -54,7 +54,7 @@ export class EventsController {
       console.error('Error processing request:', error);
       throw new HttpException('Invalid data format', HttpStatus.BAD_REQUEST);
     }
-  } */
+  }
   @Post('/test')
   testFunction(@Body() object: any) {
     this.eventService.createOfResourceInMongoDbOnlyIfDoesntExist(object);
@@ -103,7 +103,7 @@ export class EventsController {
     return this.eventService.getTypeDataByName(Body);
   }
   @Post('/add/user')
-  addUsersToEvent(@Body() body: {eventId: string, userEmail: string} ) {
+  addUsersToEvent(@Body() body: { eventId: string; userEmail: string }) {
     console.log(body);
     return this.eventService.addUserToEvent(body);
   }
