@@ -52,8 +52,14 @@ function HobbiesModal({ onClick }) {
       if (user && user.email) {
         try {
           let url = "http://localhost:7000/users/";
-          console.log(hobbies)
-          await axios.post(`${url}update-user-hobbies/${user.email}`, { hobbies: hobbies });
+          const hobbiesTags = hobbies.map(hobby => hobby.data);
+          const hobbiesTagsResult = [].concat(...hobbiesTags);
+          console.log(hobbiesTagsResult)
+
+          const hobbiesNames = hobbies.map(hobby => hobby.name);
+          const hobbiesNamesResult = [].concat(...hobbiesNames);
+
+          await axios.post(`${url}update-user-hobbies/${user.email}`, { hobbies: hobbiesTagsResult });
         } catch (error) {
           console.error("Error fetching hobbies:", error);
         }

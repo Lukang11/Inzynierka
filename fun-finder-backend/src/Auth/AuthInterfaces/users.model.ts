@@ -17,10 +17,7 @@ export const UserSchema = new Schema<User>({
   password: { type: String },
   fname: { type: String, required: true },
   lname: { type: String, required: true },
-  hobbies: [{ 
-    name: { type: String, required: true },
-    data: { type: [String], required: true },
-  }],
+  hobbies: { type: [String], required: true },
   events: { type: [Object] },
   description: { type: String, default: "Not set yet" },
   score: { type: Number, default: 0 },
