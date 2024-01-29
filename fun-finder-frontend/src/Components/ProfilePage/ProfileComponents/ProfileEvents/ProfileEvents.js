@@ -13,6 +13,7 @@ const ProfileEvents = () => {
         try {
           const events = await axios.get(`${url}${user.email}`);
           setEventsData(events.data);
+          console.log(eventsData)
         } catch (error) {
           console.error("Error fetching events:", error);
         }
