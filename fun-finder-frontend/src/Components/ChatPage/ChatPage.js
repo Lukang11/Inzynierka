@@ -13,7 +13,8 @@ const ChatPageComponent = () => {
 
     const [whichChatToDisplay,setWichChatToDisplay] = useState("person");
     const [whichMessagesToDisplay,setWichMessagesToDisplay] = useState("");
-    const [participantInfo, setParticipantInfo] = useState([]);
+    const [chatsInfo, setChatsInfo] = useState([]);
+    const [slectedChatParticipants, setSelectedChatParticipants] = useState([]);
     const [messages, SetMessages] = useState([]);
     const [newChat, setNewChat] = useState(false);
     const [initialRender, setInitialRender] = useState(true); // Dodatkowy stan
@@ -41,12 +42,12 @@ const ChatPageComponent = () => {
         switch (whichChatToDisplay) {
             case "person":
                 if(user){
-                    console.log(user)
+                    setChatsInfo([]);
                     axios.get(`http://localhost:7000/clouds/participants/${user._id}`)
                     .then(response => {
-                    setParticipantInfo(response.data);
-                    console.log(response.data);
-                    console.log("dodaje? tak?")
+                    setChatsInfo(response.data);
+                    console.log("halo");
+                    console.log(response.data)
                     })
                     .catch(error => {
                     console.error('Error fetching participant info:', error);
@@ -59,7 +60,7 @@ const ChatPageComponent = () => {
                 if(user) {
                     axios.get(`http://localhost:7000/clouds/event/${user._id}`)
                 .then(response => {
-                    setParticipantInfo(response.data);
+                    setChatsInfo(response.data);
                     console.log(response.data);
                 })
                 .catch(error => {
@@ -77,7 +78,8 @@ const ChatPageComponent = () => {
             axios.get(`http://localhost:7000/messages/${chatId}`)
                 .then(response => {
                 SetMessages(response.data);
-            console.log(response.data);
+            const selectedChat = chatsInfo.find(chat => chat.chatId === chatId);
+            setSelectedChatParticipants(selectedChat.participants);
         })
         .catch(error => {
             console.log('Error fetching messages info', error);
@@ -91,7 +93,6 @@ const ChatPageComponent = () => {
     const updateWichMessagesToDisplay =  (chatId) => {
         if(chatId !== whichMessagesToDisplay){
             setWichMessagesToDisplay(chatId);
-            console.log(chatId);
             SetMessages([]);   
         }
     };
@@ -104,6 +105,7 @@ const ChatPageComponent = () => {
     const checkIfUsingMobileVersion = () => {
         return window.innerWidth < 800;
     }
+
 
     const displayChatClouds = () => {
         if (checkIfUsingMobileVersion() && whichMessagesToDisplay !== ""){
@@ -126,7 +128,7 @@ const ChatPageComponent = () => {
                     clearDisplayedMessage={updateWichMessagesToDisplay}/>
                 {displayChatClouds() && (
                 <ChatClouds 
-                    passChatCloudsDBData={participantInfo} 
+                    passChatCloudsDBData={chatsInfo}
                     updateWichMessagesToDisplay={updateWichMessagesToDisplay}/>)}
                 {whichChatToDisplay === "person" && displayChatClouds() && (
                     <ChatNewMessageComponent
@@ -137,7 +139,7 @@ const ChatPageComponent = () => {
                 {whichMessagesToDisplay !== "" && (
                     <ChatMessages 
                     passWichMessageToDisplay={messages}
-                    participantsInfo={participantInfo}
+                    chatParticipants={slectedChatParticipants}
                     passConversationId={whichMessagesToDisplay}
                     passChatType={whichChatToDisplay}
                     />

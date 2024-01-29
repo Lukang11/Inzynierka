@@ -4,12 +4,8 @@ import { useState } from "react";
 
 
 function ChatClouds({ passChatCloudsDBData, updateWichMessagesToDisplay }){
-    const [lastMess,setLastMess] = useState("");
 
     const changeWichMessageToUpdate = (id) =>{
-            console.log(lastMess, "a tu cos robie")
-            console.log(id);
-            setLastMess(id)
             updateWichMessagesToDisplay(id);
     }
 
@@ -32,7 +28,7 @@ function ChatClouds({ passChatCloudsDBData, updateWichMessagesToDisplay }){
                     style={{backgroundImage: `url(${item.avatar})`}}>
                     </div>
                     <div className="chat-info">
-                        <p>{item.fname} {item.lname}</p>
+                            <p>{item.name}</p>
                         <div className="chat-info-message">
                             <a>{replaceLongLastMessage(item.lastMessage)}</a>
                         </div>
