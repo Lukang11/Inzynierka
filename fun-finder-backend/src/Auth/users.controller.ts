@@ -187,8 +187,8 @@ export class UserController {
   }
 
   @Post('/update-user-hobbies/:email')
-  async updateCurrentUserHobbies(@Param('email') email: string, @Body() body: { hobbies: UserHobbies[] }) {
-    const updatedUser = await this.userService.updateUserHobbiesByEmail(email, body.hobbies);
+  async updateCurrentUserHobbies(@Param('email') email: string, @Body() body: { hobbies: UserHobbies[], hobbiesName: UserHobbies[] }) {
+    const updatedUser = await this.userService.updateUserHobbiesByEmail(email, body.hobbies, body.hobbiesName);
     return updatedUser ? { message: 'Hobbies updated successfully', user: updatedUser } : { message: 'User not found' };
   }
 

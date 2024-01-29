@@ -31,7 +31,7 @@ const ProfileHobbies = () => {
 
   function onClick(element) {
     setIsOpen((val) => !val);
-    console.log(element); // You can access the entire object here
+    console.log(element);
   }
 
   function getHobbyIcon(hobbyName) {

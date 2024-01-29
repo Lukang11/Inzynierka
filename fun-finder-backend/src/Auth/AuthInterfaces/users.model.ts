@@ -6,6 +6,7 @@ export interface User extends Document {
   fname: string;
   lname: string;
   hobbies: UserHobbies[];
+  hobbiesName: UserHobbies[];
   events: UserEvents[];
   description: string;
   score: number;
@@ -18,6 +19,7 @@ export const UserSchema = new Schema<User>({
   fname: { type: String, required: true },
   lname: { type: String, required: true },
   hobbies: { type: [String], required: true },
+  hobbiesName: { type: [String], required: true },
   events: { type: [Object] },
   description: { type: String, default: "Not set yet" },
   score: { type: Number, default: 0 },

@@ -59,7 +59,7 @@ function HobbiesModal({ onClick }) {
           const hobbiesNames = hobbies.map(hobby => hobby.name);
           const hobbiesNamesResult = [].concat(...hobbiesNames);
 
-          await axios.post(`${url}update-user-hobbies/${user.email}`, { hobbies: hobbiesTagsResult });
+          await axios.post(`${url}update-user-hobbies/${user.email}`, { hobbies: hobbiesTagsResult, hobbiesName: hobbiesNamesResult });
         } catch (error) {
           console.error("Error fetching hobbies:", error);
         }
