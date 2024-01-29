@@ -36,7 +36,7 @@ export class EventsService {
       eventStart: fullObject.eventStart,
       eventEnd: fullObject.eventEnd,
       eventDescription: fullObject.eventDescription,
-      eventParticipants: fullObject.eventParticipants,
+      eventParticipantsEmail: fullObject.eventParticipantsEmail,
       maxEventParticipants: fullObject.maxEventParticipants,
       relatedHobbies: fullObject.relatedHobbies,
       eventPhoto: fullObject.eventPhoto,

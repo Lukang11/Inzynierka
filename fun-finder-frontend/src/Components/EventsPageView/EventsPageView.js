@@ -7,15 +7,23 @@ import HiglyRatedPlaces from "./HiglyRatingPlacesComponent/HiglyRatedPlaces";
 
 function EventsPageView() {
   const [error, setError] = useState();
-  const [location, setLocation] = useState(null);
+  const [userlocation, setUserLocation] = useState(null);
   const navigate = useNavigate();
+  const [filter, setFilter] = useState('');
+  
+
+
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+  };
 
   useEffect(() => {
     const getLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            setLocation({
+            setUserLocation({
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
             });
@@ -35,7 +43,7 @@ function EventsPageView() {
   return (
     <div>
       <div>
-        {console.log(location)}
+        {console.log(userlocation)}
         <div className="event-button-group">
           <button className="events-button-fillter">Filtruj</button>
           <button
