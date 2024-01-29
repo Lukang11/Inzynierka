@@ -215,4 +215,11 @@ export class UserController {
   async getUsersByHobby(@Param('hobby') hobby: string): Promise<User[]> {
     return this.userService.findUsersByHobby(hobby);
   }
+
+  @Get('/search-by-prefix/:prefix')
+  async searchUsersByPrefix(@Param('prefix') prefix: string) {
+    const searchedUsers = await this.userService.searchUsersByPrefix(prefix);
+    return searchedUsers;
+  }
+
 }

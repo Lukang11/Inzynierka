@@ -162,4 +162,12 @@ export class UserService {
   async findUsersByHobby(hobby: string): Promise<User[]> {
     return this.UserModel.find({ hobbies: { $all: hobby  } }).select('-password').limit(20).exec();
   }
+
+  async searchUsersByPrefix(prefix: string): Promise<User[]> {
+    const regex = new RegExp(`^${prefix}`, 'i');
+    const searchedUsers = await this.UserModel.find({ $or: [{ fname: regex }, { lname: regex }] }).exec();
+    return searchedUsers;
+  }
+
+
 }
