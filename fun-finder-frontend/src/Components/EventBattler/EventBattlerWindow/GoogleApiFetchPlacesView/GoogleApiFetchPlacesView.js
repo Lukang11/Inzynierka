@@ -38,7 +38,7 @@ function GoogleApiFetchPlacesView({ data }) {
   }, []);
   return (
     <div className="google-api-view">
-      {console.log(data.length)}
+      {console.log(data)}
       {data.length === 0 ? (
         <div className="event-battler-container-for-places">
           <h3>Niestety nie znaleźlismy żadnych które do was by pasowały</h3>
@@ -68,8 +68,21 @@ function GoogleApiFetchPlacesView({ data }) {
           </div>
           <div className="google-api-places-view-wrapper">
             {" "}
-            {data.map((place) => (
-              <GooglePlaceSquare eventInfo={place} key={place._id} />
+            {data.placesWithTags.map((place) => (
+              <GooglePlaceSquare
+                eventInfo={place}
+                key={place._id}
+                isAddedByUser={false}
+              />
+            ))}
+          </div>
+          <div className="google-api-places-view-wrapper">
+            {data.eventWithTags.map((event) => (
+              <GooglePlaceSquare
+                eventInfo={event}
+                key={event._id}
+                isAddedByUser={true}
+              />
             ))}
           </div>
         </div>

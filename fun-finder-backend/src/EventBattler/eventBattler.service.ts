@@ -60,7 +60,7 @@ export class EventBattlerService {
       const eventWithTags =
         await this.eventService.getEventsForBattler(commonHobbies);
 
-      return placesWithTags;
+      return { placesWithTags: placesWithTags, eventWithTags: eventWithTags };
     }
   }
   async createNewRoom(roomData: {

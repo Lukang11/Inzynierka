@@ -9,26 +9,26 @@ function EventBattlerWindow({ participants }) {
   const url_tags = "http://localhost:7000/events/places_types";
   const [apiTags, setApiTags] = useState();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (participants.length > 0) {
-        try {
-          const response = await axios.post(url_battle, { participants });
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
-    const fetchApiTags = async () => {
-      try {
-        const response = await axios.get(url_tags);
-        console.log(response.data);
-      } catch (error) {}
-    };
+  // useEffect(() => {
+  //   // const fetchData = async () => {
+  //   //   if (participants.length > 0) {
+  //   //     try {
+  //   //       const response = await axios.post(url_battle, { participants });
+  //   //     } catch (error) {
+  //   //       console.error(error);
+  //   //     }
+  //   //   }
+  //   // };
+  //   const fetchApiTags = async () => {
+  //     try {
+  //       const response = await axios.get(url_tags);
+  //       console.log(response.data);
+  //     } catch (error) {}
+  //   };
 
-    fetchData();
-    fetchApiTags();
-  }, [participants]);
+  //   fetchData();
+  //   fetchApiTags();
+  // }, [participants]);
   return (
     <div className="event-battler-window">
       {participants.length === 0 || participants.length === 1 ? (
