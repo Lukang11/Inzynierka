@@ -2,20 +2,22 @@ import React, { useEffect, useState, useRef} from "react";
 import "./ChatMessages.css"
 import io from "socket.io-client"
 import { useAuth } from "../../../Utils/AuthProvider";
+import axios from "axios";
 
-function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversationId,passChatType} ){
+function ChatMessages( {passWichMessageToDisplay, chatParticipants, passConversationId,passChatType} ){
     const { user } = useAuth(); // do pobierania id uz
 
     const [socket, setSocket ] = useState(null);
     const [messages, setMessages] = useState([]);
     const [participants, SetParticipants] = useState("");
+    const [participantsInfo, setParticipantsInfo] = useState([{}]);
     const [conversationId, setConversationId] = useState("");
     const inputMesageRef = useRef(null);
     const lastItemRef = useRef(null);
 
 
     const getParticipantImage = (id) => {
-        const foundParticipant = participants.find(participant => participant.id === id);
+        const foundParticipant = participantsInfo.find(participant => participant.id === id);
         if (foundParticipant) {
             return foundParticipant.avatar
         }
@@ -26,7 +28,7 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
     }
 
     const getParticipantsName = (id) => {
-        const foundParticipant = participants.find(participant => participant.id === id);
+        const foundParticipant = participantsInfo.find(participant => participant.id === id);
         if(foundParticipant) {
             return foundParticipant.fname + " " + foundParticipant.lname
         }
@@ -35,6 +37,12 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
         }
     }
     
+    const getParticipantsInfo = async (participantsIds) => {
+        console.log(participantsIds);
+        const response = await axios.post(`http://localhost:7000/clouds/chatParticipants/info`,{participantsIds: participantsIds});
+        setParticipantsInfo(response.data);
+        
+    }
 
     const messageListener = (obj) => {
         console.log("co ja ci tu podaje ", obj);
@@ -52,12 +60,12 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
         console.log(value);
     }
 
-    const handleData = (singleMessage,user_id,passConversationId,participantsInfo,passChatType) => {
+    const handleData = (singleMessage,user_id,participantsInfo,passChatType) => {
         if(singleMessage !== "") {
             const dataToSendViaSocket = {
                 message:singleMessage,
                 user_id:user_id,
-                conversationId: passConversationId,
+                conversationId: conversationId,
                 participants: participantsInfo,
                 chatType: passChatType
             }
@@ -67,15 +75,21 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
     }
     const handleKeyPress = (Event) => {
         if (Event.key === 'Enter') {
-            handleData(inputMesageRef.current.value,user._id,passConversationId,participantsInfo,passChatType);
+            handleData(inputMesageRef.current.value,user._id,chatParticipants,passChatType);
         }
     }
     useEffect(() => {
-        console.log(participants)
         setMessages(passWichMessageToDisplay);
         setConversationId(passConversationId);
-        SetParticipants(participantsInfo);
-    },[passWichMessageToDisplay,passConversationId,participantsInfo])
+        SetParticipants(chatParticipants);
+    },[passWichMessageToDisplay,passConversationId,chatParticipants])
+
+    useEffect(() => {
+        if(participants) {
+            getParticipantsInfo(participants)
+            console.log(participantsInfo)
+        }
+    },[participants]);
 
     useEffect(() => {
         const newSocket = io("http://localhost:8001", {
@@ -154,7 +168,7 @@ function ChatMessages( {passWichMessageToDisplay, participantsInfo, passConversa
                         onKeyDown={handleKeyPress}/>
                     <button
                         className="message-send-btn"
-                        onClick={ () => handleData(inputMesageRef.current.value,user._id,passConversationId,participantsInfo,passChatType)}>
+                        onClick={ () => handleData(inputMesageRef.current.value,user._id,chatParticipants,passChatType)}>
                             <a>+</a>
                     </button>
             </div>

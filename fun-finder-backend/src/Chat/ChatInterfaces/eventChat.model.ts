@@ -4,6 +4,7 @@ export interface EventChat extends mongoose.Document {
     participants: string[];
     last_message: string;
     name: string;
+    avatar: string;
     created_at: Date;
 }
 
@@ -20,6 +21,10 @@ export const EventChatSchema = new mongoose.Schema({
      type: String,
      default: '',
     },
+     avatar:{
+     type: String,
+     default: '',
+     },
      created_at: {
      type: Date,
      default: Date.now,
