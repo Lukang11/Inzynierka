@@ -186,6 +186,13 @@ export class UserController {
     return { hobbies };
   }
 
+  @Get('/user-hobbies-names/:email')
+  async getCurrentUserHobbiesNames(@Param('email') email: string) {
+    const hobbiesNames = await this.userService.getUserHobbiesNamesByEmail(email);
+    return { hobbiesNames };
+  }
+
+
   @Post('/update-user-hobbies/:email')
   async updateCurrentUserHobbies(@Param('email') email: string, @Body() body: { hobbies: UserHobbies[], hobbiesName: UserHobbies[] }) {
     const updatedUser = await this.userService.updateUserHobbiesByEmail(email, body.hobbies, body.hobbiesName);

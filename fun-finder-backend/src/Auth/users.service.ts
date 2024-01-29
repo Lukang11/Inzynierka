@@ -128,6 +128,12 @@ export class UserService {
     return user ? user.hobbies : null;
   }
 
+
+  async getUserHobbiesNamesByEmail(email: string): Promise<UserHobbies[] | null> {
+    const user = await this.UserModel.findOne({ email }).exec();
+    return user ? user.hobbiesName : null;
+  }
+
   async updateUserHobbiesByEmail(email: string, newHobbies: UserHobbies[], newHobbiesName: UserHobbies[]): Promise<User | null> {
     const user = await this.UserModel.findOneAndUpdate(
       { email },
