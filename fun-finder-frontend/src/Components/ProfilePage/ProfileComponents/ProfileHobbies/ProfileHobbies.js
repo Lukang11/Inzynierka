@@ -49,8 +49,8 @@ const ProfileHobbies = () => {
       </div>
       <div className="hobbies-second-row">
         <div className="hobbies-contener-wrapper">
-          {hobbies
-            ? hobbies.map((element, index) => (
+          {hobbies && hobbies.length > 0 ? (
+            hobbies.map((element, index) => (
               <div key={index} className="hobbies-contener-wrapper-item">
                 <div className="hobby-icon">
                   {getHobbyIcon(element) && (
@@ -60,10 +60,12 @@ const ProfileHobbies = () => {
                 <div>{element}</div>
               </div>
             ))
-            : null}
+          ) : (
+            <span>Brak zainteresowań</span>
+          )}
         </div>
       </div>
-
+  
       {isOpen ? <HobbiesModal onClick={onClick} /> : null}
     </div>
   );

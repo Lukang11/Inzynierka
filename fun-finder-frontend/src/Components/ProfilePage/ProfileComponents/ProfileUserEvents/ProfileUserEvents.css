@@ -84,14 +84,36 @@
 .cell-event-name {
   font-size: 18px;
   font-weight: bold;
+  color: var(--mainpurple);
 }
 
 .cell-event-location {
   font-size: 18px;
   margin-top:2px;
+  color: black;
 }
 
 .cell-event-time {
   margin-top: 10px;
   color: gray;
+}
+
+.event-cell-container a {
+  text-decoration: none;
+}
+
+@media (max-width: 767px) {
+  .cell-image { 
+    margin-bottom: 0px;
+  }
+
+  .cell-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cell-text-container {
+    margin-top: 30px;
+    margin-left: 15px;
+  }
 }

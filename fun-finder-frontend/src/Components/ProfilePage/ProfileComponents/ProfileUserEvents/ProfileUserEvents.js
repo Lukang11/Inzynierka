@@ -27,22 +27,20 @@ const ProfileUserEvents = () => {
 
   return (
     <div>
-      {console.log(eventsData)}
       <div className="events-profile-card">
         <h2 className="events-title">Twoje wydarzenia</h2>
         <ul>
-          {console.log(eventsData)}
-          {eventsData ? (
+          {eventsData && eventsData.length > 0 ? (
             eventsData.map((element, index) => (
               <EventCell key={index} element={element} index={index} />
             ))
           ) : (
-            <p>Ładowanie...</p>
+            <span>Nie dołączyłeś(aś) do żadnych wydarzeń, kliknij <a href="/events">tutaj</a> aby to zmienić</span> 
           )}
         </ul>
       </div>
     </div>
-  );
+  );  
 };
 
 export default ProfileUserEvents;
