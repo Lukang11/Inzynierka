@@ -54,6 +54,10 @@
   .profile-event-wrapper {
     order: 2;     
   }
+
+  .profile-event-wrapper ul {
+    padding: 0;   
+  }
   
   .profile-hobbies-wrapper {
     order: 1;

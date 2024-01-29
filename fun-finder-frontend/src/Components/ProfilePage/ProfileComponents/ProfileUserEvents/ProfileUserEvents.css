@@ -104,12 +104,14 @@
 
 @media (max-width: 767px) {
   .cell-image { 
-    margin-bottom: 0px;
+    margin-bottom: 15px;
   }
 
   .cell-container {
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 
   .cell-text-container {
