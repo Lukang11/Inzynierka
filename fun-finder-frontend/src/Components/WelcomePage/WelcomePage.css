@@ -251,7 +251,7 @@
   }
 
   .card {
-    width: 100%;
+    width: 85%;
     transition: all 0.5s;
     margin-bottom: 20px;
   }
