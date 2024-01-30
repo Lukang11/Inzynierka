@@ -217,6 +217,14 @@ export class UserController {
     return this.userService.findUsersByHobby(hobby);
   }
 
+
+  @Get('/search-by-prefix/:prefix')
+  async searchUsersByPrefix(@Param('prefix') prefix: string) {
+    const searchedUsers = await this.userService.searchUsersByPrefix(prefix);
+    return searchedUsers;
+  }
+
+
   @Post('/add-event/:email')
   async addEventToUser(
     @Param('email') email: string,
@@ -247,4 +255,5 @@ export class UserController {
       return null;
     }
   }
+
 }
