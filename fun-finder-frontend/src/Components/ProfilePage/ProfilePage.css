@@ -20,6 +20,7 @@
 .second-row-wrapper {
   display: flex;
   justify-content: space-around;
+  padding-bottom: 15px;
 }
 .profile-event-wrapper {
   margin-top: 5%;
@@ -52,6 +53,10 @@
   
   .profile-event-wrapper {
     order: 2;     
+  }
+
+  .profile-event-wrapper ul {
+    padding: 0;   
   }
   
   .profile-hobbies-wrapper {

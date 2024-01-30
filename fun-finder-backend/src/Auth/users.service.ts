@@ -162,4 +162,23 @@ export class UserService {
   async findUsersByHobby(hobby: string): Promise<User[]> {
     return this.UserModel.find({ hobbies: { $all: hobby  } }).select('-password').limit(20).exec();
   }
+
+  async updateUserEventsByEmail(email: string, updatedEvents: any[]): Promise<User | null> {
+    try {
+      const user = await this.UserModel.findOne({ email }).exec();
+  
+      if (!user) {
+        throw new Error('Użytkownik nie istnieje.');
+      }
+      console.log(updatedEvents);
+      user.events = updatedEvents;
+  
+      const updatedUser = await user.save();
+  
+      return updatedUser;
+    } catch (error) {
+      console.error('Błąd aktualizacji wydarzeń użytkownika:', error);
+      return null;
+    }
+  }
 }

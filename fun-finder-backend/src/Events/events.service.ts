@@ -37,7 +37,7 @@ export class EventsService {
       eventStart: fullObject.eventStart,
       eventEnd: fullObject.eventEnd,
       eventDescription: fullObject.eventDescription,
-      eventParticipants: fullObject.eventParticipants,
+      eventParticipantsEmail: fullObject.eventParticipantsEmail,
       maxEventParticipants: fullObject.maxEventParticipants,
       relatedHobbies: fullObject.relatedHobbies,
       eventPhoto: fullObject.eventPhoto,
@@ -186,7 +186,7 @@ export class EventsService {
       console.log(tag_name.name);
       return await this.apiPlacesTags.findOne({ name: tag_name.name }).exec();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
   async addUserToEvent(body: { eventId: string; userEmail: string }) {
@@ -194,12 +194,14 @@ export class EventsService {
     try {
       const event = await this.eventsModel.findById(body.eventId).exec();
 
-      if(!event){
-        throw new Error("could not find event")
+      if (!event) {
+        throw new Error('could not find event');
       }
-      const participantIndex = event.eventParticipantsEmail.indexOf(body.userEmail);
-      if(participantIndex !== -1 ) {
-        throw new Error("user arleady in event")
+      const participantIndex = event.eventParticipantsEmail.indexOf(
+        body.userEmail,
+      );
+      if (participantIndex !== -1) {
+        throw new Error('user arleady in event');
       }
       if(event.maxEventParticipants < event.eventParticipantsEmail.length + 1){
         console.log("max users in event reached");
@@ -219,6 +221,13 @@ export class EventsService {
     try {
       return await this.placeModel.find({
         types: { $in: arrayOfTags },
+      });
+    } catch (error) {}
+  }
+  async getEventsForBattler(arrayOfTags: string[]) {
+    try {
+      return await this.eventsModel.find({
+        relatedHobbies: { $in: arrayOfTags },
       });
     } catch (error) {}
   }
