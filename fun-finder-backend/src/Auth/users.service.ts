@@ -170,7 +170,6 @@ export class UserService {
       if (!user) {
         throw new Error('Użytkownik nie istnieje.');
       }
-      console.log(updatedEvents);
       user.events = updatedEvents;
   
       const updatedUser = await user.save();

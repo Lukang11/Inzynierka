@@ -1,15 +1,15 @@
 .event-battler-one-cont {
   background-color: rgba(7, 7, 48, 0.541);
   width: 100%;
-  height: 100%;
+  height: 75vh;
   color: white;
   font-size: 1.75em;
-  border-radius: 4px;
+  border-radius: 20px;
 }
 .event-battler-one-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   height: 100%;
   width: 100%;

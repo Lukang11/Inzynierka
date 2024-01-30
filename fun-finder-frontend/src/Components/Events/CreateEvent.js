@@ -161,6 +161,34 @@ function CreateEvent( ) {
     }
 }
 
+const handleAddEventToUser = async (event_id) => {
+  const eventDataBody = {
+    eventId: event_id,
+    name: name,
+    eventDescription: description,
+    eventStart: startDate,
+    eventEnd: endDate,
+    location: address,
+    eventPhoto: imageUrl
+  };
+
+  try {
+    const addEventToUser = await axios.post(`http://localhost:7000/users/add-event/${user.email}`, eventDataBody, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!addEventToUser.status === 200) {
+      throw new Error(`Błąd HTTP! Status: ${addEventToUser.status}`);
+    }
+
+  } catch (error) {
+    console.error('Wystąpił błąd podczas wykonywania żądania:', error.message);
+    throw error;
+  }
+};
+
   
     const handleSubmit = async (event) => {
       event.preventDefault();
@@ -183,6 +211,7 @@ function CreateEvent( ) {
           
         });
         createNewEventChat(user._id, name, imageUrl,response.data);
+        handleAddEventToUser(response.data);
   
         console.log('Dane zostały pomyślnie zapisane:', response.data);
         console.log('even chat created:', user._id)
