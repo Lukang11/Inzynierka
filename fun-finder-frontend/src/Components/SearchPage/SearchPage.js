@@ -9,9 +9,15 @@ import UserCard from "./UserCard";
 function SearchPage() {
   const [filter, setFilter] = useState('');
   const [searchedUsers, setSearchedUsers] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   const handleSearchChange = (e) => {
     setFilter(e.target.value);
+  }
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+    console.log(e.target.value)
   }
 
   useEffect(() => {
@@ -53,16 +59,44 @@ function SearchPage() {
             </button>
           </form>
         </div>
-        {searchedUsers.length !== 0 && (
-  <div className="sp-results">
-    {searchedUsers.map((user) => (  
-        <div className="sp-results-item">
-        <UserCard user={user} />
-        </div>
-    ))}
-  </div>
-)}
 
+
+<div className="users-section">
+        <div className="users-section-header">Propozycje dla Ciebie</div>
+        <div>
+      <label >Filtruj po zainteresowaniach użytkownika: </label>
+      <select
+        name="selectedCategory"
+        value={selectedCategory}
+        onChange={handleCategoryChange}
+      >
+        <option value="All">Wybierz</option>
+        <option value="Motoryzacja">Motoryzacja</option>
+        <option value="Kultura">Kultura</option>
+        <option value="Edukacja">Edukacja</option>
+        <option value="Rozrywka i rekreacja">Rozrywka i rekreacja</option>
+        <option value="Jedzenie">Jedzenie</option>
+        <option value="Zdrowie i uroda">Zdrowie i uroda</option>
+        <option value="Agroturystyka">Agroturystyka</option>
+        <option value="Zakupy">Zakupy</option>
+        <option value="Sport i Fitnes">Sport i Fitness</option>
+        <option value="Transport">Transport</option>
+      </select>
+    </div>
+     
+        {/* <SPUserModal /> */}
+        
+    </div>
+
+    {searchedUsers.length !== 0 && (
+            <div className="sp-results">
+              {searchedUsers.filter((user) => selectedCategory === "All" || user.hobbiesName.includes(selectedCategory) ).map((user) => (  
+                  <div className="sp-results-item">
+                  <UserCard user={user} />
+                  </div>
+              ))}
+            </div>
+          )}
 
       </div>
     </>
