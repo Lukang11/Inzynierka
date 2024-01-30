@@ -4,12 +4,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
 import UserCard from "./UserCard";
+import SPUserModal from "./SPUserModal";
+import { useAuth } from "../../Utils/AuthProvider";
 
 
 function SearchPage() {
+
+  const { user } = useAuth();
+
   const [filter, setFilter] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
   const [searchedUsers, setSearchedUsers] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedUser, setSelectedUser] = useState()
 
   const handleSearchChange = (e) => {
     setFilter(e.target.value);
@@ -17,7 +24,16 @@ function SearchPage() {
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
-    console.log(e.target.value)
+    if (user) {
+      console.log(user.email);
+    } else {
+      console.log("User email is undefined or null");
+    }
+  }
+
+  function onClick(user) {
+    setIsOpen((val) => !val);
+    setSelectedUser(user)
   }
 
   useEffect(() => {
@@ -59,10 +75,11 @@ function SearchPage() {
             </button>
           </form>
         </div>
+        </div>
 
 
 <div className="users-section">
-        <div className="users-section-header">Propozycje dla Ciebie</div>
+        <div className="users-section-header">Znaleziono dla Ciebie</div>
         <div>
       <label >Filtruj po zainteresowaniach użytkownika: </label>
       <select
@@ -84,21 +101,27 @@ function SearchPage() {
       </select>
     </div>
      
-        {/* <SPUserModal /> */}
+        {isOpen ? <SPUserModal  onClick={onClick} user={selectedUser}/> : null}
+        
         
     </div>
 
     {searchedUsers.length !== 0 && (
             <div className="sp-results">
-              {searchedUsers.filter((user) => selectedCategory === "All" || user.hobbiesName.includes(selectedCategory) ).map((user) => (  
-                  <div className="sp-results-item">
-                  <UserCard user={user} />
+              {searchedUsers
+                .filter((searchedUser) => searchedUser.email != user.email)
+                .filter((searchedUser) => searchedUser.selectedCategory === "All" || searchedUser.hobbiesName.includes(selectedCategory) )
+                .map((user) => (  
+                  <div className="sp-results-item" onClick={() => onClick(user)}> 
+                  <UserCard user={user}  />
                   </div>
               ))}
             </div>
           )}
 
-      </div>
+                
+                
+   
     </>
   )
 }

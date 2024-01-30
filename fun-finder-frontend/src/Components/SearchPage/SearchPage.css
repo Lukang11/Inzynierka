@@ -56,7 +56,7 @@
   }
 
   .users-section {
-
+    justify-content: left;
     margin: 100px;
   }
   
