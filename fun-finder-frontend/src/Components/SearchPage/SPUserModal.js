@@ -1,9 +1,35 @@
 import React, { useState, useEffect } from "react";
 import "./SPUserModal.css";
 import axios from "axios";
+import { useAuth } from "../../Utils/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
-function SPUserModal({ onClick, user }) {
-  const { fname, lname, hobbiesName, description, avatar } = user;
+function SPUserModal({ onClick, selectedUser }) {
+  const { _id, fname, lname, hobbiesName, description, avatar } = selectedUser;
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const createNewChat = async () => {
+    try {
+        await axios.post(`http://localhost:7000/clouds/event/createPrivateChat`,
+        {
+            userCreatingChatId: user._id,
+            chatParticipantId: _id
+        })
+
+    }
+    catch (error) {
+        console.log("failed to create new PrivateChat");
+    }
+}
+
+    const onClickHandler = () => {
+        createNewChat()
+        navigate("/chat")
+        window.location.reload();
+    }
+
+
 
 
     useEffect(() => {
@@ -24,7 +50,7 @@ function SPUserModal({ onClick, user }) {
                 <div className="sp-modal-hobbies">{hobbiesName}</div>
                 <div className="sp-modal-desc">{description}</div>
                 <div className="sp-modal-btn-container">
-                    <div className="sp-modal-contact-btn">Napisz do mnie!</div>
+                    <div className="sp-modal-contact-btn" onClick={onClickHandler}>Napisz do mnie!</div>
                 </div>
             
             </div>

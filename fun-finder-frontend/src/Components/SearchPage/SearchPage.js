@@ -101,7 +101,7 @@ function SearchPage() {
       </select>
     </div>
      
-        {isOpen ? <SPUserModal  onClick={onClick} user={selectedUser}/> : null}
+        {isOpen ? <SPUserModal  onClick={onClick} selectedUser={selectedUser}/> : null}
         
         
     </div>
