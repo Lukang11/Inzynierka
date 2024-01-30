@@ -3,6 +3,7 @@ import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
 import "./EventInfo.css";
 import { useAuth } from "../../Utils/AuthProvider";
 import { Loader } from "@googlemaps/js-api-loader";
+import axios from "axios";
 
 export const EventInfo = () => {
   const currentURL = window.location.href;
@@ -74,6 +75,14 @@ export const EventInfo = () => {
     checkIfUserIsRegistered();
   }, [eventData, isMapsLoaded, user]);
 
+  const addUserToEventChat = async () => {
+    await axios.post('http://localhost:7000/clouds/event/addUserToChat',
+    {
+      userId: user._id,
+      eventId: eventId
+      
+    })
+
   const handleAddEventToUser = async () => {
     const eventDataBody = {
       eventId: eventData._id,
@@ -121,7 +130,9 @@ export const EventInfo = () => {
       if (!response.ok) {
         throw new Error(`Błąd HTTP! Status: ${response.status}`);
       }
-
+      // trzeba tu dodać jeszcze bad response do tego jak bedzie max uzytkowników
+      addUserToEventChat();
+      console.log(response.status);
       const result = await response.json();
       setIsUserRegistered(true); 
       alert('Pomyślnie zarejestrowano na wydarzenie!');

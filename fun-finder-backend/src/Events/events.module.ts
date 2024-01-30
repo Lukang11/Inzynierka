@@ -20,6 +20,9 @@ import { PlacesTagsSchema } from './EventInterfaces/place_tags.model';
   ],
   controllers: [EventsController],
   providers: [EventsService],
-  exports: [EventsService], // Export the service if needed
+  exports: [
+    EventsService,
+    MongooseModule.forFeature([
+      { name: 'Events', schema: EventSchema },])],
 })
 export class EventsModule {}

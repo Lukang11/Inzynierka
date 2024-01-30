@@ -146,13 +146,14 @@ function CreateEvent( ) {
 
   const navigate = useNavigate(); 
 
-  const createNewEventChat = async (userCreatingChatId, chatName, imageUrl) => {
+  const createNewEventChat = async (userCreatingChatId, chatName, imageUrl, event_id) => {
     try {
         await axios.post(`http://localhost:7000/clouds/event/createEventChat`,
         {
           userCreatingChatId: userCreatingChatId,
           chatName: chatName,
-          imageUrl: imageUrl
+          imageUrl: imageUrl,
+          event_id: event_id, 
         })
     }
     catch (error) {
@@ -167,7 +168,6 @@ function CreateEvent( ) {
         return;
       }
       try {
-        createNewEventChat(user._id, name, imageUrl)
         const response = await axios.post('http://localhost:7000/events/add', {
           name: name,
           location: address,
@@ -182,6 +182,7 @@ function CreateEvent( ) {
 
           
         });
+        createNewEventChat(user._id, name, imageUrl,response.data);
   
         console.log('Dane zostały pomyślnie zapisane:', response.data);
         console.log('even chat created:', user._id)

@@ -1,5 +1,5 @@
 // events.service.ts
-import { Injectable, forwardRef, Inject } from '@nestjs/common';
+import { Injectable, forwardRef, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
@@ -18,6 +18,7 @@ import {
 import { Events } from './EventInterfaces/events.model';
 import { PlacesTags } from './EventInterfaces/place_tags.model';
 import { DEFAULT_EAGER_REFRESH_THRESHOLD_MILLIS } from 'google-auth-library/build/src/auth/authclient';
+import { Http2ServerResponse } from 'http2';
 
 @Injectable()
 export class EventsService {
@@ -42,6 +43,7 @@ export class EventsService {
       eventPhoto: fullObject.eventPhoto,
     });
     const result = await newEvent.save();
+    return result._id;
   }
   async getAllEvents() {
     try {
@@ -201,9 +203,15 @@ export class EventsService {
       if (participantIndex !== -1) {
         throw new Error('user arleady in event');
       }
-      event.eventParticipantsEmail.push(body.userEmail);
-      console.log('dodaje uzytkownika');
-      await event.save();
+      if(event.maxEventParticipants < event.eventParticipantsEmail.length + 1){
+        console.log("max users in event reached");
+        return HttpStatus.FORBIDDEN;
+      }
+      else {
+        event.eventParticipantsEmail.push(body.userEmail)
+        console.log('dodaje uzytkownika')
+        await event.save();
+      }
     } catch (error) {
       console.log(error);
     }
