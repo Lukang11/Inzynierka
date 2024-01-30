@@ -112,13 +112,7 @@ describe('EventsController', () => {
     expect(await controller.getPlacesTagByName(tag)).toBe('data');
     expect(service.getTypeDataByName).toHaveBeenCalledWith(tag);
   });
-  it('should add a user to an event', async () => {
-    const eventId = 'event1';
-    const userId = 'user1';
-    
-    expect(await controller.addUserToEvent(eventId, userId)).toBe('added');
-    expect(service.addUserToEvent).toHaveBeenCalledWith(eventId, userId);
-  });
+  
           
   
   

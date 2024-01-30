@@ -27,11 +27,13 @@ export const UserSchema = new Schema<User>({
 });
 
 export interface UserEvents {
+  event_id: string,
   event_name: string;
+  event_description: string;
   event_time_start: string;
   event_time_end: string;
   event_location: string;
-  event_person_count: number;
+  event_photo: string;
 }
 export interface UserHobbies {
   hobbie_id: string;

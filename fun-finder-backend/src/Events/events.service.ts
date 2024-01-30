@@ -1,5 +1,5 @@
 // events.service.ts
-import { Injectable, forwardRef, Inject } from '@nestjs/common';
+import { Injectable, forwardRef, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
@@ -18,6 +18,7 @@ import {
 import { Events } from './EventInterfaces/events.model';
 import { PlacesTags } from './EventInterfaces/place_tags.model';
 import { DEFAULT_EAGER_REFRESH_THRESHOLD_MILLIS } from 'google-auth-library/build/src/auth/authclient';
+import { Http2ServerResponse } from 'http2';
 
 @Injectable()
 export class EventsService {
@@ -36,12 +37,13 @@ export class EventsService {
       eventStart: fullObject.eventStart,
       eventEnd: fullObject.eventEnd,
       eventDescription: fullObject.eventDescription,
-      eventParticipants: fullObject.eventParticipants,
+      eventParticipantsEmail: fullObject.eventParticipantsEmail,
       maxEventParticipants: fullObject.maxEventParticipants,
       relatedHobbies: fullObject.relatedHobbies,
       eventPhoto: fullObject.eventPhoto,
     });
     const result = await newEvent.save();
+    return result._id;
   }
   async getAllEvents() {
     try {
@@ -184,26 +186,32 @@ export class EventsService {
       console.log(tag_name.name);
       return await this.apiPlacesTags.findOne({ name: tag_name.name }).exec();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
   async addUserToEvent(body: { eventId: string; userEmail: string }) {
     console.log(body.eventId);
     try {
       const event = await this.eventsModel.findById(body.eventId).exec();
-      console.log(event,body.eventId,body.userEmail);
-      console.log(event.eventParticipantsEmail)
 
-      if(!event){
-        throw new Error("could not find event")
+      if (!event) {
+        throw new Error('could not find event');
       }
-      const participantIndex = event.eventParticipantsEmail.indexOf(body.userEmail);
-      if(participantIndex !== -1 ) {
-        throw new Error("user arleady in event")
+      const participantIndex = event.eventParticipantsEmail.indexOf(
+        body.userEmail,
+      );
+      if (participantIndex !== -1) {
+        throw new Error('user arleady in event');
       }
-      event.eventParticipantsEmail.push(body.userEmail)
-      console.log('dodaje uzytkownika')
-      await event.save();
+      if(event.maxEventParticipants < event.eventParticipantsEmail.length + 1){
+        console.log("max users in event reached");
+        return HttpStatus.FORBIDDEN;
+      }
+      else {
+        event.eventParticipantsEmail.push(body.userEmail)
+        console.log('dodaje uzytkownika')
+        await event.save();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -213,6 +221,13 @@ export class EventsService {
     try {
       return await this.placeModel.find({
         types: { $in: arrayOfTags },
+      });
+    } catch (error) {}
+  }
+  async getEventsForBattler(arrayOfTags: string[]) {
+    try {
+      return await this.eventsModel.find({
+        relatedHobbies: { $in: arrayOfTags },
       });
     } catch (error) {}
   }

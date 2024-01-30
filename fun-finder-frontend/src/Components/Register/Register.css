@@ -96,7 +96,7 @@
 
 .google-login-button-container-register {
   width: 35vh;
-
+  margin-left: 66px;
 }
 
 
@@ -110,7 +110,7 @@
 
   .mobile-only-image {
     display: block;
-    width: 100vw;
+    width: 100%;
   }
 
   .register-container {
@@ -130,15 +130,33 @@
 
   .registerForm-container {
     text-align: center;
-    padding-left: 0px;
+    padding: 10px;
   }
 
   .error-message,
   .password-strength,
   .google-login-button-container-register {
     margin: auto;
-    width: 50%;
-
+    width: 22vh;
   }
 
+  .error-message {
+    width: 66%;
+  }
+
+  .register-container::before {
+    display: none;
+  }
+
+  .register-container::after {
+    display: none;
+  }
+
+  .registerForm-container button {
+    width: 66%;
+  }
+
+  .registerForm-container input {
+    width: 66%;
+  }
 }

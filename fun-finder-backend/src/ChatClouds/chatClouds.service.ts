@@ -5,69 +5,66 @@ import { User } from 'src/Auth/AuthInterfaces/users.model';
 import { GroupChat } from 'src/Chat/ChatInterfaces/groupChat.model';
 import { EventChat } from 'src/Chat/ChatInterfaces/eventChat.model';
 import { PrivateChat } from './ChatCloudsInterfaces/chatclouds.model';
+import { Events } from 'src/Events/EventInterfaces/events.model';
 
 @Injectable()
 export class ChatCloudsService {
   constructor(
     @InjectModel('Private_Chats') private readonly privateChatModel: Model<PrivateChat>,
     @InjectModel('User') private readonly userModel: Model<User>,
-    @InjectModel('Group_Chats') private readonly groupChat: Model<GroupChat>,
-    @InjectModel('Event_Chats') private readonly eventChats: Model<EventChat>
+    @InjectModel('Event_Chats') private readonly eventChats: Model<EventChat>,
+    @InjectModel('Events') private readonly events: Model<Events>
   ) {}
+
+  async getParticipantsInfo( data: {participantsIds: [string]}) {
+    try {
+      const participantsInfo = [];
+      for (const id of data.participantsIds) {
+        const participantInfo = await this.getUserInfoById(id);
+        participantsInfo.push({
+          id: participantInfo._id.toString(),
+          fname: participantInfo.fname,
+          lname: participantInfo.lname,
+          avatar: participantInfo.avatar
+        });
+      }
+      console.log(participantsInfo);
+      return participantsInfo;
+    }
+    catch (err) {
+      console.log("failed to get participants info");
+    }
+  };
 
   async findUserInPrivateChat(userId: string) {
     try {
+      console.log('user id :' ,userId)
       const privateChatsWithUser = await this.privateChatModel.find({ participants: userId });
       if (!privateChatsWithUser || privateChatsWithUser.length === 0) {
-        console.log('User not found in any private chat');
+        
       }
 
       const participantInfo = [];
 
       for (const privateChat of privateChatsWithUser) {
         const otherParticipantsIds = privateChat.participants.filter(participant => participant !== userId);
-
+        console.log(otherParticipantsIds);
           const otherParticipant = await this.getUserInfoById(otherParticipantsIds[0]); // pobranie danych drugiego rozmowcy 
           participantInfo.push({
-            id: otherParticipant._id,
             chatId: privateChat.id,
-            fname: otherParticipant.fname,
-            lname: otherParticipant.lname,
+            name: otherParticipant.fname + " " + otherParticipant.lname,
             avatar: otherParticipant.avatar,
             lastMessage: privateChat.last_message,
+            participants: [userId,otherParticipant._id]
           });
 
       }
       return participantInfo;
     } catch (error) {
       console.log(error)
-      throw new Error('Failed to find user in private chat');
     }
   }
 
-  async findUserGroupsChats(userId: string) {
-    try {
-      const groupChatsForUser = await this.groupChat.find({ participants: userId});
-      if (!groupChatsForUser || groupChatsForUser.length === 0){
-        console.log('No group chats for user');
-      }
-
-      const groupChatInfo = [];
-
-      for ( const groupChat of groupChatsForUser) {
-        const groupChatData = {
-          chatId: groupChat._id,
-          name: groupChat.name,
-          lastMessage: groupChat.last_message,
-        };
-        groupChatInfo.push(groupChatData);
-      };
-      return groupChatInfo;
-      
-    } catch (error) {
-      throw new Error('failed to find groups');
-    }
-  }
 
   async findUserEventChats(userId: string) {
     try {
@@ -83,13 +80,15 @@ export class ChatCloudsService {
           participants: eventChat.participants,
           chatId: eventChat._id,
           name: eventChat.name,
+          avatar: eventChat.avatar,
           lastMessage: eventChat.last_message
         };
+
         eventChatInfo.push(eventChatData);
       };
       return eventChatInfo;
     } catch (error) {
-      throw new Error('failed to find events');
+      console.log(error);
     }
   };
 
@@ -132,33 +131,17 @@ export class ChatCloudsService {
     }
   }
   
-  async createNewGroupChat(userCreatingChatId: string, chatName: string) {
-    const newGroupChatCloud = new this.groupChat ({
-      participants: [userCreatingChatId],
-      last_message: "",
-      name: chatName,
-      created_at: new Date
-    })
-    this.sendNewGroupChat(newGroupChatCloud);
-  }
-  
-  async sendNewGroupChat(groupChatObject: GroupChat){
-    try{
-      await groupChatObject.save();
-      console.log("created");
-    }
-    catch (err) {
-      console.error("unable to create groupChat", err);
-    }
-  }
 
-  async createNewEventChat(userCreatingChatId: string, chatName: string) {
+  async createNewEventChat(userCreatingChatId: string, chatName: string, imageUrl: string,event_id: string) {
     const newEventChatCloud = new this.eventChats ({
       participants: [userCreatingChatId],
       last_message: "",
       name: chatName,
-      created_at: new Date
+      avatar: imageUrl,
+      created_at: new Date,
+      event_id: event_id
     });
+    console.log(newEventChatCloud);
     this.sendNewEventChat(newEventChatCloud);
   }
 
@@ -171,4 +154,33 @@ export class ChatCloudsService {
       console.error("unable to create eventChat", err);
     }
   }
+  async addUserToEventChat(userId: string, eventId: string) {
+    try {
+      const eventChat = await this.eventChats.findOne({event_id: eventId});
+      const event = await this.events.findById(eventId)
+
+      if(eventChat && event) {
+        if(eventChat.participants.includes(userId)){
+          console.log("user is arleady a participant");
+        }
+        else {
+          if(event.maxEventParticipants < eventChat.participants.length + 1) {
+            console.log("max users reached");
+          }
+          else {
+            eventChat.participants.push(userId);
+            await eventChat.save();
+          console.log("user added to eventChat !");
+          }
+        }
+      }
+      else {
+        console.log("could not find event chat");
+      }
+
+    }
+    catch(err) {
+      console.log("failed to add user to chat");
+    }
+}
 }
