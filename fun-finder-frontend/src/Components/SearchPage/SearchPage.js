@@ -110,7 +110,7 @@ function SearchPage() {
             <div className="sp-results">
               {searchedUsers
                 .filter((searchedUser) => searchedUser.email != user.email)
-                .filter((searchedUser) => searchedUser.selectedCategory === "All" || searchedUser.hobbiesName.includes(selectedCategory) )
+                .filter((searchedUser) => selectedCategory === "All" || searchedUser.hobbiesName.includes(selectedCategory) )
                 .map((user) => (  
                   <div className="sp-results-item" onClick={() => onClick(user)}> 
                   <UserCard user={user}  />
