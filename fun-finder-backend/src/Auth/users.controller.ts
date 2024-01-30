@@ -236,7 +236,6 @@ export class UserController {
       if (!user) {
         throw new Error('Użytkownik nie istnieje.');
       }
-      console.log(event);
       // Dodaj wydarzenie do użytkownika
       user.events.push({
         event_id:  event.eventId,
