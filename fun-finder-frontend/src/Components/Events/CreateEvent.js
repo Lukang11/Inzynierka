@@ -12,12 +12,13 @@ import EventCardPrewiev from './EventCardPrewiev';
 function CreateEvent( ) {
   const { user } = useAuth(); 
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategoryName,setSelectedCategoryName]=useState('')
   const [errors, setErrors] = useState([]); 
   const [name, setName] = useState('');
   const [people, setPeople] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [latLng, setLatLng] = useState({ lat: 0, lng: 0 });
+  const [latLng, setLatLng] = useState({ lat: '0', lng: '0 '});
   const [address,setAddress]=useState('')
   const [description,setDescription]=useState('')
   const apiKey= process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
@@ -26,9 +27,13 @@ function CreateEvent( ) {
   const searchBoxRef = useRef(null);
   const [imageUrl, setImageUrl] = useState('');
   const [map, setMap] = useState(null);
-  const handleCategorySelect = (categoryName) => {
-    setSelectedCategory(categoryName);
+  const handleCategorySelect = (category) => {
+    
+    setSelectedCategory(category);
+    setImageUrl(category.image); 
+    setSelectedCategoryName(category.name)
   };
+  
   const validate = () => {
     let tempErrors = {};
     let isValid = true;
@@ -199,16 +204,15 @@ const handleAddEventToUser = async (event_id) => {
         const response = await axios.post('http://localhost:7000/events/add', {
           name: name,
           location: address,
-          geolocation: latLng,
-          eventStart:startDate,
-          eventEnd:endDate,
-          eventDescription:description,
-          maxEventParticipants:people,
+          geoLocation: { latitude: latLng.lat.toString(), longitude: latLng.lng.toString() },
+          eventStart: startDate,
+          eventEnd: endDate,
+          eventDescription: description,
+          maxEventParticipants: people,
           eventParticipantsEmail: [user.email],
-          relatedHobbies:selectedCategory,
-          eventPhoto:imageUrl,
-
-          
+          relatedHobbies: selectedCategory.data,
+          relatedHobbiesName: selectedCategoryName,
+          eventPhoto: imageUrl,
         });
         createNewEventChat(user._id, name, imageUrl,response.data);
         handleAddEventToUser(response.data);
@@ -253,16 +257,17 @@ const handleAddEventToUser = async (event_id) => {
       <div className='events-card'>
         <div className='info-header'>Kategoria</div>
         <div className='categories-container'>
-  {hobbiesData.map((category) => (
-    <div
-      key={category.id}
-      className={`category-item ${selectedCategory === category.name ? 'selected' : ''}`}
-      onClick={() => handleCategorySelect(category.data)}
-    >
-      <FontAwesomeIcon icon={category.icon} className='category-icon' />
-      <span className='category-name'>{category.name}</span>
-    </div>
-  ))}
+        {hobbiesData.map((category) => (
+  <div
+    key={category.id}
+    className={`category-item ${selectedCategory && selectedCategory.id === category.id ? 'selected' : ''}`}
+    onClick={() => handleCategorySelect(category)}
+  >
+    <FontAwesomeIcon icon={category.icon} className='category-icon' />
+    <span className='category-name'>{category.name}</span>
+  </div>
+))}
+
   {errors.category && <div className="error-message">{errors.category}</div>}
 </div>
       </div>

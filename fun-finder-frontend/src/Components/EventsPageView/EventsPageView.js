@@ -14,8 +14,8 @@ function EventsPageView() {
 
 
 
-  const handleFilterChange = (newFilter) => {
-    setFilter(newFilter);
+  const handleFilterChange = () => {
+    setFilter(filter);
   };
 
   useEffect(() => {
@@ -45,7 +45,11 @@ function EventsPageView() {
       <div>
         {console.log(userlocation)}
         <div className="event-button-group">
-          <button className="events-button-fillter">Filtruj</button>
+        <select onChange={(e) => handleFilterChange(e.target.value)}>
+            <option value="">Wszystkie</option>
+            <option value="20">Do 20 km</option>
+            <option value="50">Do 50 km</option>
+          </select>
           <button
             className="events-button-add-events"
             onClick={() => navigate("/create-event")}
@@ -59,7 +63,7 @@ function EventsPageView() {
         </div>
       </div>
       <div className="events-view-container">
-        <AllEventComponent />
+        <AllEventComponent filter={filter} userLocation={userlocation}t />
       </div>
       <h3 className="event-view-title">
         Wydarzenia którę mogą ci się spodobać

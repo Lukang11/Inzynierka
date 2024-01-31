@@ -34,12 +34,14 @@ export class EventsService {
     const newEvent = new this.eventsModel({
       name: fullObject.name,
       location: fullObject.location,
+      geoLocation: fullObject.geoLocation,
       eventStart: fullObject.eventStart,
       eventEnd: fullObject.eventEnd,
       eventDescription: fullObject.eventDescription,
       eventParticipantsEmail: fullObject.eventParticipantsEmail,
       maxEventParticipants: fullObject.maxEventParticipants,
       relatedHobbies: fullObject.relatedHobbies,
+      relatedHobbiesName:fullObject.relatedHobbiesName,
       eventPhoto: fullObject.eventPhoto,
     });
     const result = await newEvent.save();

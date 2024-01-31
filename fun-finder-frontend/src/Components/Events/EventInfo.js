@@ -106,6 +106,7 @@ export const EventInfo = () => {
       }
     }
 
+
     const handleRegisterEvent = async () => {
       // refreshPage();
       if (eventData && eventData.users && eventData.users.includes(user.email)) {

@@ -2,68 +2,53 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EventCardView from "../EventCardView/EventCardView";
 import "./NearbyEventsComponent.css";
-function calculateDistance(lat1, lon1, lat2, lon2) {
-  const toRadians = (degree) => degree * (Math.PI / 180);
+import { useAuth } from "../../../Utils/AuthProvider";
 
-  const R = 6371; 
+function NearbyEventsComponent({ userLocation }) {
+  const { user } = useAuth();
+  const userEmail = user.email;
+  const [events, setEvents] = useState([]);
+  const [userHobbies, setUserHobbies] = useState([]);
+  const eventsUrl = "http://localhost:7000/events";
+  const userHobbiesUrl = `http://localhost:7000/users/user-hobbies-names/${userEmail}`;
 
-  const dLat = toRadians(lat2 - lat1);
-  const dLon = toRadians(lon2 - lon1);
-
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
-    Math.sin(dLon / 2) * Math.sin(dLon / 2);
-
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-  return R * c; 
-}
-
-function NearbyEventsComponent({filter, userLocation}) {
-  const [events, setEvents] = useState();
-  const url = "http://localhost:7000/events";
-  const filterEvents = (events) => {
-    const currentDate = new Date();
-    return events.filter((event) => {
-      const eventDate = new Date(event.eventStart);
-      if (eventDate < currentDate) return false;
-      if (filter && userLocation) {
-        const distance = calculateDistance(
-          userLocation.latitude,
-          userLocation.longitude,
-          event.geoLocation.latitude,
-          event.geoLocation.longitude
-        );
-        return distance <= filter.maxDistance;
-      }
-      return true;
-    });
-  };
-
-  const fetchEvents = () => {
-    axios.get(url).then((response) => {
-      const filteredEvents = filterEvents(response.data);
-      setEvents(filteredEvents);
-    })
-    .catch(error => {
-      console.error("Error fetching events:", error);
-     
-    });
-  };
-
-  
   useEffect(() => {
-    fetchEvents();
-  }, [filter, userLocation]);
+    const fetchData = async () => {
+      try {
+        const userHobbiesResponse = await axios.get(userHobbiesUrl);
+        const userHobbiesData = userHobbiesResponse.data.hobbiesNames;
+        console.log(userHobbiesData)
+
+        const eventsResponse = await axios.get(eventsUrl);
+        const allEvents = eventsResponse.data;
+
+      
+        const filteredEvents = filterEvents(allEvents, userHobbiesData);
+
+        setEvents(filteredEvents);
+        console.log(filteredEvents)
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [userEmail]);
+
+  const filterEvents = (events, userHobbiesData) => {
+    return events.filter((event) =>
+      Array.isArray(event.relatedHobbiesName) && event.relatedHobbiesName.some((hobby) => userHobbiesData.includes(hobby))
+    );
+  };
   return (
     <div className="all-events-component">
-      {" "}
-      {events
-        ? events.map((event) => (
-            <EventCardView eventInfo={event} places={false} />
-          ))
-        : "Couldnt fetch events at the moment, try later"}
+      {events.length > 0 ? (
+        events.map((event) => (
+          <EventCardView key={event._id} eventInfo={event} places={false} />
+        ))
+      ) : (
+        <p>Brak eventów pasujących do Twoich zainteresowań</p>
+      )}
     </div>
   );
 }
