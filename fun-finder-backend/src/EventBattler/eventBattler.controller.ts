@@ -33,4 +33,8 @@ export class EventBattler {
   async addToRoom(@Param('id') id: string){
     return await this.eventBattlerService.addToRoom(id);
   }
+  @Get('/findRoom/:roomId')
+  async findBattleRoom(@Param('roomId') roomId: string) {
+    return await this.eventBattlerService.checkIfRoomExists(roomId);
+  }
 }

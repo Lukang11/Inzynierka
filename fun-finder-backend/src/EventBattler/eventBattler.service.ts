@@ -102,11 +102,28 @@ export class EventBattlerService {
   async addToRoom(id: string) {
     try {
       const eventRoom = await this.EventRooms.findById(id);
-      eventRoom.participants += 1;
-      await eventRoom.save();
-      console.log('incremented room');
+      if(eventRoom){
+        eventRoom.participants += 1;
+        await eventRoom.save();
+        console.log('incremented room');
+      }
     } catch (err) {
       console.log(err);
+    }
+  }
+  async checkIfRoomExists(roomId: string) {
+    try {
+      const eventRoom = await this.EventRooms.findById(roomId);
+      if(eventRoom === null) {
+        return false;
+      }
+      else {
+        return true;
+      }
+    }
+    catch(err) {
+      console.log("event not found")
+      return false;
     }
   }
 }

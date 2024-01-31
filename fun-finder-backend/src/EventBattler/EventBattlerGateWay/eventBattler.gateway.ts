@@ -15,24 +15,25 @@ export class EventBattlerGateway implements OnGatewayConnection {
 
 
     handleConnection(client: Socket) {
-        const sender_id = client.handshake.query.sender_id as string; // trzeba dodać query do connecta
+        const sender_id = client.handshake.query.sender_id as string;
         const room_id = client.handshake.query.room_id as string;
+
         this.clients.set(sender_id, {socket: client, roomId: room_id});
         console.log(`nowe połączenie: ${sender_id}`);
         console.log(`connecting to room: ${room_id}`)
         client.join(room_id); // łaczenie do pokoju 
-        this.eventBattlerService.addToRoom(room_id);
+         this.eventBattlerService.addToRoom(room_id);
 
         const participants = this.getParticipantsInRoom(room_id);
         client.emit('updateParticipants', participants);
         client.to(room_id.toString()).emit('updateParticipants', participants); // przy nowym dołączeniu aktualizujemu liste uzytkownikow
 
-        client.on('disconnect', () => {
+         client.on('disconnect', () => {
             this.clients.delete(sender_id);
             console.log('disconect client : ',sender_id);
             const participants = this.getParticipantsInRoom(room_id);
-            client.to(room_id.toString()).emit('handleDisconect', participants);
             this.eventBattlerService.removeFromRoom(room_id);
+            client.to(room_id.toString()).emit('handleDisconect', participants);
 
             console.log('new participants list', participants);
         })
