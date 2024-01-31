@@ -38,7 +38,6 @@ function GoogleApiFetchPlacesView({ data }) {
   }, []);
   return (
     <div className="google-api-view">
-      {console.log(data)}
       {data.length === 0 ? (
         <div className="event-battler-container-for-places">
           <h3>Niestety nie znaleźlismy żadnych które do was by pasowały</h3>
@@ -66,24 +65,35 @@ function GoogleApiFetchPlacesView({ data }) {
             </div>
             <div>Miłej zabawy !</div>
           </div>
-          <div className="google-api-places-view-wrapper">
-            {" "}
-            {data.placesWithTags.map((place) => (
-              <GooglePlaceSquare
-                eventInfo={place}
-                key={place._id}
-                isAddedByUser={false}
-              />
-            ))}
-          </div>
-          <div className="google-api-places-view-wrapper">
-            {data.eventWithTags.map((event) => (
-              <GooglePlaceSquare
-                eventInfo={event}
-                key={event._id}
-                isAddedByUser={true}
-              />
-            ))}
+          <div className="event-places-cont-wrapper">
+            <div className="google-api-places-view-wrapper">
+              <h3>Miejsca dopasowane do preferencji</h3>
+              {data.placesWithTags.map((place) => (
+                <GooglePlaceSquare
+                  eventInfo={place}
+                  key={place._id}
+                  isAddedByUser={false}
+                />
+              ))}
+            </div>
+            {data.eventWithTags ? (
+              <div className="google-api-places-view-wrapper">
+                <h3>Wydarzenia utworzone przez użytkowników</h3>
+                {data.eventWithTags.map((event) => (
+                  <div>
+                    <GooglePlaceSquare
+                      eventInfo={event}
+                      key={event._id}
+                      isAddedByUser={true}
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <h3 className="event-battler-not-found">
+                Niestety nie udało nam się znaleźć odpowiednich wydarzeń
+              </h3>
+            )}
           </div>
         </div>
       )}
