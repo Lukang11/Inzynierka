@@ -4,7 +4,7 @@ import { useAuth } from "../../../../Utils/AuthProvider";
 import axios from "axios";
 import HobbiesModal from "../HobbiesModal/HobbiesModal";
 import { hobbiesData } from "../../../../Data/HobbiesData";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ProfileHobbies = () => {
   const [hobbies, sethobbies] = useState([]);
@@ -16,8 +16,10 @@ const ProfileHobbies = () => {
     const fetchData = async () => {
       if (user && user.email) {
         try {
-          const hobbiesResponse = await axios.get(`${url}user-hobbies-names/${user.email}`);
-          const userHobbies = hobbiesResponse.data.hobbiesNames
+          const hobbiesResponse = await axios.get(
+            `${url}user-hobbies-names/${user.email}`
+          );
+          const userHobbies = hobbiesResponse.data.hobbiesNames;
 
           sethobbies(() => userHobbies);
         } catch (error) {
@@ -25,10 +27,9 @@ const ProfileHobbies = () => {
         }
       }
     };
-  
+
     fetchData();
   }, [user]);
-
 
   function onClick(element) {
     setIsOpen((val) => !val);
@@ -36,7 +37,7 @@ const ProfileHobbies = () => {
   }
 
   function getHobbyIcon(hobbyName) {
-    const matchingHobby = hobbiesData.find(hobby => hobby.name === hobbyName);
+    const matchingHobby = hobbiesData.find((hobby) => hobby.name === hobbyName);
     const matchingIcon = matchingHobby ? matchingHobby.icon : null;
     return matchingIcon;
   }
@@ -65,8 +66,10 @@ const ProfileHobbies = () => {
           )}
         </div>
       </div>
-  
-      {isOpen ? <HobbiesModal onClick={onClick} /> : null}
+
+      {isOpen ? (
+        <HobbiesModal onClick={onClick} getIcon={getHobbyIcon} />
+      ) : null}
     </div>
   );
 };
