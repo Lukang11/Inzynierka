@@ -1,25 +1,48 @@
 .google-square-cont {
-  margin: 20px;
-  width: 100px;
-
+  margin: 10px;
 }
 .google-square-link {
   text-decoration: none;
   color: black;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
+  height: 100%;
+  background-color: rgba(128, 128, 128, 0.201);
+  transition: background-color 0.4s ease;
+  border-radius: 15px;
 }
 .google-square-header {
+  flex-basis: 40%;
+  width: 150px;
+  font-size: 1em;
 }
 .google-square-adress {
-  font-size: 0.7em;
+  flex-basis: 40%;
+  font-size: 0.6em;
 }
-.google-square-adress-item {
+.google-square-desc {
+  font-size: 0.8em;
 }
 .google-square-rating {
+  flex-basis: 20%;
+}
+.google-square-link:hover {
+  background-color: var(--mainpurple); /* Black background on hover */
+  color: white;
+}
+.google-square-date {
+  font-size: 0.5em;
+}
+.google-square-loc {
+  margin: 5px;
+  font-size: 0.6em;
+}
+
+.rating-stars {
+  color: gold;
 }

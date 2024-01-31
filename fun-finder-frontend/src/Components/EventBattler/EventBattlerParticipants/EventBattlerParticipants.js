@@ -33,14 +33,14 @@ function EventBattlerParticipants({participants}) {
   }, [participants]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    // return <p>Loading...</p>;
   }
 
   return (
     <div className="event-battler-participants-container">
       <ul>
         {loading ? (
-          <p>Loading...</p>
+          null
         ) : (
           users.map((user, index) => (
             <li key={index}>

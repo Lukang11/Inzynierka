@@ -55,7 +55,9 @@ export class EventsController {
       console.error('Error processing request:', error);
       throw new HttpException('Invalid data format', HttpStatus.BAD_REQUEST);
     }
-  } 
+
+  }
+
   @Post('/test')
   testFunction(@Body() object: any) {
     this.eventService.createOfResourceInMongoDbOnlyIfDoesntExist(object);
@@ -104,8 +106,7 @@ export class EventsController {
     return this.eventService.getTypeDataByName(Body);
   }
   @Post('/add/user')
-  addUsersToEvent(@Body() body: {eventId: string, userEmail: string} ) {
-    console.log(body);
+  addUsersToEvent(@Body() body: { eventId: string; userEmail: string }) {
     return this.eventService.addUserToEvent(body);
   }
 }

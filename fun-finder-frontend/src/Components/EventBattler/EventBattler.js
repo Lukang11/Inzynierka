@@ -5,16 +5,18 @@ import EventBattlerWindow from "./EventBattlerWindow/EventBattlerWindow";
 import EventBattlerParticipants from "./EventBattlerParticipants/EventBattlerParticipants";
 import io from "socket.io-client";
 import { useAuth } from "../../Utils/AuthProvider";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 function EventBattler() {
   const { user } = useAuth(); // do pobierania id uz
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [socket, setSocket] = useState(null);
   const [participants, setParticipants] = useState([]); // ludzie w roomie
   const [messages, setMessages] = useState([]); // wiadomosci w roomie
+  const [doRoomExists, setDoRoomExists] = useState(null);
 
   const updateParticipants = (obj) => {
     // funkcja aktualizacja po dołączeniu do rooma
@@ -25,56 +27,84 @@ function EventBattler() {
   };
 
   const messageListener = (obj) => {
-    // funkcja zapisująca nową wiadomość
-    // id: this.generateUniqueId(),
-    // sender_id: userId, dostajemy coś takiego
-    // text: message,
-    setMessages([...messages, obj]); // funkcja do zapisania wiadomosci
+    setMessages(prevMessages => [...prevMessages, obj]);
   };
 
   useEffect(() => {
-    // nawiązujemy połączenie
-    const newSocket = io("http://localhost:8002", {
-      query: {
-        sender_id: user._id,
-        room_id: id, // uzupełnić
-      },
-    });
-    setSocket(newSocket);
 
-    return () => {
-      newSocket.disconnect();
+    const checkIfRoomExists = async () => {
+      
+      try {
+        const response = await axios.get(`http://localhost:7000/battle/findRoom/${id}`);
+        if (response.data === true) {
+          setDoRoomExists(true)
+        }
+        else {
+          setDoRoomExists(false);
+        }
+      }
+      catch (err) {
+        console.log("failed to find if roomExists");
+        setDoRoomExists(false);
+      }
+    }
 
-    };
-  }, [setSocket, user._id]);
+    if(user) {
+      checkIfRoomExists();
+    }
+  }, [user]);
 
   useEffect(() => {
-    // odbieramy aktualizacje po dołączeniu kogos do rooma
-    socket?.on("updateParticipants", updateParticipants);
-  }, [updateParticipants]);
+    if(doRoomExists !== null){
+      if(doRoomExists === true){
+        const newSocket = io("http://localhost:8002", {
+        query: {
+          sender_id: user._id,
+          room_id: id, // uzupełnić
+        },
+       });
+        setSocket(newSocket);
+  
+        return () => {
+          newSocket.disconnect();
+          
+        };
+      }
+      else if (doRoomExists === false) {
+        navigate('/battle');
+      }
+
+    }
+  },[doRoomExists])
+
+
 
   useEffect(() => {
-    // odbieranie wiadomości
+    console.log("wykonuje")
     socket?.on("message", messageListener); // odbieramy wiadomość
-  }, [messageListener]);
+    socket?.on("handleDisconect", updateParticipants);
+    socket?.on("updateParticipants", updateParticipants);
+  }, [socket]);
 
-  useEffect(() => {
-    // odbieranie wiadomości
-    socket?.on("handleDisconect", updateParticipants); // odbieranie wiadomości                                         // odbieramy wiadomość
-  }, [updateParticipants]);
 
   return (
     <div className="battler-container">
-      <EventBattlerWindow
-        participants={participants}
-        className="battler-window-container"
-      ></EventBattlerWindow>
-      <EventBattlerChat
-        passParticipants={participants}
-        passMessages={messages}
-        updateMessage={send}
-        className="battler-chat-container"
-      ></EventBattlerChat>
+        <div className="battler-flex-window-item">
+          {" "}
+          <EventBattlerWindow
+            participants={participants}
+            className="battler-window-container"
+          ></EventBattlerWindow>
+        </div>
+        <div className="battler-flex-chat-item">
+          {" "}
+          <EventBattlerChat
+            passParticipants={participants}
+            passMessages={messages}
+            updateMessage={send}
+            className="battler-chat-container"
+          ></EventBattlerChat>
+        </div>
       <EventBattlerParticipants
         participants={participants}
         className="battler-participants-container"

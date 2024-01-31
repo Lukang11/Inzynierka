@@ -28,6 +28,7 @@
     font-size: 1rem;
     display: flex;
     flex-flow: row nowrap;
+    margin-left: 5px;
   }
   
   .search-form:focus-within {
@@ -56,7 +57,7 @@
   }
 
   .users-section {
-
+    justify-content: left;
     margin: 100px;
   }
   
@@ -101,7 +102,21 @@
   }
 
   .sp-results {
-    text-align: center;
-    color: black;
-    font-size: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10px;
   }
+
+  .sp-results-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    white-space: nowrap;
+  }
+
+
+  

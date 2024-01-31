@@ -1,11 +1,11 @@
 .event-battler-more-user-view-cont {
-  height: 100%;
   width: 100%;
-  font-size: 1.5em;
+  font-size: 1.4em;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  height: 75vh;
 }
 
 .event-b-m-u-v-btn {
@@ -15,4 +15,12 @@
   padding: 10px;
   border-radius: 5px;
   font-size: 1.25em;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 1150px) {
+  .event-battler-more-user-view-cont {
+    height: auto;
+    padding: 30px;
+  }
 }

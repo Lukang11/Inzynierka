@@ -24,6 +24,10 @@
   .refresh-button:hover {
     background-color: #6d0ce4;
   }
+  .refresh-button:disabled {
+    background-color: #9f8cb6;
+    cursor:default;
+  }
   .create-group-button {
     padding: 10px 20px;
     background-color: var(--mainpurple);

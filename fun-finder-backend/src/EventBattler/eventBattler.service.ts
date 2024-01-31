@@ -15,7 +15,8 @@ export class EventBattlerService {
     private readonly userService: UserService,
     @Inject(forwardRef(() => EventsService))
     private readonly eventService: EventsService,
-    @InjectModel('Event_Battler_Rooms') private readonly EventRooms: Model<EventBattlerRooms>,
+    @InjectModel('Event_Battler_Rooms')
+    private readonly EventRooms: Model<EventBattlerRooms>,
   ) {}
 
   findCommonElements(...arrays) {
@@ -56,59 +57,73 @@ export class EventBattlerService {
     } else {
       const placesWithTags =
         await this.eventService.getPlacesForBattler(commonHobbies);
+      const eventWithTags =
+        await this.eventService.getEventsForBattler(commonHobbies);
 
-      return placesWithTags;
+      return { placesWithTags: placesWithTags, eventWithTags: eventWithTags };
     }
   }
   async createNewRoom(roomData: {
-    description: string,
-    participants: number,
-    location: string,
-    date: Date
-  }){
+    description: string;
+    participants: number;
+    location: string;
+    date: Date;
+  }) {
     try {
-      const newRoom = new this.EventRooms (roomData)
+      const newRoom = new this.EventRooms(roomData);
       await newRoom.save();
-      console.log("Creating new room");
+      console.log('Creating new room');
       return newRoom._id;
-    }
-    catch(err) {
-      console.log("unable to create new room");
+    } catch (err) {
+      console.log('unable to create new room');
     }
   }
-  async getAllRooms():Promise<EventBattlerRooms[] | null> {
+  async getAllRooms(): Promise<EventBattlerRooms[] | null> {
     try {
-      return await this.EventRooms.find().exec()
-    }
-    catch(err) {
-      console.log("failed to fetch rooms data");
+      return await this.EventRooms.find().exec();
+    } catch (err) {
+      console.log('failed to fetch rooms data');
     }
   }
   async removeFromRoom(id: string) {
     try {
-       const eventRoom = await this.EventRooms.findById(id);
-      if(eventRoom.participants === 1) {
+      const eventRoom = await this.EventRooms.findById(id);
+      if (eventRoom.participants === 1) {
         this.EventRooms.findByIdAndDelete(id).exec();
-      }
-      else {
+      } else {
         eventRoom.participants -= 1;
         await eventRoom.save();
-        console.log("room participants decremented");
+        console.log('room participants decremented');
       }
-    }
-    catch(err) {
-      console.log("could not delete room");
+    } catch (err) {
+      console.log('could not delete room');
     }
   }
   async addToRoom(id: string) {
-    try{
+    try {
       const eventRoom = await this.EventRooms.findById(id);
-      eventRoom.participants += 1;
-      await eventRoom.save();
-      console.log("incremented room");
+      if(eventRoom){
+        eventRoom.participants += 1;
+        await eventRoom.save();
+        console.log('incremented room');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  async checkIfRoomExists(roomId: string) {
+    try {
+      const eventRoom = await this.EventRooms.findById(roomId);
+      if(eventRoom === null) {
+        return false;
+      }
+      else {
+        return true;
+      }
     }
     catch(err) {
-      console.log(err)
+      console.log("event not found")
+      return false;
     }
   }
 }

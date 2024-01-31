@@ -40,6 +40,7 @@ export class Events {
 }
 
 export interface Events {
+  eventId: string;
   name: string;
   location: string;
   geoLocation: GeoLocation;

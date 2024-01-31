@@ -11,19 +11,30 @@ function EventBattlerChat( {passParticipants,passMessages,updateMessage} ) {
   const inputMesageRef = useRef(null);
   
 const getMessageSenderFname = (id) => {
-  const userFname = usersData.find(user => user._id === id);
-  return userFname ? userFname.fname : null;
+  if(user){
+    const userFname = usersData.find(user => user._id === id);
+    return userFname ? userFname.fname : null;
+  }
+
+}
+const addUserToUserData = (userData) => {
+  const userExists = usersData.find(user => user._id === userData._id)
+  if (!userExists) {
+    setUsersData(prevUsersData => [...prevUsersData, userData]);
+  }
 }
 
 const getMessageSenderAvatar = (id) => {
-  const userAvatar = usersData.find(userAvatar => userAvatar._id === id);
+  if(user){
+    const userAvatar = usersData.find(userAvatar => userAvatar._id === id);
   return userAvatar ? userAvatar.avatar : null;
+  }
+
 }
-const getMessageSenderEmail = (id) => {
+const checkIfIdIsMine = (id) => {
   if(user && id === user._id){
     return true;
   }
-  else return false;
 }
 const handleData = (singleMessage,user_id) => {
   if(singleMessage !== "") {
@@ -37,7 +48,6 @@ const handleData = (singleMessage,user_id) => {
 }
   const handleMessageInput = () => {
     const value = inputMesageRef.current.value;
-    console.log(value);
 }
 const handleKeyPress = (Event) => {
   if (Event.key === 'Enter') {
@@ -64,6 +74,14 @@ const handleKeyPress = (Event) => {
                 avatar: data.avatar
               })
             }
+            addUserToUserData({
+              _id: data._id,
+              email: data.email,
+              fname: data.fname,
+              lname: data.lname,
+              avatar: data.avatar,
+          });
+
             return {
               _id: data._id,
               email: data.email,
@@ -73,10 +91,8 @@ const handleKeyPress = (Event) => {
             };
           })
         );
-        setUsersData(userData);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setUsersData([]);
       }
     }
     };
@@ -87,34 +103,48 @@ const handleKeyPress = (Event) => {
   return (
     <div className="event-battle-chat-wrapper">
       <div className="event-battle-chat-field">
-        {passMessages.map((message) => {
+        {passMessages.map((message,index) => {
           return (
-            <div key={message._id} >
-            <div
-              className={
-                getMessageSenderEmail(message.sender_id)
-                  ? "event-battle-chat-item-owner"
-                  : "event-battle-chat-item-other"
-              }>
-                    {getMessageSenderAvatar(message.sender_id) === null ? (
-                    <ActiveCircle isActive={false} />
-                ) : (
-                <img
-                className="event-battler-chat-avatar"
-                src={getMessageSenderAvatar(message.sender_id)}
-                alt="Avatar"
-              />
-              )}
-              <div className="event-battler-chat-details-wrapper">
-                <p className="event-battler-chat-user-info">
-                  {getMessageSenderFname(message.sender_id)}
-                </p>
-                <p className="event-battler-chat-message">
-                  {message.text}
-                </p>
+              <div
+                key={index}
+                className={
+                  checkIfIdIsMine(message.sender_id)
+                    ? "event-battle-chat-item-owner"
+                    : "event-battle-chat-item-other"}>
+                {!checkIfIdIsMine(message.sender_id) ? (
+                  <>
+                  <div className="event-battler-chat-details-wrapper">
+                    <p className="event-battler-chat-user-info-other">
+                      {getMessageSenderFname(message.sender_id)}
+                    </p>
+                    <p className="event-battler-chat-message">
+                      {message.text}
+                    </p>
+                  </div>
+                  <img
+                    className="event-battler-chat-avatar"
+                    src={getMessageSenderAvatar(message.sender_id)}
+                    alt="Avatar"
+                  />
+                  </>
+                  ) : (
+                    <>
+                    <img
+                      className="event-battler-chat-avatar"
+                      src={getMessageSenderAvatar(message.sender_id)}
+                      alt="Avatar"
+                  />
+                  <div className="event-battler-chat-details-wrapper">
+                    <p className="event-battler-chat-user-info">
+                      {getMessageSenderFname(message.sender_id)}
+                    </p>
+                    <p className="event-battler-chat-message">
+                      {message.text}
+                    </p>
+                  </div>
+                    </>
+                  )}
               </div>
-            </div>
-            </div>
           );
         })}
       </div>
@@ -129,7 +159,7 @@ const handleKeyPress = (Event) => {
         <button
           className="event-battle-message-send-btn"
           onClick={ () => handleData(inputMesageRef.current.value,user._id)}
-        ></button>
+        >+</button>
       </div>
     </div>
   );

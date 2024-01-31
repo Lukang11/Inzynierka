@@ -30,12 +30,12 @@
 }
 
 .close-modal {
-    color: white;
-      position: absolute;
-      top: 30px;
-      left: 30px;
-      font-size: xx-large;
-      cursor: pointer;
+  color: white;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  font-size: xx-large;
+  cursor: pointer;
 }
 
 .modal-input {
@@ -86,4 +86,8 @@
 .hobbies-items {
   text-align: center;
   width: 100%;
+}
+
+.hobbies-prf-icon {
+  color: var(--mainpurple);
 }

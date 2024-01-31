@@ -33,6 +33,10 @@
   font-size: 1.3em;
 }
 
+.section-title h3 {
+  margin: 0;
+}
+
 .section-text {
   font-size: 0.9em;
   padding-left: 100px;
@@ -65,6 +69,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
 }
 
 
@@ -81,6 +86,7 @@
   align-items: center;
   text-decoration: none;
   cursor: pointer;
+  margin-right: 10px;
 }
 
 .section-outline-btn:hover {
@@ -251,7 +257,7 @@
   }
 
   .card {
-    width: 100%;
+    width: 85%;
     transition: all 0.5s;
     margin-bottom: 20px;
   }

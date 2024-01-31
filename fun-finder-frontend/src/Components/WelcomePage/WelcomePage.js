@@ -36,7 +36,7 @@ function WelcomePage() {
             <div className="first-section">
                 <div className="container">
                     <div className="left">
-                        <div className="section-title">Poznawaj ludzi z<br></br> twoimi zainteresowaniami</div>
+                        <div className="section-title"><h3>Poznawaj ludzi z</h3> <h3>twoimi zainteresowaniami</h3></div>
                         <div className="section-text">Dzięki spersonalizowanym kategoriom odnajdziesz osoby podobne do Ciebie. Dołącz do nas i nawiązuj nowe znajomości.</div>
 
                         <div className="buttons-container">

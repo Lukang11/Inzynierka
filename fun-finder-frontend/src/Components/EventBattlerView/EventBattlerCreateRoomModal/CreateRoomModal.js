@@ -8,7 +8,6 @@ function EventBattlerCreateRoom({updateModalShow}) {
     const [roomName, setRoomtName] = useState("");
     const [roomLocation, setRoomLocation] = useState("");
     const [roomDate, setRoomDate] = useState("");
-    const [createdRoomId,setCreatedRoomId] = useState("");
 
     const handleRoomNameChange = (e) => {
         setRoomtName(e.target.value);
@@ -22,14 +21,14 @@ function EventBattlerCreateRoom({updateModalShow}) {
         setRoomDate(e.target.value);
       };
     
-       const handleSubmit = async () => {
+       const handleSubmit = async (e) => {
+        e.preventDefault();
         await axios.post(`http://localhost:7000/battle/createRoom`, {
           description: roomName,
           participants: 0,
           location: roomLocation,
           date: roomDate
         }).then(response => {
-          console.log(response);
           navigate(`/battle/${response.data}`);
         })
       };
@@ -41,20 +40,20 @@ function EventBattlerCreateRoom({updateModalShow}) {
             &times;
           </div>
           <h2>Stwórz pokój</h2>
-          <form>
+          <form onSubmit={handleSubmit}> 
             <label>
               Nazwa wydarzenia:
-              <input type="text" value={roomName} onChange={handleRoomNameChange} />
+              <input type="text" value={roomName} onChange={handleRoomNameChange}  required/>
             </label>
             <label>
               Miejsce:
-              <input type="text" value={roomLocation} onChange={handleRoomLocationChange} />
+              <input type="text" value={roomLocation} onChange={handleRoomLocationChange}  required/>
             </label>
             <label>
               Data:
-              <input type="datetime-local" value={roomDate} onChange={handleRoomDateChange} />
+              <input type="datetime-local" value={roomDate} onChange={handleRoomDateChange} required/>
             </label>
-            <button type="button" onClick={handleSubmit}>Utwórz</button>
+            <button type="submit">Utwórz</button>
             <button type="button">Anuluj</button>
           </form>
         </div>

@@ -5,13 +5,15 @@ import { User } from 'src/Auth/AuthInterfaces/users.model';
 import { GroupChat } from 'src/Chat/ChatInterfaces/groupChat.model';
 import { EventChat } from 'src/Chat/ChatInterfaces/eventChat.model';
 import { PrivateChat } from './ChatCloudsInterfaces/chatclouds.model';
+import { Events } from 'src/Events/EventInterfaces/events.model';
 
 @Injectable()
 export class ChatCloudsService {
   constructor(
     @InjectModel('Private_Chats') private readonly privateChatModel: Model<PrivateChat>,
     @InjectModel('User') private readonly userModel: Model<User>,
-    @InjectModel('Event_Chats') private readonly eventChats: Model<EventChat>
+    @InjectModel('Event_Chats') private readonly eventChats: Model<EventChat>,
+    @InjectModel('Events') private readonly events: Model<Events>
   ) {}
 
   async getParticipantsInfo( data: {participantsIds: [string]}) {
@@ -130,13 +132,14 @@ export class ChatCloudsService {
   }
   
 
-  async createNewEventChat(userCreatingChatId: string, chatName: string, imageUrl: string) {
+  async createNewEventChat(userCreatingChatId: string, chatName: string, imageUrl: string,event_id: string) {
     const newEventChatCloud = new this.eventChats ({
       participants: [userCreatingChatId],
       last_message: "",
       name: chatName,
       avatar: imageUrl,
-      created_at: new Date
+      created_at: new Date,
+      event_id: event_id
     });
     console.log(newEventChatCloud);
     this.sendNewEventChat(newEventChatCloud);
@@ -151,4 +154,33 @@ export class ChatCloudsService {
       console.error("unable to create eventChat", err);
     }
   }
+  async addUserToEventChat(userId: string, eventId: string) {
+    try {
+      const eventChat = await this.eventChats.findOne({event_id: eventId});
+      const event = await this.events.findById(eventId)
+
+      if(eventChat && event) {
+        if(eventChat.participants.includes(userId)){
+          console.log("user is arleady a participant");
+        }
+        else {
+          if(event.maxEventParticipants < eventChat.participants.length + 1) {
+            console.log("max users reached");
+          }
+          else {
+            eventChat.participants.push(userId);
+            await eventChat.save();
+          console.log("user added to eventChat !");
+          }
+        }
+      }
+      else {
+        console.log("could not find event chat");
+      }
+
+    }
+    catch(err) {
+      console.log("failed to add user to chat");
+    }
+}
 }

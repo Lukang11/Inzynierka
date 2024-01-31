@@ -34,19 +34,6 @@ function EventBattlerMoreUserView({ participants }) {
               Szukaj
             </button>
           </div>
-          <div>
-            {" "}
-            {/* {loading ? (
-              <ClipLoader
-                color={color}
-                loading={loading}
-                cssOverride={override}
-                size={30}
-                aria-label="Loading Spinner"
-                data-testid="loader"
-              />
-            ) : null} */}
-          </div>
         </div>
       ) : (
         <GoogleApiFetchPlacesView data={resData} />

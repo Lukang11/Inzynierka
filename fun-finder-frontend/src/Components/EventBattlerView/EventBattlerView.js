@@ -7,16 +7,26 @@ import EventBattlerCreateRoom from "./EventBattlerCreateRoomModal/CreateRoomModa
 function EventBattlerView() {
   const [showModal, setShowModal] = useState(false);
   const [roomsData, setRoomsData] = useState([{}])
+  const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   const  handleRefreshClick = async () => {
-    axios.get('http://localhost:7000/battle/getRooms').then(response => {
-      console.log(response.data);
-      setRoomsData(response.data);
-  });
+    setButtonDisabled(true);
+    try {
+      axios.get('http://localhost:7000/battle/getRooms').then(response => {
+        setRoomsData(response.data);
+    });
+      setTimeout(() => {
+        setButtonDisabled(false);
+      },3000)
+    }
+    catch (err) {
+      console.log("failed to load");
+      setButtonDisabled(false);
+    }
+
 }
   const handleCreateGroupClick = () => {
     setShowModal(true);
-    console.log(showModal);
 
   };
   const handleCloseModal = () => {
@@ -36,7 +46,6 @@ function EventBattlerView() {
 
   useEffect(() => {
     axios.get('http://localhost:7000/battle/getRooms').then(response => {
-      console.log(response.data);
       setRoomsData(response.data);
     })
   },[])
@@ -46,7 +55,7 @@ function EventBattlerView() {
       <div className="event-battler-rooms">
         <div className="event-battler-tools">
           <button className="create-group-button" onClick={handleCreateGroupClick}>Stwórz pokój</button>
-          <button className="refresh-button" onClick={handleRefreshClick}>Odśwież</button>
+          <button className="refresh-button" onClick={handleRefreshClick} disabled={isButtonDisabled}>Odśwież</button>
         </div>
         <div className="event-battler-H2">
           <h2>Dołącz do pokoju !</h2>

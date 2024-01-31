@@ -17,6 +17,9 @@ export class UserService {
       throw new Error('Wszystkie pola są wymagane.');
     }
 
+    user.fname = user.fname.charAt(0).toUpperCase() + user.fname.slice(1);
+    user.lname = user.lname.charAt(0).toUpperCase() + user.lname.slice(1);
+
     if (user.password) {
       const hashedPassword = await bcrypt.hash(user.password, 10);
       user = { ...user, password: hashedPassword } as User;
@@ -162,4 +165,32 @@ export class UserService {
   async findUsersByHobby(hobby: string): Promise<User[]> {
     return this.UserModel.find({ hobbies: { $all: hobby  } }).select('-password').limit(20).exec();
   }
+
+
+  async searchUsersByPrefix(prefix: string): Promise<User[]> {
+    const regex = new RegExp(`^${prefix}`, 'i');
+    const searchedUsers = await this.UserModel.find({ $or: [{ fname: regex }, { lname: regex }] }).exec();
+    return searchedUsers;
+  }
+
+
+
+  async updateUserEventsByEmail(email: string, updatedEvents: any[]): Promise<User | null> {
+    try {
+      const user = await this.UserModel.findOne({ email }).exec();
+  
+      if (!user) {
+        throw new Error('Użytkownik nie istnieje.');
+      }
+      user.events = updatedEvents;
+  
+      const updatedUser = await user.save();
+  
+      return updatedUser;
+    } catch (error) {
+      console.error('Błąd aktualizacji wydarzeń użytkownika:', error);
+      return null;
+    }
+  }
+
 }

@@ -15,6 +15,7 @@ import { parse } from 'cookie';
 import { Response, Request } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
+import { Events } from 'src/Events/EventInterfaces/events.model';
 
 @Controller('/users')
 export class UserController {
@@ -215,4 +216,43 @@ export class UserController {
   async getUsersByHobby(@Param('hobby') hobby: string): Promise<User[]> {
     return this.userService.findUsersByHobby(hobby);
   }
+
+
+  @Get('/search-by-prefix/:prefix')
+  async searchUsersByPrefix(@Param('prefix') prefix: string) {
+    const searchedUsers = await this.userService.searchUsersByPrefix(prefix);
+    return searchedUsers;
+  }
+
+
+  @Post('/add-event/:email')
+  async addEventToUser(
+    @Param('email') email: string,
+    @Body() event: Events,
+  ): Promise<User | null> {
+    try {
+      // Znajdź użytkownika
+      const user = await this.userService.findByEmail(email);
+      if (!user) {
+        throw new Error('Użytkownik nie istnieje.');
+      }
+      // Dodaj wydarzenie do użytkownika
+      user.events.push({
+        event_id:  event.eventId,
+        event_name: event.name,
+        event_description: event.eventDescription,
+        event_time_start: event.eventStart.toString(),
+        event_time_end: event.eventEnd.toString(),
+        event_location: event.location,
+        event_photo: event.eventPhoto,
+      });
+
+      // Zapisz użytkownika
+      return await this.userService.updateUserEventsByEmail(email, user.events);
+    } catch (error) {
+      console.error('Błąd dodawania wydarzenia do użytkownika:', error);
+      return null;
+    }
+  }
+
 }

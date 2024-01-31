@@ -7,52 +7,6 @@ import GooglePlaceSquare from "./GooglePlaceSquare/GooglePlaceSquare";
 function GoogleApiFetchPlacesView({ data }) {
   const [palces, setPlaces] = useState();
   const url = "http://localhost:7000/events/find-places-by-localization";
-  const mock = [
-    {
-      _id: "656f8cf1a410a1eacfeb7603",
-      types: [
-        "restaurant",
-        "bar",
-        "food",
-        "point_of_interest",
-        "establishment",
-      ],
-      formattedAddress:
-        "Bulwar Nadmorski im.Feliksa Nowowiejskiego 2, 81-371 Gdynia, Poland",
-      websiteUri: "http://browarportgdynia.com/",
-      displayName: {
-        text: "Browar Port Gdynia",
-        languageCode: "en",
-        _id: "656f8cf1a410a1eacfeb7604",
-      },
-      iconMaskBaseUri:
-        "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
-      rating: 4.2,
-      __v: 0,
-    },
-    {
-      _id: "656f8e5fa410a1eacfeb765d",
-      types: [
-        "seafood_restaurant",
-        "restaurant",
-        "food",
-        "bar",
-        "point_of_interest",
-        "establishment",
-      ],
-      formattedAddress: "Orłowska 3, 81-522 Gdynia, Poland",
-      websiteUri: "http://www.tawernaorlowska.pl/",
-      displayName: {
-        text: "Tawerna Orłowska",
-        languageCode: "en",
-        _id: "656f8e5fa410a1eacfeb765e",
-      },
-      iconMaskBaseUri:
-        "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
-      rating: 4.1,
-      __v: 0,
-    },
-  ];
   const fetchEvents = (latitude_f, longitude_f) => {
     axios
       .post(url, {
@@ -84,16 +38,15 @@ function GoogleApiFetchPlacesView({ data }) {
   }, []);
   return (
     <div className="google-api-view">
-      {console.log(data.length)}
       {data.length === 0 ? (
-        <div>
-          <h4>
-            Niestety nie znaleźlismy żadnych miejsc które by do was pasowały
-          </h4>
-          <div>Może coś z tych miejsc cie zainteresuje?</div>
+        <div className="event-battler-container-for-places">
+          <h3>Niestety nie znaleźlismy żadnych które by do was pasowały</h3>
+          <div>Więc wyszukalismy kilka restaruacji w waszej okolicy.</div>
+          <div>Smacznego!</div>
           <div className="google-api-places-view-wrapper">
             {palces
-              ? palces.places.map((palce) => (
+              ? palces.places.sort((a, b) => b.rating - a.rating)
+              .map((palce) => (
                   <GooglePlaceSquare
                     eventInfo={palce}
                     places={true}
@@ -104,10 +57,47 @@ function GoogleApiFetchPlacesView({ data }) {
           </div>
         </div>
       ) : (
-        <div className="google-api-places-view-wrapper">
-          {data.map((place) => (
-            <GooglePlaceSquare eventInfo={place} key={place._id} />
-          ))}
+        <div>
+          <div>
+            <h3>Udało się!</h3>
+            <div>
+              Na podstawie tego co was łączy udało nam się dopasować kilka
+              miejsc.
+            </div>
+            <div>Miłej zabawy !</div>
+          </div>
+          <div className="event-places-cont-wrapper">
+            <div className="google-api-places-view-wrapper">
+              <h3>Miejsca dopasowane do preferencji</h3>
+                {data.placesWithTags
+                  .sort((a, b) => b.rating - a.rating)
+                  .map((place) => (
+                    <GooglePlaceSquare
+                      eventInfo={place}
+                      key={place._id}
+                      isAddedByUser={false}
+                    />
+                  ))}
+            </div>
+            {data.eventWithTags ? (
+              <div className="google-api-places-view-wrapper">
+                <h3>Wydarzenia utworzone przez użytkowników</h3>
+                {data.eventWithTags.map((event) => (
+                  <div>
+                    <GooglePlaceSquare
+                      eventInfo={event}
+                      key={event._id}
+                      isAddedByUser={true}
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <h3 className="event-battler-not-found">
+                Niestety nie udało nam się znaleźć odpowiednich wydarzeń
+              </h3>
+            )}
+          </div>
         </div>
       )}
     </div>
