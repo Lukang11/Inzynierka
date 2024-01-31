@@ -60,16 +60,20 @@ function EventBattlerView() {
         <div className="event-battler-H2">
           <h2>Dołącz do pokoju !</h2>
         </div>
-        {roomsData.map((val, index) => (
-          <EventBattlerItem
-            id={val._id}
-            key={index}
-            description={val.description}
-            participants={val.participants}
-            location={val.location}
-            date={formatDate(val.date)}
-          ></EventBattlerItem>
-        ))}
+        {roomsData.length === 0 ? (
+          <p className="event-battler-no-rooms-info">Brak aktywnych pokoi.</p> 
+        ) : (
+          roomsData.map((val, index) => (
+            <EventBattlerItem
+              id={val._id}
+              key={index}
+              description={val.description}
+              participants={val.participants}
+              location={val.location}
+              date={formatDate(val.date)}
+            ></EventBattlerItem>
+          ))
+        )}
       </div>
       {showModal && (
         <EventBattlerCreateRoom updateModalShow={handleCloseModal}/>
