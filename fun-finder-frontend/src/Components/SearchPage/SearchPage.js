@@ -87,7 +87,7 @@ function SearchPage() {
         value={selectedCategory}
         onChange={handleCategoryChange}
       >
-        <option value="All">Wybierz</option>
+        <option value="All">Wszystkie</option>
         <option value="Motoryzacja">Motoryzacja</option>
         <option value="Kultura">Kultura</option>
         <option value="Edukacja">Edukacja</option>
@@ -109,7 +109,7 @@ function SearchPage() {
     {searchedUsers.length !== 0 && (
             <div className="sp-results">
               {searchedUsers
-                .filter((searchedUser) => searchedUser.email != user.email)
+                .filter((searchedUser) => searchedUser.email !== user.email)
                 .filter((searchedUser) => selectedCategory === "All" || searchedUser.hobbiesName.includes(selectedCategory) )
                 .map((user) => (  
                   <div className="sp-results-item" onClick={() => onClick(user)}> 

@@ -15,7 +15,7 @@ dotenv.config();
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
     JwtModule.register({
       secret: process.env.JWT_SECRET_KEY,
-      signOptions: { expiresIn: '3h' },
+      signOptions: { expiresIn: '10h' },
     }),
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],

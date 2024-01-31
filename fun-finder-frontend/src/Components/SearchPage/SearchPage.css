@@ -28,6 +28,7 @@
     font-size: 1rem;
     display: flex;
     flex-flow: row nowrap;
+    margin-left: 5px;
   }
   
   .search-form:focus-within {
@@ -103,8 +104,9 @@
   .sp-results {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
+    padding-bottom: 10px;
   }
 
   .sp-results-item {
