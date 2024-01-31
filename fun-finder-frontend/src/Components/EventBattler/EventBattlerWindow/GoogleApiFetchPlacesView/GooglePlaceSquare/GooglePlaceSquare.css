@@ -6,7 +6,7 @@
   color: black;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
   padding-top: 10px;
@@ -19,11 +19,14 @@
 .google-square-header {
   flex-basis: 40%;
   width: 150px;
-  font-size: 0.8em;
+  font-size: 1em;
 }
 .google-square-adress {
   flex-basis: 40%;
   font-size: 0.6em;
+}
+.google-square-desc {
+  font-size: 0.8em;
 }
 .google-square-rating {
   flex-basis: 20%;
@@ -32,4 +35,11 @@
 .google-square-link:hover {
   background-color: var(--mainpurple); /* Black background on hover */
   color: white;
+}
+.google-square-date {
+  font-size: 0.5em;
+}
+.google-square-loc {
+  margin: 5px;
+  font-size: 0.6em;
 }

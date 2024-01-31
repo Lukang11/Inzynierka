@@ -4,8 +4,19 @@
 .google-api-places-view-wrapper {
   display: flex;
   flex-wrap: nowrap;
-  flex-direction: row;
-  overflow-x: scroll;
-  overflow-y: visible;
+  flex-direction: column;
+  width: 400px;
+  margin: auto;
+  max-height: 500px;
+  overflow-y: scroll;
+
   margin: 10px;
+}
+.event-places-cont-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.event-battler-not-found {
+  text-align: center;
 }

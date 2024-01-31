@@ -39,9 +39,14 @@ function GooglePlaceSquare({ eventInfo, isAddedByUser }) {
           <div className="google-square-header">
             {eventInfo.displayName ? eventInfo.displayName.text : null}
           </div>
-          <div className="google-square-adress">{split_address[0]}</div>
+          <div>
+            <div className="google-square-adress">{split_address[0]}</div>
+            <div className="google-square-adress">
+              {split_address[1]},{split_address[2]}
+            </div>
+          </div>
           <div className="google-square-rating">
-            {eventInfo.rating ? eventInfo.rating : "Brak"}/5
+            {eventInfo.rating ? eventInfo.rating : "Brak"}
           </div>
         </a>
       ) : (
@@ -49,13 +54,19 @@ function GooglePlaceSquare({ eventInfo, isAddedByUser }) {
           to={`/event-info/${eventInfo._id}`}
           className="google-square-link"
         >
-          <div className="google-square-header">{eventInfo.name}</div>
-          <div className="google-square-adress">
-            {eventInfo.eventDescription}
+          <div>
+            <div className="google-square-header">{eventInfo.name}</div>
+            <div>
+              <div className="google-square-date">{formattedHourStart}</div>
+              <div className="google-square-date">{formattedHourEnd}</div>
+            </div>
           </div>
-          <div className="google-square-adress">{formattedHourStart}</div>
-          <div className="google-square-adress">{formattedHourEnd}</div>
-          <div className="google-square-rating">{eventInfo.location}</div>
+
+          <div className="google-square-desc">{eventInfo.eventDescription}</div>
+
+          <div>
+            <div className="google-square-loc">{eventInfo.location}</div>
+          </div>
         </Link>
       )}
     </div>
