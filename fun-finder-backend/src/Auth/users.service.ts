@@ -17,6 +17,9 @@ export class UserService {
       throw new Error('Wszystkie pola są wymagane.');
     }
 
+    user.fname = user.fname.charAt(0).toUpperCase() + user.fname.slice(1);
+    user.lname = user.lname.charAt(0).toUpperCase() + user.lname.slice(1);
+
     if (user.password) {
       const hashedPassword = await bcrypt.hash(user.password, 10);
       user = { ...user, password: hashedPassword } as User;

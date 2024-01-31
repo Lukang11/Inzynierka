@@ -127,7 +127,12 @@ export class EventsService {
   async getUsersEvents(email: string) {
     const user = await this.userModel.findOne({ email: email });
     const events = user.events;
-    return events;
+
+    const currentEvents = events.filter((event) => {
+      const eventTimeEnd = new Date(event.event_time_end);
+      return eventTimeEnd >= new Date();
+    });
+    return currentEvents;
   }
   async getUsersHobbies(email: string) {
     const user = await this.userModel.findOne({ email: email });
