@@ -42,10 +42,11 @@ function GoogleApiFetchPlacesView({ data }) {
         <div className="event-battler-container-for-places">
           <h3>Niestety nie znaleźlismy żadnych które do was by pasowały</h3>
           <div>Więc wyszukalismy kilka restaruacji w waszej okolicy.</div>
-          <div>Smacznego !</div>
+          <div>Smacznego!</div>
           <div className="google-api-places-view-wrapper">
             {palces
-              ? palces.places.map((palce) => (
+              ? palces.places.sort((a, b) => b.rating - a.rating)
+              .map((palce) => (
                   <GooglePlaceSquare
                     eventInfo={palce}
                     places={true}
