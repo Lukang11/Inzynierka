@@ -3,6 +3,7 @@
   justify-content: right;
   font-size: 40px;
   height: 0px;
+  cursor: pointer;
 }
 
 .event-battler-modal-overlay {
@@ -50,8 +51,10 @@
   margin-bottom: 5px;
   border: none;
   border-radius: 3px;
+  cursor: pointer;
 }
 
 .event-battler-modal-content button:hover {
   background-color: #6d0ce4;
+  cursor: pointer;
 }
