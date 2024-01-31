@@ -30,7 +30,6 @@
 }
 .google-square-rating {
   flex-basis: 20%;
-  color: gold;
 }
 .google-square-link:hover {
   background-color: var(--mainpurple); /* Black background on hover */
@@ -42,4 +41,8 @@
 .google-square-loc {
   margin: 5px;
   font-size: 0.6em;
+}
+
+.rating-stars {
+  color: gold;
 }

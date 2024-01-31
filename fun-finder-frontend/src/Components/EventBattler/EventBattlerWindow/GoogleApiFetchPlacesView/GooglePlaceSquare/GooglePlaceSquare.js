@@ -1,6 +1,7 @@
 import React from "react";
 import "./GooglePlaceSquare.css";
 import { Link, useNavigate } from "react-router-dom";
+import StarRating from "./StarRating";
 
 function GooglePlaceSquare({ eventInfo, isAddedByUser }) {
   const split_address = !isAddedByUser
@@ -10,21 +11,21 @@ function GooglePlaceSquare({ eventInfo, isAddedByUser }) {
   const dateEventTimeEnd = new Date(eventInfo.eventEnd);
   const formattedHourStart = isAddedByUser
     ? dateEventTimeStart.toLocaleDateString("pl-PL", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      })
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
     : null;
   const formattedHourEnd = isAddedByUser
     ? dateEventTimeEnd.toLocaleDateString("pl-PL", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      })
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
     : null;
   const navigate = useNavigate();
 
@@ -46,7 +47,18 @@ function GooglePlaceSquare({ eventInfo, isAddedByUser }) {
             </div>
           </div>
           <div className="google-square-rating">
-            {eventInfo.rating ? eventInfo.rating : "Brak"}
+            {eventInfo.rating ? (
+              <div>
+                <div className="rating-string">
+                  {eventInfo.rating}
+                </div>
+                <div className="rating-stars">
+                  <StarRating rating={eventInfo.rating} />
+                </div>
+              </div>
+            ) : (
+              "Brak"
+            )}
           </div>
         </a>
       ) : (

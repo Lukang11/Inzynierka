@@ -68,13 +68,15 @@ function GoogleApiFetchPlacesView({ data }) {
           <div className="event-places-cont-wrapper">
             <div className="google-api-places-view-wrapper">
               <h3>Miejsca dopasowane do preferencji</h3>
-              {data.placesWithTags.map((place) => (
-                <GooglePlaceSquare
-                  eventInfo={place}
-                  key={place._id}
-                  isAddedByUser={false}
-                />
-              ))}
+                {data.placesWithTags
+                  .sort((a, b) => b.rating - a.rating)
+                  .map((place) => (
+                    <GooglePlaceSquare
+                      eventInfo={place}
+                      key={place._id}
+                      isAddedByUser={false}
+                    />
+                  ))}
             </div>
             {data.eventWithTags ? (
               <div className="google-api-places-view-wrapper">
