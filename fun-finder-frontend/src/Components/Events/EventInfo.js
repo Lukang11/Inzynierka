@@ -124,7 +124,7 @@ export const EventInfo = () => {
           <div className="event-map-container">
           <p className="event-enrolled-users">
             <span className="enrolled-users">Zapisanych uczestników: </span>
-            <span className="event-number-of-users">{eventData.eventParticipantsEmail.length}</span>
+            <span className="event-number-of-users">{eventData.eventParticipantsEmail.length} / {eventData.maxEventParticipants}</span>
           </p>
               {latitude !== null && longitude !== null && (
                 <GoogleMap 

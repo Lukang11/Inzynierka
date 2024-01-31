@@ -1,7 +1,7 @@
 describe('CreateEvent Component Tests', () => {
   beforeEach(() => {
     cy.loginUser('1234@gmail.com', 'P@ssw0rd');
-    cy.get(':nth-child(2) > a').click();
+    cy.get(':nth-child(3) > a').click();
     cy.get('.events-button-add-events').click();
     
   });
@@ -44,8 +44,8 @@ describe('CreateEvent Component Tests', () => {
   it('should submit form with valid data', () => {
     
     cy.get(':nth-child(1) > [type="text"]').type('Test Event');
-    cy.get('[placeholder="Podaj datę rozpoczęcia"]').type('2021-06-01T12:00');
-    cy.get('[placeholder="Podaj datę zakończenia"]').type('2021-06-01T13:00');
+    cy.get('[placeholder="Podaj datę rozpoczęcia"]').type('2024-06-01T12:00');
+    cy.get('[placeholder="Podaj datę zakończenia"]').type('2024-06-01T13:00');
     cy.get('[type="number"]').type('10');
     cy.get('[placeholder="Napisz coś o swoim wydarzeniu"]').type('Test description');
     cy.get('[placeholder="Podaj adres wydarzenia"]',{ timeout: 10000 }).type('Gdynia Hutnicza 44 {enter}' );
