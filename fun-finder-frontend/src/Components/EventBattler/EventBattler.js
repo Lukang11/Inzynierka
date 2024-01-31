@@ -28,7 +28,6 @@ function EventBattler() {
 
   const messageListener = (obj) => {
     setMessages(prevMessages => [...prevMessages, obj]);
-    console.log(obj);
   };
 
   useEffect(() => {
@@ -39,7 +38,6 @@ function EventBattler() {
         const response = await axios.get(`http://localhost:7000/battle/findRoom/${id}`);
         if (response.data === true) {
           setDoRoomExists(true)
-          console.log("halo")
         }
         else {
           setDoRoomExists(false);
@@ -91,7 +89,6 @@ function EventBattler() {
 
   return (
     <div className="battler-container">
-      {/* <div className="battler-window-chat-container"> */}
         <div className="battler-flex-window-item">
           {" "}
           <EventBattlerWindow
@@ -108,7 +105,6 @@ function EventBattler() {
             className="battler-chat-container"
           ></EventBattlerChat>
         </div>
-      {/* </div> */}
       <EventBattlerParticipants
         participants={participants}
         className="battler-participants-container"

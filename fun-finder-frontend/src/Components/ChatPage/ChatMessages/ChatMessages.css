@@ -66,6 +66,32 @@
     border: 1px solid #b6b6b6;
 
 }
+.chat-details-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+.chat-user-info-other {
+    font-size: 15px;
+    margin: 4px;
+    font-weight: bold;
+    align-self: flex-end;
+}
+.chat-message {
+    margin: 0px;
+}
+.messages-chat-avatar {
+    margin: 5px;
+    display: flex;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+.chat-user-info-owner{
+    font-size: 15px;
+    margin: 4px;
+    font-weight: bold;
+    align-self: flex-start;
+}
 @media (max-width: 800px) {
     .chat-field {
         flex-basis: 95%;
