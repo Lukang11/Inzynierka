@@ -15,11 +15,9 @@ export const ChatNewMessage = ({handleNewChat}) => {
     };
 
     const searchForUser = async (email) => {
-        console.log(email);
         axios.get(`http://localhost:7000/users/user-data-email/${email}`)
                 .then(response => {
                 setSearchedUser(response.data);
-                console.log(response.data);
                 })
                 .catch(error => {
                 console.error('Error finding user with this email', error);

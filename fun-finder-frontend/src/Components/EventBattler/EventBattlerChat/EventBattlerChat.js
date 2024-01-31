@@ -17,6 +17,12 @@ const getMessageSenderFname = (id) => {
   }
 
 }
+const addUserToUserData = (userData) => {
+  const userExists = usersData.find(user => user._id === userData._id)
+  if (!userExists) {
+    setUsersData(prevUsersData => [...prevUsersData, userData]);
+  }
+}
 
 const getMessageSenderAvatar = (id) => {
   if(user){
@@ -42,7 +48,6 @@ const handleData = (singleMessage,user_id) => {
 }
   const handleMessageInput = () => {
     const value = inputMesageRef.current.value;
-    console.log(value);
 }
 const handleKeyPress = (Event) => {
   if (Event.key === 'Enter') {
@@ -69,6 +74,14 @@ const handleKeyPress = (Event) => {
                 avatar: data.avatar
               })
             }
+            addUserToUserData({
+              _id: data._id,
+              email: data.email,
+              fname: data.fname,
+              lname: data.lname,
+              avatar: data.avatar,
+          });
+
             return {
               _id: data._id,
               email: data.email,
@@ -78,10 +91,8 @@ const handleKeyPress = (Event) => {
             };
           })
         );
-        setUsersData(userData);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setUsersData([]);
       }
     }
     };

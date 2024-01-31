@@ -40,7 +40,7 @@ function GoogleApiFetchPlacesView({ data }) {
     <div className="google-api-view">
       {data.length === 0 ? (
         <div className="event-battler-container-for-places">
-          <h3>Niestety nie znaleźlismy żadnych które do was by pasowały</h3>
+          <h3>Niestety nie znaleźlismy żadnych które by do was pasowały</h3>
           <div>Więc wyszukalismy kilka restaruacji w waszej okolicy.</div>
           <div>Smacznego!</div>
           <div className="google-api-places-view-wrapper">

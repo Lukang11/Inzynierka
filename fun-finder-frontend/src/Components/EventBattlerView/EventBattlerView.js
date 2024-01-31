@@ -13,7 +13,6 @@ function EventBattlerView() {
     setButtonDisabled(true);
     try {
       axios.get('http://localhost:7000/battle/getRooms').then(response => {
-        console.log(response.data);
         setRoomsData(response.data);
     });
       setTimeout(() => {
@@ -47,7 +46,6 @@ function EventBattlerView() {
 
   useEffect(() => {
     axios.get('http://localhost:7000/battle/getRooms').then(response => {
-      console.log(response.data);
       setRoomsData(response.data);
     })
   },[])
