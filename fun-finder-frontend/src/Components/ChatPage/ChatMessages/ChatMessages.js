@@ -12,6 +12,7 @@ function ChatMessages( {passWichMessageToDisplay, chatParticipants, passConversa
     const [participants, SetParticipants] = useState("");
     const [participantsInfo, setParticipantsInfo] = useState([{}]);
     const [conversationId, setConversationId] = useState("");
+    const [inputValue,setInputValue] = useState("");
     const inputMesageRef = useRef(null);
     const lastItemRef = useRef(null);
 
@@ -38,26 +39,22 @@ function ChatMessages( {passWichMessageToDisplay, chatParticipants, passConversa
     }
     
     const getParticipantsInfo = async (participantsIds) => {
-        console.log(participantsIds);
         const response = await axios.post(`http://localhost:7000/clouds/chatParticipants/info`,{participantsIds: participantsIds});
         setParticipantsInfo(response.data);
         
     }
 
     const messageListener = (obj) => {
-        console.log("co ja ci tu podaje ", obj);
         setMessages([...messages, obj]) // funkcja do zapisania wiadomosci
-        console.log(messages, " co to za obiekt");
          /// tu mi coś nie działa 
     }
     
      const send = async (data) => {
-        console.log(data + "to są dane do wysłania");
         await socket?.emit("message",(data));
     }
     const handleMessageInput = () => {
         const value = inputMesageRef.current.value;
-        console.log(value);
+        setInputValue(value)
     }
 
     const handleData = (singleMessage,user_id,participantsInfo,passChatType) => {
@@ -69,7 +66,7 @@ function ChatMessages( {passWichMessageToDisplay, chatParticipants, passConversa
                 participants: participantsInfo,
                 chatType: passChatType
             }
-            console.log("to wysylam ", dataToSendViaSocket);
+            setInputValue("");
             send(dataToSendViaSocket);
         }
     }
@@ -87,7 +84,6 @@ function ChatMessages( {passWichMessageToDisplay, chatParticipants, passConversa
     useEffect(() => {
         if(participants) {
             getParticipantsInfo(participants)
-            console.log(participantsInfo)
         }
     },[participants]);
 
@@ -131,28 +127,28 @@ function ChatMessages( {passWichMessageToDisplay, chatParticipants, passConversa
                 >
                 {user._id !== message.sender_id ? (
                     <>
-                    <div className="event-battler-chat-details-wrapper">
-                        <p className="event-battler-chat-user-info-other">
+                    <div className="chat-details-wrapper">
+                        <p className="chat-user-info-other">
                             {getParticipantsName(message.sender_id)}
                         </p>
-                        <p className="event-battler-chat-message">{message.text}</p>
+                        <p className="chat-message">{message.text}</p>
                     </div>
                     <img
-                    className="event-battler-chat-avatar"
+                    className="messages-chat-avatar"
                     src={getParticipantImage(message.sender_id)}
                     alt="Avatar"/></>
                 ) : (
                     <>
                     <img
-                    className="event-battler-chat-avatar"
+                    className="messages-chat-avatar"
                     src={getParticipantImage(message.sender_id)}
                     alt="Avatar"
                     />
-                    <div className="event-battler-chat-details-wrapper">
-                        <p className="event-battler-chat-user-info-owner">
+                    <div className="chat-details-wrapper">
+                        <p className="chat-user-info-owner">
                             {getParticipantsName(message.sender_id)}
                         </p>
-                        <p className="event-battler-chat-message">{message.text}</p>
+                        <p className="chat-message">{message.text}</p>
                     </div>
                     </>
                 )}
@@ -163,6 +159,7 @@ function ChatMessages( {passWichMessageToDisplay, chatParticipants, passConversa
                     <input
                         className="message-input"
                         type="text"
+                        value={inputValue}
                         ref={inputMesageRef}
                         onChange={handleMessageInput}
                         onKeyDown={handleKeyPress}/>

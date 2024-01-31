@@ -46,8 +46,6 @@ const ChatPageComponent = () => {
                     axios.get(`http://localhost:7000/clouds/participants/${user._id}`)
                     .then(response => {
                     setChatsInfo(response.data);
-                    console.log("halo");
-                    console.log(response.data)
                     })
                     .catch(error => {
                     console.error('Error fetching participant info:', error);
@@ -61,7 +59,6 @@ const ChatPageComponent = () => {
                     axios.get(`http://localhost:7000/clouds/event/${user._id}`)
                 .then(response => {
                     setChatsInfo(response.data);
-                    console.log(response.data);
                 })
                 .catch(error => {
                     console.error('Error fetching group info', error);
