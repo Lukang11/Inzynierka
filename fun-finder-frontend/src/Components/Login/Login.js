@@ -33,7 +33,7 @@ const Login = () => {
 
             await login(response.data.user);
 
-            document.cookie = serialize('accessToken', response.data.accessToken, { path: '/', maxAge: 3600 });
+            document.cookie = serialize('accessToken', response.data.accessToken, { path: '/', maxAge: 36000 });
             
             navigate("/profile");
         } catch (error) {

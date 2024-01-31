@@ -16,11 +16,9 @@
 }
 
 .sp-modal-bg {
-    
     max-width: 90vw;
-    width: 60%;
-    max-height: 80vh;
-    overflow-y: auto; 
+    width: 80%;
+    max-height: 80vh; 
     border-radius: 20px;
     background-color: white;
     margin: auto;
@@ -30,6 +28,7 @@
     justify-content: space-evenly;
     box-sizing: border-box;
     padding: 20px; 
+    text-align: center;
 }
 
 .close-profile-modal {
