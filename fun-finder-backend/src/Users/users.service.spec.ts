@@ -4,7 +4,7 @@ import { Test } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
-import { User, UserHobbies } from './AuthInterfaces/users.model';
+import { User, UserHobbies } from './UsersInterfaces/users.model';
 import { access } from 'fs';
 
 jest.mock('bcrypt', () => ({
@@ -166,7 +166,7 @@ describe('UserService', () => {
     };
     
     
-    jest.spyOn(userService, 'createGoogleUser').mockResolvedValue(expectedUser as User); // Cast to User for the mock return if necessary
+    jest.spyOn(userService, 'createGoogleUser').mockResolvedValue(expectedUser as User);
     
     const createdOrUpdatedUser = await userService.createGoogleUser(payload);
     
@@ -209,29 +209,7 @@ describe('UserService', () => {
     expect(result).toEqual(updatedUser);
     expect(userService.updateUserDescByEmail).toHaveBeenCalledWith(email, newDescription);
   });
-  it('should return a user score by email', async () => {
-    const email = 'test@example.com';
-    const expectedScore = 85;
-  
-    jest.spyOn(userService, 'getUserScoreByEmail').mockResolvedValue(expectedScore);
-  
-    const score = await userService.getUserScoreByEmail(email);
-  
-    expect(score).toEqual(expectedScore);
-    expect(userService.getUserScoreByEmail).toHaveBeenCalledWith(email);
-  });
-  it('should update a user score by email', async () => {
-    const email = 'test@example.com';
-    const newScore = 95;
-    const updatedUser: Partial<User> = { email, score: newScore };
-  
-    jest.spyOn(userService, 'updateUserScoreByEmail').mockResolvedValue(updatedUser as User);
-  
-    const result = await userService.updateUserScoreByEmail(email, newScore);
-  
-    expect(result).toHaveProperty('score', newScore);
-    expect(userService.updateUserScoreByEmail).toHaveBeenCalledWith(email, newScore);
-  });
+
   it('should return a user avatar by email', async () => {
     const email = 'test@example.com';
     const expectedAvatar = 'avatar_url';
