@@ -120,32 +120,30 @@ const ChatPageComponent = () => {
     return (
         <div className="chat-page">
             <div className="chat-clouds-section">
-                <ChatTypes
-                    updateWichChatToDisplay={updateWichChatToDisplay}
-                    clearDisplayedMessage={updateWichMessagesToDisplay}/>
+                <ChatTypes // wyświetlanie typów chatu
+                    updateWichChatToDisplay={updateWichChatToDisplay} 
+                    // przekazywanie informacji o typie chatu i czyszczenie pobranych wiadomości z bazy danych
+                    clearDisplayedMessage={updateWichMessagesToDisplay} />  
                 {displayChatClouds() && (
-                <ChatClouds 
+                <ChatClouds // wyświetlanie dmków chatu
                     passChatCloudsDBData={chatsInfo}
                     updateWichMessagesToDisplay={updateWichMessagesToDisplay}/>)}
                 {whichChatToDisplay === "person" && displayChatClouds() && (
-                    <ChatNewMessageComponent
-                    handleNewChat={handleNewChatAdded}/>
+                    <ChatNewMessageComponent // wyświetlanie okienka do tworzenia nowego chatu
+                    handleNewChat={handleNewChatAdded}/> // po stworzeniu nowego chatu ponowne pobranie danych dymków chatu
                 )}
             </div>
             <div className="chat-messages-section">
                 {whichMessagesToDisplay !== "" && (
-                    <ChatMessages 
-                    passWichMessageToDisplay={messages}
-                    chatParticipants={slectedChatParticipants}
-                    passConversationId={whichMessagesToDisplay}
-                    passChatType={whichChatToDisplay}
+                    <ChatMessages // wyświetlanie wiadomości z chatu
+                    passWichMessageToDisplay={messages} // przekazywanie danych wiadomości do wyświetlenia
+                    chatParticipants={slectedChatParticipants} // przekazanie informacji o uczestnikach chatu
+                    passConversationId={whichMessagesToDisplay} // przekazanie informacji id chatu
+                    passChatType={whichChatToDisplay} // przekazanie informacji o typie chatu
                     />
                 )}
             </div>
             </div>
         );
     }
-    
-
-
 export default ChatPageComponent;

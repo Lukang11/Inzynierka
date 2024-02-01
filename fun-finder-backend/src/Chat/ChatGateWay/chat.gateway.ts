@@ -41,34 +41,31 @@ export class ChatGateway implements OnGatewayConnection {
     }
 
 
-    @SubscribeMessage('message')
-    handleMessage(client: Socket, data: Data): void {
-        console.log("o takie ", data, "takie dane przekazuje");
-        const message = data.message;
-        const userId = data.user_id;  // subscribe message przyjmuje tylko 2 argumenty socket, i pakuje otrzymane dany do tablicy dlatego tak
-        const conversationId = data.conversationId;
+    @SubscribeMessage('message') 
+    handleMessage(client: Socket, data: Data): void { // funkcja wywoływana w przypadku otrzymania zdarzenia message
 
-       const messageToSend = new this.messages ({
+        const message = data.message; // zapisanie tresci wiadomości
+        const userId = data.user_id;  // zapisanie id użytkownika wysyłajacego wiadomość
+        const conversationId = data.conversationId; // zapisanie id chatu
+
+       const messageToSend = new this.messages ({ // stworzenie obiektu do zapisania w bazie danych
             conversation_id: conversationId,
             sender_id: userId,
             text: message,
             date: new Date
           });
-        this.sendMessageToDatabase(messageToSend);
-        this.updateLastMessage(data.conversationId,data.message,data.chatType);
+        this.sendMessageToDatabase(messageToSend); // zapisanie wiadomości do bazy danych
+        this.updateLastMessage(data.conversationId,data.message,data.chatType); // ustawienie ostatnej wiadomości chatu
 
-        const messageToSendToUser = {
+        const messageToSendToUser = { // stworzenie obiektu do przesłania wszystkim uczestniczącym w chacie
             id: messageToSend._id,
             conversation_id: conversationId,
             sender_id: userId,
             text: message,
         }
-        console.log(messageToSendToUser)
-        console.log(messageToSend)
-
           client.emit('message',messageToSendToUser) // wyslanie wiadomosci do wysylającego
 
-          data.participants.forEach( participant => {
+          data.participants.forEach( participant => { // wysłanie wiadomości do każdego uczestnika chatu
             const sendTo = this.clients.get(participant.id);
             if(sendTo) {
                 sendTo.emit('message',messageToSendToUser);

@@ -46,7 +46,7 @@ function ChatMessages( {passWichMessageToDisplay, chatParticipants, passConversa
 
     const messageListener = (obj) => {
         setMessages([...messages, obj]) // funkcja do zapisania wiadomosci
-         /// tu mi coś nie działa 
+
     }
     
      const send = async (data) => {

@@ -13,7 +13,7 @@ export class EventBattler {
     );
   }
   @Post('/createRoom')
-  async createNewRoom(@Body() Body: {
+  async createNewRoom(@Body() Body: { // tworzenie pokoju
     description: string,
     participants: number,
     location: string,
@@ -21,19 +21,19 @@ export class EventBattler {
   }) {
     return await this.eventBattlerService.createNewRoom(Body);
   }
-  @Get('/getRooms')
+  @Get('/getRooms') // pobranie listy pokoi
   async getAllRooms(){
     return await this.eventBattlerService.getAllRooms();
   }
-  @Post(`/removeFromRoom/:id`)
+  @Post(`/removeFromRoom/:id`) // usuwanie uczestnika z  pokoju o podanym id
   async removeRoom(@Param('id') id: string){
     return await this.eventBattlerService.removeFromRoom(id);
   }
-  @Post(`/addToRoom/:id`)
+  @Post(`/addToRoom/:id`) // dodanie uczestnika do pokoju o podanym id
   async addToRoom(@Param('id') id: string){
     return await this.eventBattlerService.addToRoom(id);
   }
-  @Get('/findRoom/:roomId')
+  @Get('/findRoom/:roomId') // znalezienie pokoju o podanym id
   async findBattleRoom(@Param('roomId') roomId: string) {
     return await this.eventBattlerService.checkIfRoomExists(roomId);
   }

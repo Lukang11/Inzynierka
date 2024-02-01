@@ -51,13 +51,13 @@ function EventBattlerView() {
   },[])
 
   return (
-    <div className="event-battler-container">
+    <div className="event-battler-container"> 
       <div className="event-battler-rooms">
-        <div className="event-battler-tools">
-          <button className="create-group-button" onClick={handleCreateGroupClick}>Stwórz pokój</button>
+        <div className="event-battler-tools"> 
+          <button className="create-group-button" onClick={handleCreateGroupClick}>Stwórz pokój</button> 
           <button className="refresh-button" onClick={handleRefreshClick} disabled={isButtonDisabled}>Odśwież</button>
-        </div>
-        <div className="event-battler-H2">
+        </div> 
+        <div className="event-battler-H2"> 
           <h2>Dołącz do pokoju !</h2>
         </div>
         {roomsData.map((val, index) => (

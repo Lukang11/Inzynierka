@@ -78,9 +78,9 @@ export class EventBattlerService {
       console.log('unable to create new room');
     }
   }
-  async getAllRooms(): Promise<EventBattlerRooms[] | null> {
+  async getAllRooms(): Promise<EventBattlerRooms[] | null> { // znalezienie wszystkich pokoi
     try {
-      return await this.EventRooms.find().exec();
+      return await this.EventRooms.find().exec(); // funkcja uruchamiana na modelu mongoDB do znalezienia wszystkich pokoi
     } catch (err) {
       console.log('failed to fetch rooms data');
     }
