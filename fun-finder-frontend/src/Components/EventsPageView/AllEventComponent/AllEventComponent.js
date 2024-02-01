@@ -32,7 +32,6 @@ function AllEventComponent({ filter, userLocation }) {
         const response = await axios.get(url);
         const allEvents = response.data;
 
-        // Po pobraniu wydarzeń, stosujemy filtr na podstawie odległości
         const filteredEvents = filterEvents(allEvents, filter, userLocation);
 
         setEvents(filteredEvents);
@@ -51,19 +50,32 @@ function AllEventComponent({ filter, userLocation }) {
     return events.filter((event) => {
       const eventDate = new Date(event.eventStart);
       if (eventDate < currentDate) return false;
+  
+      
       if (filter && userLocation) {
+       
+        if (!event.geoLocation || !event.geoLocation.latitude || !event.geoLocation.longitude) {
+          
+          return false;
+        }
+  
         const userLat = parseFloat(userLocation.latitude);
         const userLong = parseFloat(userLocation.longitude);
         const eventLat = parseFloat(event.geoLocation.latitude);
         const eventLong = parseFloat(event.geoLocation.longitude);
-  
         const distance = calculateDistance(userLat, userLong, eventLat, eventLong);
-        return distance <= filter;
+        console.log(userLat, userLong, eventLat, eventLong, distance);
+        return distance <= parseFloat(filter);
       }
-      return true;
+  
       
+      return true; 
     });
   };
+  
+  
+  
+  
 
   return (
     <div className="all-events-component">
@@ -72,7 +84,7 @@ function AllEventComponent({ filter, userLocation }) {
           <EventCardView eventInfo={event} places={false} key={event._id} />
         ))
       ) : (
-        "Couldnt fetch events at the moment, try later"
+        "Nie ma żadnych wydarzeń z twoimi prefrencjami"
       )}
     </div>
   );

@@ -10,14 +10,17 @@ function EventsPageView() {
   const [userlocation, setUserLocation] = useState(null);
   const navigate = useNavigate();
   const [filter, setFilter] = useState('');
+  const [dateFilter, setDateFilter] = useState('');
   
 
 
 
-  const handleFilterChange = () => {
-    setFilter(filter);
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
   };
-
+  const handleDateFilterChange = (newDateFilter) => {
+    setDateFilter(newDateFilter);
+  };
   useEffect(() => {
     const getLocation = () => {
       if (navigator.geolocation) {
@@ -50,6 +53,11 @@ function EventsPageView() {
             <option value="20">Do 20 km</option>
             <option value="50">Do 50 km</option>
           </select>
+          <select onChange={(e) => handleDateFilterChange(e.target.value)}>
+          <option value="">Brak filtrowania daty</option>
+          <option value="earliest">Najwcześniejsze</option>
+          <option value="latest">Najpóźniejsze</option>
+          </select>
           <button
             className="events-button-add-events"
             onClick={() => navigate("/create-event")}
@@ -63,7 +71,7 @@ function EventsPageView() {
         </div>
       </div>
       <div className="events-view-container">
-        <AllEventComponent filter={filter} userLocation={userlocation}t />
+        <AllEventComponent filter={filter} userLocation={userlocation} dateFilter={dateFilter} />
       </div>
       <h3 className="event-view-title">
         Wydarzenia którę mogą ci się spodobać
@@ -72,7 +80,7 @@ function EventsPageView() {
         A może to co wiemy, że lubisz ?
       </div>
       <div className="events-view-container">
-        <NearbyEventsComponent />
+        <NearbyEventsComponent filter={filter} userLocation={userlocation} dateFilter={dateFilter} />
       </div>
       <h3 className="event-view-title">Miejsca warte odwiedzenia</h3>
 

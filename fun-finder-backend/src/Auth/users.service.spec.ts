@@ -4,7 +4,7 @@ import { Test } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
-import { User } from './AuthInterfaces/users.model';
+import { User, UserHobbies } from './AuthInterfaces/users.model';
 import { access } from 'fs';
 
 jest.mock('bcrypt', () => ({
@@ -152,7 +152,110 @@ describe('UserService', () => {
     jest.spyOn(userService, 'comparePassword').mockResolvedValue(false);
     await expect(userService.loginUser(user.email, 'wrongpassword')).rejects.toThrow('Nieprawidłowy adres email lub hasło');
   });
+  it('should create or update a Google user correctly', async () => {
+    const payload = { email: 'google.user@example.com', given_name: 'Google', family_name: 'User' };
+    const expectedUser: Partial<User> = { 
+      email: 'example@wp.pl', 
+      fname: 'Google', 
+      lname: 'User',
+      hobbies: [],
+      hobbiesName: [],
+      events: [],
+      description: '',
+      
+    };
+    
+    
+    jest.spyOn(userService, 'createGoogleUser').mockResolvedValue(expectedUser as User); // Cast to User for the mock return if necessary
+    
+    const createdOrUpdatedUser = await userService.createGoogleUser(payload);
+    
+    expect(createdOrUpdatedUser).toEqual(expectedUser);
+    expect(userService.createGoogleUser).toHaveBeenCalledWith(payload);
+  });
+
+  it('should return a user description by email', async () => {
+    const email = 'test@example.com';
+    const expectedDescription = 'Test description';
   
+    jest.spyOn(userService, 'getUserDescByEmail').mockResolvedValue(expectedDescription);
+  
+    const description = await userService.getUserDescByEmail(email);
+  
+    expect(description).toEqual(expectedDescription);
+    expect(userService.getUserDescByEmail).toHaveBeenCalledWith(email);
+  });
+  
+  it('should return null if user does not exist', async () => {
+    const email = 'nonexistent@example.com';
+  
+    jest.spyOn(userService, 'getUserDescByEmail').mockResolvedValue(null);
+  
+    const description = await userService.getUserDescByEmail(email);
+  
+    expect(description).toBeNull();
+    expect(userService.getUserDescByEmail).toHaveBeenCalledWith(email);
+  });
+
+  it('should update a user description by email', async () => {
+    const email = 'test@example.com';
+    const newDescription = 'Updated description';
+    const updatedUser: Partial<User> = { email, description: newDescription };
+  
+    jest.spyOn(userService, 'updateUserDescByEmail').mockResolvedValue(updatedUser as User);
+  
+    const result = await userService.updateUserDescByEmail(email, newDescription);
+  
+    expect(result).toEqual(updatedUser);
+    expect(userService.updateUserDescByEmail).toHaveBeenCalledWith(email, newDescription);
+  });
+  it('should return a user score by email', async () => {
+    const email = 'test@example.com';
+    const expectedScore = 85;
+  
+    jest.spyOn(userService, 'getUserScoreByEmail').mockResolvedValue(expectedScore);
+  
+    const score = await userService.getUserScoreByEmail(email);
+  
+    expect(score).toEqual(expectedScore);
+    expect(userService.getUserScoreByEmail).toHaveBeenCalledWith(email);
+  });
+  it('should update a user score by email', async () => {
+    const email = 'test@example.com';
+    const newScore = 95;
+    const updatedUser: Partial<User> = { email, score: newScore };
+  
+    jest.spyOn(userService, 'updateUserScoreByEmail').mockResolvedValue(updatedUser as User);
+  
+    const result = await userService.updateUserScoreByEmail(email, newScore);
+  
+    expect(result).toHaveProperty('score', newScore);
+    expect(userService.updateUserScoreByEmail).toHaveBeenCalledWith(email, newScore);
+  });
+  it('should return a user avatar by email', async () => {
+    const email = 'test@example.com';
+    const expectedAvatar = 'avatar_url';
+  
+    jest.spyOn(userService, 'getUserAvatarByEmail').mockResolvedValue(expectedAvatar);
+  
+    const avatar = await userService.getUserAvatarByEmail(email);
+  
+    expect(avatar).toEqual(expectedAvatar);
+    expect(userService.getUserAvatarByEmail).toHaveBeenCalledWith(email);
+  });
+  it('should update a user avatar by email', async () => {
+    const email = 'test@example.com';
+    const newAvatar = 'new_avatar_url';
+    const updatedUser: Partial<User> = { email, avatar: newAvatar };
+  
+    jest.spyOn(userService, 'updateUserAvatarByEmail').mockResolvedValue(updatedUser as User);
+  
+    const result = await userService.updateUserAvatarByEmail(email, newAvatar);
+  
+    expect(result).toHaveProperty('avatar', newAvatar);
+    expect(userService.updateUserAvatarByEmail).toHaveBeenCalledWith(email, newAvatar);
+  });
+ 
   
   
   
