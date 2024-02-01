@@ -15,6 +15,7 @@ export const EventInfo = () => {
   const [longitude, setLongitude] = useState(null);
   const [eventData, setEventData] = useState(null);
   const [isUserRegistered, setIsUserRegistered] = useState(false);
+  const [usersEnrolled, setUsersEnrolled] = useState(null);
   const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
   function refreshPage() {
     window.location.reload(false);
@@ -38,6 +39,7 @@ export const EventInfo = () => {
         }
         const data = await response.json();
         setEventData(data);
+        setUsersEnrolled(data.eventParticipantsEmail.length);
       } catch (error) {
         console.error('Error fetching event data:', error);
       }
@@ -108,39 +110,41 @@ export const EventInfo = () => {
 
 
     const handleRegisterEvent = async () => {
-      // refreshPage();
-      if (eventData && eventData.users && eventData.users.includes(user.email)) {
-        setIsUserRegistered(true);
-        alert('Jesteś już zarejestrowany na to wydarzenie!');
+      if (eventData && eventData.eventParticipantsEmail.length >= eventData.maxEventParticipants) {
+        alert('Maksymalna liczba uczestników została już osiągnięta.');
         return;
       }
-
+  
       try {
         const userEmail = user.email;
-
         const response = await fetch(`http://localhost:7000/events/add/user`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
-
           },
           body: JSON.stringify({ eventId: eventId, userEmail: userEmail }),
-
         });
-
+    
         if (!response.ok) {
           throw new Error(`Błąd HTTP! Status: ${response.status}`);
         }
-        // trzeba tu dodać jeszcze bad response do tego jak bedzie max uzytkowników
-        addUserToEventChat();
-        console.log(response.status);
-        // const result = await response.json();
+    
+        
+        if (response.status === 409) { 
+          alert('Nie można zarejestrować na wydarzenie, maksymalna liczba uczestników została osiągnięta.');
+          return;
+        }
+    
+        addUserToEventChat(); 
         setIsUserRegistered(true);
+        setUsersEnrolled(prevState => prevState + 1);
         alert('Pomyślnie zarejestrowano na wydarzenie!');
       } catch (error) {
-        console.error('Błąd rejestracji na wydarzenie:', error)
+        console.error('Błąd rejestracji na wydarzenie:', error);
+        alert('Nie udało się zarejestrować na wydarzenie.');
       }
     };
+    
 
     const handleClick = async () => {
       await handleRegisterEvent();
@@ -163,7 +167,7 @@ export const EventInfo = () => {
             <div className="event-map-container">
               <p className="event-enrolled-users">
                 <span className="enrolled-users">Zapisanych uczestników: </span>
-                <span className="event-number-of-users">{eventData.eventParticipantsEmail.length}</span>
+                <span className="event-number-of-users">{usersEnrolled}/{eventData.maxEventParticipants}</span>
               </p>
               {latitude !== null && longitude !== null && (
                 <GoogleMap

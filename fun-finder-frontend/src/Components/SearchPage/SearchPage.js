@@ -70,9 +70,9 @@ function SearchPage() {
               onChange={handleSearchChange}
               value={filter}
             />
-            <button className="search_btn" type="submit">
+            <div className="search_btn" >
               <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </button>
+            </div>
           </form>
         </div>
         </div>

@@ -91,18 +91,17 @@ describe('Users Controller', () => {
     expect(service.updateUserDescByEmail).toHaveBeenCalledWith(email, description);
   });
   it('should get current user data by ID', async () => {
-    type PartialUser = Partial<User>;
+    
     const userId = '123456'; 
-    const userData = {   
+    const userData: Partial<User> = {   
     email: 'test@example.com',
     fname: 'John',
     lname: 'Doe',
     hobbies: [],
     events: [],
     description: '',
-    score: 0,
-    avatar: '', } as  User;
-    jest.spyOn(service, 'findById').mockResolvedValue(userData);
+  
+    avatar: '', };
 
     const result = await controller.getCurrentUserDataById(userId);
     expect(result).toEqual(userData);

@@ -53,11 +53,6 @@ function EventsPageView() {
             <option value="20">Do 20 km</option>
             <option value="50">Do 50 km</option>
           </select>
-          <select onChange={(e) => handleDateFilterChange(e.target.value)}>
-          <option value="">Brak filtrowania daty</option>
-          <option value="earliest">Najwcześniejsze</option>
-          <option value="latest">Najpóźniejsze</option>
-          </select>
           <button
             className="events-button-add-events"
             onClick={() => navigate("/create-event")}
