@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EventCardView from "../EventCardView/EventCardView";
 
-function HiglyRatedPlaces() {
+function Restaruants() {
   const [palces, setPlaces] = useState();
   const [position, setPosition] = useState({ latitude: null, longitude: null });
   const url = "http://localhost:7000/events/find-places-by-localization";
@@ -47,4 +47,4 @@ function HiglyRatedPlaces() {
   );
 }
 
-export default HiglyRatedPlaces;
+export default Restaruants;

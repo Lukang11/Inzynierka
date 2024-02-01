@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EventCardView from "../EventCardView/EventCardView";
-import "./NearbyEventsComponent.css";
+import "./PreferedEventsComponent.css";
 function calculateDistance(lat1, lon1, lat2, lon2) {
   const toRadians = (degree) => degree * (Math.PI / 180);
 
-  const R = 6371; 
+  const R = 6371;
 
   const dLat = toRadians(lat2 - lat1);
   const dLon = toRadians(lon2 - lon1);
 
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
-    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    Math.cos(toRadians(lat1)) *
+      Math.cos(toRadians(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
 
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-  return R * c; 
+  return R * c;
 }
 
-function NearbyEventsComponent({filter, userLocation}) {
+function PreferedEventsComponent({ filter, userLocation }) {
   const [events, setEvents] = useState();
   const url = "http://localhost:7000/events";
   const filterEvents = (events) => {
@@ -42,17 +44,17 @@ function NearbyEventsComponent({filter, userLocation}) {
   };
 
   const fetchEvents = () => {
-    axios.get(url).then((response) => {
-      const filteredEvents = filterEvents(response.data);
-      setEvents(filteredEvents);
-    })
-    .catch(error => {
-      console.error("Error fetching events:", error);
-     
-    });
+    axios
+      .get(url)
+      .then((response) => {
+        const filteredEvents = filterEvents(response.data);
+        setEvents(filteredEvents);
+      })
+      .catch((error) => {
+        console.error("Error fetching events:", error);
+      });
   };
 
-  
   useEffect(() => {
     fetchEvents();
   }, [filter, userLocation]);
@@ -68,4 +70,4 @@ function NearbyEventsComponent({filter, userLocation}) {
   );
 }
 
-export default NearbyEventsComponent;
+export default PreferedEventsComponent;

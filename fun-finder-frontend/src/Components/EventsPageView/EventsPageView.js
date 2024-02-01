@@ -2,17 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./EventsPageView.css";
 import { useNavigate } from "react-router-dom";
 import AllEventComponent from "./AllEventComponent/AllEventComponent";
-import NearbyEventsComponent from "./NearbyEventsComponent/NearbyEventsComponent";
-import HiglyRatedPlaces from "./HiglyRatingPlacesComponent/HiglyRatedPlaces";
+import PreferedEventsComponent from "./PreferedEventsComponent/PreferedEventsComponent";
+import Restaruants from "./RestaruantsComponent/Restaruants";
 
 function EventsPageView() {
   const [error, setError] = useState();
   const [userlocation, setUserLocation] = useState(null);
   const navigate = useNavigate();
-  const [filter, setFilter] = useState('');
-  
-
-
+  const [filter, setFilter] = useState("");
 
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
@@ -68,13 +65,13 @@ function EventsPageView() {
         A może to co wiemy, że lubisz ?
       </div>
       <div className="events-view-container">
-        <NearbyEventsComponent />
+        <PreferedEventsComponent />
       </div>
       <h3 className="event-view-title">Miejsca warte odwiedzenia</h3>
 
       <div className="event-view-title-desc">Restaruacje blisko ciebie :)</div>
       <div className="events-view-container">
-        <HiglyRatedPlaces />
+        <Restaruants />
       </div>
     </div>
   );
