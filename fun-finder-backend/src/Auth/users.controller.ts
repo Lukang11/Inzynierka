@@ -157,18 +157,6 @@ export class UserController {
     return updatedUser ? { message: 'Description updated successfully', user: updatedUser } : { message: 'User not found' };
   }
 
-  @Get('/user-score/:email')
-  async getCurrentUserScore(@Param('email') email: string) {
-    const score = await this.userService.getUserScoreByEmail(email);
-    return { score };
-  }
-
-  @Post('/update-user-score/:email')
-  async updateUserScore(@Param('email') email: string, @Body() body: { score: number }) {
-    const updatedUser = await this.userService.updateUserScoreByEmail(email, body.score);
-    return updatedUser ? { message: 'Score updated successfully', user: updatedUser } : { message: 'User not found' };
-  }
-
   @Get('/user-avatar/:email')
   async getCurrentUserAvatar(@Param('email') email: string) {
     const avatar = await this.userService.getUserAvatarByEmail(email);

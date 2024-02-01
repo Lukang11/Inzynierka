@@ -96,21 +96,6 @@ export class UserService {
     return user;
   }
 
-  async getUserScoreByEmail(email: string): Promise<number | null> {
-    const user = await this.UserModel.findOne({ email }).exec();
-    return user ? user.score : null;
-  }
-
-  async updateUserScoreByEmail(email: string, newScore: number): Promise<User | null> {
-    const user = await this.UserModel.findOneAndUpdate(
-      { email },
-      { $set: { score: newScore } },
-      { new: true },
-    ).exec();
-
-    return user || null;
-  }
-
   async getUserAvatarByEmail(email: string): Promise<string | null> {
     const user = await this.UserModel.findOne({ email }).exec();
     return user ? user.avatar : null;
