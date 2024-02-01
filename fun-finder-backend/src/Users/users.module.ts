@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserController } from './users.controller';
 import { UserService } from './users.service';
-import { User, UserSchema } from './AuthInterfaces/users.model';
+import { User, UserSchema } from './UsersInterfaces/users.model';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import * as dotenv from 'dotenv';

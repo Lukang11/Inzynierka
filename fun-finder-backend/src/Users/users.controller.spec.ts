@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from './users.controller';
-import { User, UserHobbies } from './AuthInterfaces/users.model';
+import { User, UserHobbies } from './UsersInterfaces/users.model';
 import { UserService } from './users.service';
 import { HttpStatus } from '@nestjs/common';
 import { OAuth2Client } from 'google-auth-library';

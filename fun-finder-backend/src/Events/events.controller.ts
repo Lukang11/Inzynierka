@@ -5,7 +5,7 @@ import {
   GoogleApiQueryResponse,
 } from './EventInterfaces/eventsInterfaces';
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { UserEvents } from 'src/Auth/AuthInterfaces/users.model';
+import { UserEvents } from 'src/Users/UsersInterfaces/users.model';
 import { PlacesTags } from './EventInterfaces/place_tags.model';
 
 @Controller('/events')

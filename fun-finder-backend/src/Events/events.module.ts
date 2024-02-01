@@ -6,7 +6,7 @@ import { EventsController } from './events.controller';
 import { EventsService } from './events.service';
 import { EventSchema } from './EventInterfaces/events.model';
 import { PlaceSchema } from './EventInterfaces/place.model';
-import { UserModule } from 'src/Auth/users.module';
+import { UserModule } from 'src/Users/users.module';
 import { PlacesTagsSchema } from './EventInterfaces/place_tags.model';
 
 @Module({

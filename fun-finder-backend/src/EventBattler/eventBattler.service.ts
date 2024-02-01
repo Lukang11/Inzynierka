@@ -1,9 +1,9 @@
 import { Injectable, forwardRef, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from 'src/Auth/AuthInterfaces/users.model';
+import { User } from 'src/Users/UsersInterfaces/users.model';
 import { Place } from 'src/Events/EventInterfaces/place.model';
-import { UserService } from 'src/Auth/users.service';
+import { UserService } from 'src/Users/users.service';
 import { EventsService } from 'src/Events/events.service';
 import { Events } from 'src/Events/EventInterfaces/events.model';
 import { EventBattlerRooms } from './EventBattlerInterfaces/room.module';

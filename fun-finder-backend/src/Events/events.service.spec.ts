@@ -5,7 +5,7 @@ import { EventsService } from './events.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Events,GeoLocation } from './EventInterfaces/events.model';
-import { User } from 'src/Auth/AuthInterfaces/users.model';
+import { User } from 'src/Users/UsersInterfaces/users.model';
 import { Place } from './EventInterfaces/place.model';
 import { PlacesTags } from './EventInterfaces/place_tags.model';
 import { types } from 'util';

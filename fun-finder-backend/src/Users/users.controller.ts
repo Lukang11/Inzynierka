@@ -10,7 +10,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { UserService } from './users.service';
-import { User, UserHobbies } from './AuthInterfaces/users.model';
+import { User, UserHobbies } from './UsersInterfaces/users.model';
 import { parse } from 'cookie';
 import { Response, Request } from 'express';
 import * as jwt from 'jsonwebtoken';

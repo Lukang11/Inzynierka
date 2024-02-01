@@ -3,8 +3,8 @@ import { EventBattlerGateway } from './EventBattlerGateWay/eventBattler.gateway'
 import { EventBattler } from './eventBattler.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { EventBattlerService } from './eventBattler.service';
-import { UserModule } from 'src/Auth/users.module';
-import { UserService } from 'src/Auth/users.service';
+import { UserModule } from 'src/Users/users.module';
+import { UserService } from 'src/Users/users.service';
 import { EventsModule } from 'src/Events/events.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EventBattlerRoomsSchema } from './EventBattlerInterfaces/room.module';
