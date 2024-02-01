@@ -9,6 +9,12 @@ import { Events } from 'src/Events/EventInterfaces/events.model';
 import { EventBattlerRooms } from './EventBattlerInterfaces/room.module';
 import { promises } from 'dns';
 
+export interface FetchRequest {
+  participants: string[];
+  latitude: number;
+  longitude: number;
+}
+
 @Injectable()
 export class EventBattlerService {
   constructor(
@@ -43,11 +49,13 @@ export class EventBattlerService {
     return commonElements;
   }
 
-  async fetchRecomendedPlacesforUserIds(users_id: string[]) {
-    const userHobbiesPromises = users_id.map(async (val, index) => {
-      const hobbies = await this.userService.getUserHobbiesById(val);
-      return hobbies;
-    });
+  async fetchRecomendedPlacesforUserIds(requestBody: FetchRequest) {
+    const userHobbiesPromises = requestBody.participants.map(
+      async (val, index) => {
+        const hobbies = await this.userService.getUserHobbiesById(val);
+        return hobbies;
+      },
+    );
 
     // Wait for all promises to resolve to get all api_tags from user
     const userHobbies = await Promise.all(userHobbiesPromises);
@@ -55,10 +63,30 @@ export class EventBattlerService {
     if (commonHobbies.length < 2) {
       return [];
     } else {
-      const placesWithTags =
+      let placesWithTags =
         await this.eventService.getPlacesForBattler(commonHobbies);
       const eventWithTags =
         await this.eventService.getEventsForBattler(commonHobbies);
+      if (placesWithTags.length === 0) {
+        let query_Object = {
+          includedTypes: commonHobbies,
+          maxResultCount: 10,
+          locationRestriction: {
+            circle: {
+              center: {
+                latitude: requestBody.latitude,
+                longitude: requestBody.longitude,
+              },
+              radius: 5000,
+            },
+          },
+        };
+        let newPlacesWithTags =
+          await this.eventService.getEventsByLocationFromGoogleApi(
+            query_Object,
+          );
+        placesWithTags = newPlacesWithTags.places;
+      }
 
       return { placesWithTags: placesWithTags, eventWithTags: eventWithTags };
     }
@@ -102,7 +130,7 @@ export class EventBattlerService {
   async addToRoom(id: string) {
     try {
       const eventRoom = await this.EventRooms.findById(id);
-      if(eventRoom){
+      if (eventRoom) {
         eventRoom.participants += 1;
         await eventRoom.save();
         console.log('incremented room');
@@ -114,15 +142,13 @@ export class EventBattlerService {
   async checkIfRoomExists(roomId: string) {
     try {
       const eventRoom = await this.EventRooms.findById(roomId);
-      if(eventRoom === null) {
+      if (eventRoom === null) {
         return false;
-      }
-      else {
+      } else {
         return true;
       }
-    }
-    catch(err) {
-      console.log("event not found")
+    } catch (err) {
+      console.log('event not found');
       return false;
     }
   }

@@ -14,15 +14,30 @@ function EventBattlerMoreUserView({ participants }) {
   const [loading, setLoading] = useState(false);
   const [placesFound, setPlacesFound] = useState(false);
   const [resData, setResData] = useState();
+  const [latitude_f, setLatitude_f] = useState();
+  const [longitude_f, setLongitude_f] = useState();
   const color = "#5908bf";
   const user_url = "http://localhost:7000/battle";
   const handleFetch = async () => {
     const participantsHobbiesList = await axios.post(`${user_url}`, {
       participants,
+      latitude: latitude_f,
+      longitude: longitude_f,
     });
+    console.log(participantsHobbiesList);
     setResData(participantsHobbiesList.data);
     setPlacesFound(true);
   };
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        setLatitude_f(() => position.coords.latitude);
+        setLongitude_f(() => position.coords.longitude);
+      });
+    } else {
+      console.log("Geolocation is not available in your browser.");
+    }
+  }, []);
   return (
     <div className="event-battler-more-user-view-cont">
       {!placesFound ? (
@@ -38,6 +53,7 @@ function EventBattlerMoreUserView({ participants }) {
       ) : (
         <GoogleApiFetchPlacesView data={resData} />
       )}
+      {console.log(resData)}
     </div>
   );
 }

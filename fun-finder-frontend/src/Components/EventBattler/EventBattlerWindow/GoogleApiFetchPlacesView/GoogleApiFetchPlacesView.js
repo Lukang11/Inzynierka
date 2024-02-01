@@ -45,14 +45,15 @@ function GoogleApiFetchPlacesView({ data }) {
           <div>Smacznego!</div>
           <div className="google-api-places-view-wrapper">
             {palces
-              ? palces.places.sort((a, b) => b.rating - a.rating)
-              .map((palce) => (
-                  <GooglePlaceSquare
-                    eventInfo={palce}
-                    places={true}
-                    key={palce._id}
-                  />
-                ))
+              ? palces.places
+                  .sort((a, b) => b.rating - a.rating)
+                  .map((palce) => (
+                    <GooglePlaceSquare
+                      eventInfo={palce}
+                      places={true}
+                      key={palce._id}
+                    />
+                  ))
               : "Couldnt fetch events at the moment, try later"}
           </div>
         </div>
@@ -69,15 +70,16 @@ function GoogleApiFetchPlacesView({ data }) {
           <div className="event-places-cont-wrapper">
             <div className="google-api-places-view-wrapper">
               <h3>Miejsca dopasowane do preferencji</h3>
-                {data.placesWithTags
-                  .sort((a, b) => b.rating - a.rating)
-                  .map((place) => (
-                    <GooglePlaceSquare
-                      eventInfo={place}
-                      key={place._id}
-                      isAddedByUser={false}
-                    />
-                  ))}
+              {console.log(data.placesWithTags)}
+              {data.placesWithTags
+                .sort((a, b) => b.rating - a.rating)
+                .map((place) => (
+                  <GooglePlaceSquare
+                    eventInfo={place}
+                    key={place._id}
+                    isAddedByUser={false}
+                  />
+                ))}
             </div>
             {data.eventWithTags ? (
               <div className="google-api-places-view-wrapper">
