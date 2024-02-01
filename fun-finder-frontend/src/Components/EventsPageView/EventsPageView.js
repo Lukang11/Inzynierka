@@ -2,18 +2,15 @@ import React, { useEffect, useState } from "react";
 import "./EventsPageView.css";
 import { useNavigate } from "react-router-dom";
 import AllEventComponent from "./AllEventComponent/AllEventComponent";
-import NearbyEventsComponent from "./NearbyEventsComponent/NearbyEventsComponent";
-import HiglyRatedPlaces from "./HiglyRatingPlacesComponent/HiglyRatedPlaces";
+import NearbyEventsComponent from "./PreferedEvents/NearbyEventsComponent";
+import HiglyRatedPlaces from "./Restaruants/Restaurants";
 
 function EventsPageView() {
   const [error, setError] = useState();
   const [userlocation, setUserLocation] = useState(null);
   const navigate = useNavigate();
-  const [filter, setFilter] = useState('');
-  const [dateFilter, setDateFilter] = useState('');
-  
-
-
+  const [filter, setFilter] = useState("");
+  const [dateFilter, setDateFilter] = useState("");
 
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
@@ -48,7 +45,7 @@ function EventsPageView() {
       <div>
         {console.log(userlocation)}
         <div className="event-button-group">
-        <select onChange={(e) => handleFilterChange(e.target.value)}>
+          <select onChange={(e) => handleFilterChange(e.target.value)}>
             <option value="">Wszystkie</option>
             <option value="20">Do 20 km</option>
             <option value="50">Do 50 km</option>
@@ -66,7 +63,11 @@ function EventsPageView() {
         </div>
       </div>
       <div className="events-view-container">
-        <AllEventComponent filter={filter} userLocation={userlocation} dateFilter={dateFilter} />
+        <AllEventComponent
+          filter={filter}
+          userLocation={userlocation}
+          dateFilter={dateFilter}
+        />
       </div>
       <h3 className="event-view-title">
         Wydarzenia którę mogą ci się spodobać
@@ -75,7 +76,11 @@ function EventsPageView() {
         A może to co wiemy, że lubisz ?
       </div>
       <div className="events-view-container">
-        <NearbyEventsComponent filter={filter} userLocation={userlocation} dateFilter={dateFilter} />
+        <NearbyEventsComponent
+          filter={filter}
+          userLocation={userlocation}
+          dateFilter={dateFilter}
+        />
       </div>
       <h3 className="event-view-title">Miejsca warte odwiedzenia</h3>
 

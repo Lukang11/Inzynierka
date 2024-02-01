@@ -45,9 +45,7 @@ export class EventsController {
     @Body() queryObject: GoogleApiQueryObject,
   ): any {
     try {
-      console.log(
-        'Wysłałem płatny request uwaga!!!!!!!!!!!!! trzeba odkomentować przed pokazywaniem events.controller.ts/ =>   findPlaceByLocalizationGoogleApi',
-      );
+      console.log('Wysłałem płatny request uwaga!');
       const result =
         this.eventService.getEventsByLocationFromGoogleApi(queryObject);
       return result;
