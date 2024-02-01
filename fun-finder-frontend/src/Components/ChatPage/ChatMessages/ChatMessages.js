@@ -50,7 +50,8 @@ function ChatMessages( {passWichMessageToDisplay, chatParticipants, passConversa
     }
     
      const send = async (data) => {
-        await socket?.emit("message",(data));
+        console.log(data);
+        await socket?.emit("message",data);
     }
     const handleMessageInput = () => {
         const value = inputMesageRef.current.value;

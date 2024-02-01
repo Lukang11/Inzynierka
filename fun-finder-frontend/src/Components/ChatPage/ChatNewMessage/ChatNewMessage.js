@@ -25,18 +25,23 @@ export const ChatNewMessage = ({handleNewChat}) => {
 
     }
     const createNewChat = async (searchedUserId) => {
-        try {
-            await axios.post(`http://localhost:7000/clouds/event/createPrivateChat`,
-            {
-                userCreatingChatId: user._id,
-                chatParticipantId: searchedUserId
-            })
-            setShowModal(false);
-            handleNewChat();
-            setSearchedUser([]);
+        if(!(user._id === searchedUserId)){
+            try {
+                await axios.post(`http://localhost:7000/clouds/event/createPrivateChat`,
+                {
+                    userCreatingChatId: user._id,
+                    chatParticipantId: searchedUserId
+                })
+                setShowModal(false);
+                handleNewChat();
+                setSearchedUser([]);
+            }
+            catch (error) {
+                console.log("failed to create new PrivateChat");
+            }
         }
-        catch (error) {
-            console.log("failed to create new PrivateChat");
+        else {
+            alert("nie możesz rozmawiać z samym sobą !");
         }
     }
 
