@@ -3,7 +3,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { CloudsController } from "./chatClouds.controller";
 import { ChatCloudsService } from "./chatClouds.service";
 import { PrivateChatSchema } from "./ChatCloudsInterfaces/chatclouds.model";
-import { UserModule } from "src/Auth/users.module";
+import { UserModule } from "src/Users/users.module";
 import { ChatModule } from "src/Chat/chat.module";
 import { EventSchema } from "src/Events/EventInterfaces/events.model";
 // MongooseModule.forFeature([

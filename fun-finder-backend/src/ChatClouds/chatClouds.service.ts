@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from 'src/Auth/AuthInterfaces/users.model';
+import { User } from 'src/Users/UsersInterfaces/users.model';
 import { GroupChat } from 'src/Chat/ChatInterfaces/groupChat.model';
 import { EventChat } from 'src/Chat/ChatInterfaces/eventChat.model';
 import { PrivateChat } from './ChatCloudsInterfaces/chatclouds.model';

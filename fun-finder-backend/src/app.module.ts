@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EventsModule } from './Events/events.module';
 import { ChatModule } from './Chat/chat.module';
-import { UserModule } from './Auth/users.module';
+import { UserModule } from './Users/users.module';
 import { CronService } from './Cron/cron.service';
 import { ChatCloudsModule } from './ChatClouds/chatClouds.module';
 import { EventBattlerModule } from './EventBattler/eventBattler.module';

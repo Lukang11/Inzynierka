@@ -14,7 +14,7 @@ import {
   User,
   UserEvents,
   UserHobbies,
-} from 'src/Auth/AuthInterfaces/users.model';
+} from 'src/Users/UsersInterfaces/users.model';
 import { Events } from './EventInterfaces/events.model';
 import { PlacesTags } from './EventInterfaces/place_tags.model';
 import { DEFAULT_EAGER_REFRESH_THRESHOLD_MILLIS } from 'google-auth-library/build/src/auth/authclient';
