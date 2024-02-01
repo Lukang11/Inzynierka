@@ -30,11 +30,10 @@ export class ChatGateway implements OnGatewayConnection {
 
     handleConnection(client: Socket) {
         const sender_id = client.handshake.query.sender_id as String;
-        console.log(client.handshake.query)
         this.clients.set(sender_id, client);
         console.log(`nowe połączenie: ${sender_id}`);
 
-        client.on('disconect', () => {
+        client.on('disconnect', () => {
             this.clients.delete(sender_id);
             console.log('disconect client : ',sender_id)
         })
@@ -43,9 +42,8 @@ export class ChatGateway implements OnGatewayConnection {
 
     @SubscribeMessage('message')
     handleMessage(client: Socket, data: Data): void {
-        console.log("o takie ", data, "takie dane przekazuje");
         const message = data.message;
-        const userId = data.user_id;  // subscribe message przyjmuje tylko 2 argumenty socket, i pakuje otrzymane dany do tablicy dlatego tak
+        const userId = client.handshake.query.sender_id as string;  // subscribe message przyjmuje tylko 2 argumenty socket, i pakuje otrzymane dany do tablicy dlatego tak
         const conversationId = data.conversationId;
 
        const messageToSend = new this.messages ({
@@ -56,20 +54,15 @@ export class ChatGateway implements OnGatewayConnection {
           });
         this.sendMessageToDatabase(messageToSend);
         this.updateLastMessage(data.conversationId,data.message,data.chatType);
-
         const messageToSendToUser = {
             id: messageToSend._id,
             conversation_id: conversationId,
             sender_id: userId,
             text: message,
         }
-        console.log(messageToSendToUser)
-        console.log(messageToSend)
-
-          client.emit('message',messageToSendToUser) // wyslanie wiadomosci do wysylającego
-
-          data.participants.forEach( participant => {
-            const sendTo = this.clients.get(participant.id);
+        console.log(this.clients)
+          data.participants.map( participantId => {
+            const sendTo = this.clients.get(participantId.toString())
             if(sendTo) {
                 sendTo.emit('message',messageToSendToUser);
             }
