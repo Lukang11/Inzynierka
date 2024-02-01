@@ -19,20 +19,19 @@ export class EventBattlerService {
     private readonly EventRooms: Model<EventBattlerRooms>,
   ) {}
 
+  //funkcja znajdująca wspólne preferencję dla liczby użytkowników wiekszej niż 1
   findCommonElements(...arrays) {
+    //Pusta tablica dla jednego użytkownika
     if (arrays.length < 2) {
       return [];
     }
-
-    // Check if all arrays are non-empty
+    // sprawdzanie czy wszystkie przekazane tablice nie są puste
     if (arrays.some((array) => array.length === 0)) {
       return [];
     }
-
-    // Use the first array as a reference
+    // użycie pierwszej tablicy jako referencji
     const referenceArray = arrays[0];
-
-    // Reduce arrays to common elements
+    // redukcja tablic tylko do wspolnego elementu
     const commonElements = referenceArray.reduce((acc, element) => {
       if (arrays.slice(1).every((array) => array.includes(element))) {
         acc.push(element);
@@ -49,9 +48,9 @@ export class EventBattlerService {
       return hobbies;
     });
 
-    // Wait for all promises to resolve to get all api_tags from user
+    // Poczekanie aż wszystkie Promisy będa rozwiązane by pozyskac wszystkie api_tags dla użytkownika
     const userHobbies = await Promise.all(userHobbiesPromises);
-    const commonHobbies = this.findCommonElements(...userHobbies);
+    const commonHobbies = this.findCommonElements(...userHobbies); // Znaleźienie wspólnych zainteresowań
     if (commonHobbies.length < 2) {
       return [];
     } else {
@@ -102,7 +101,7 @@ export class EventBattlerService {
   async addToRoom(id: string) {
     try {
       const eventRoom = await this.EventRooms.findById(id);
-      if(eventRoom){
+      if (eventRoom) {
         eventRoom.participants += 1;
         await eventRoom.save();
         console.log('incremented room');
@@ -114,15 +113,13 @@ export class EventBattlerService {
   async checkIfRoomExists(roomId: string) {
     try {
       const eventRoom = await this.EventRooms.findById(roomId);
-      if(eventRoom === null) {
+      if (eventRoom === null) {
         return false;
-      }
-      else {
+      } else {
         return true;
       }
-    }
-    catch(err) {
-      console.log("event not found")
+    } catch (err) {
+      console.log('event not found');
       return false;
     }
   }
