@@ -80,7 +80,6 @@ function EventBattler() {
 
 
   useEffect(() => {
-    console.log("wykonuje")
     socket?.on("message", messageListener); // odbieramy wiadomość
     socket?.on("handleDisconect", updateParticipants);
     socket?.on("updateParticipants", updateParticipants);

@@ -33,7 +33,6 @@ const ProfileHobbies = () => {
 
   function onClick(element) {
     setIsOpen((val) => !val);
-    console.log(element);
   }
 
   function getHobbyIcon(hobbyName) {

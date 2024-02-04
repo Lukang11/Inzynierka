@@ -22,7 +22,6 @@ function EventBattlerWindow({ participants }) {
     const fetchApiTags = async () => {
       try {
         const response = await axios.get(url_tags);
-        console.log(response.data);
       } catch (error) {}
     };
 

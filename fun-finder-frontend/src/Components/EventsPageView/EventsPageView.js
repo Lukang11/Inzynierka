@@ -44,7 +44,6 @@ function EventsPageView() {
   return (
     <div>
       <div>
-        {console.log(userlocation)}
         <div className="event-button-group">
           <select onChange={(e) => handleFilterChange(e.target.value)}>
             <option value="">Wszystkie</option>

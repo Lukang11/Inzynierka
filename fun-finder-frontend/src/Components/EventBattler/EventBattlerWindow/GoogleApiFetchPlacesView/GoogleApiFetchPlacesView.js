@@ -70,7 +70,6 @@ function GoogleApiFetchPlacesView({ data }) {
           <div className="event-places-cont-wrapper">
             <div className="google-api-places-view-wrapper">
               <h3>Miejsca dopasowane do preferencji</h3>
-              {console.log(data.placesWithTags)}
               {data.placesWithTags
                 .sort((a, b) => b.rating - a.rating)
                 .map((place) => (

@@ -37,10 +37,9 @@ function Restaurants() {
 
   return (
     <div className="all-events-component">
-      {console.log(palces)}{" "}
       {palces
-        ? palces.places.map((palce) => (
-            <EventCardView eventInfo={palce} places={true} key={palce._id} />
+        ? palces.places.map((palce, index) => (
+            <EventCardView eventInfo={palce} places={true} key={index} />
           ))
         : "Couldnt fetch events at the moment, try later"}
     </div>

@@ -24,7 +24,6 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 function AllEventComponent({ filter, userLocation }) {
   const [events, setEvents] = useState([]);
   const url = "http://localhost:7000/events";
-  console.log(filter, userLocation);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +34,6 @@ function AllEventComponent({ filter, userLocation }) {
         const filteredEvents = filterEvents(allEvents, filter, userLocation);
 
         setEvents(filteredEvents);
-        console.log("Aktualizacja stanu events:", events);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -45,7 +43,6 @@ function AllEventComponent({ filter, userLocation }) {
   }, [filter, userLocation]);
 
   const filterEvents = (events, filter, userLocation) => {
-    console.log("Przed filtrowaniem:", events);
     const currentDate = new Date();
     return events.filter((event) => {
       const eventDate = new Date(event.eventStart);
@@ -64,7 +61,6 @@ function AllEventComponent({ filter, userLocation }) {
         const eventLat = parseFloat(event.geoLocation.latitude);
         const eventLong = parseFloat(event.geoLocation.longitude);
         const distance = calculateDistance(userLat, userLong, eventLat, eventLong);
-        console.log(userLat, userLong, eventLat, eventLong, distance);
         return distance <= parseFloat(filter);
       }
   

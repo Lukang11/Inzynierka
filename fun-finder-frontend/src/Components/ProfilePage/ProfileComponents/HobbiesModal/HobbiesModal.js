@@ -55,7 +55,6 @@ function HobbiesModal({ onClick, getIcon }) {
           let url = "http://localhost:7000/users/";
           const hobbiesTags = hobbies.map((hobby) => hobby.data);
           const hobbiesTagsResult = [].concat(...hobbiesTags);
-          console.log(hobbiesTagsResult);
 
           const hobbiesNames = hobbies.map((hobby) => hobby.name);
           const hobbiesNamesResult = [].concat(...hobbiesNames);
@@ -93,7 +92,6 @@ function HobbiesModal({ onClick, getIcon }) {
             <div className="add-hobby-text">Dodaj zainteresowanie</div>
             <div>
               <div className="sel-hobbies-wrap">
-                {/* {console.log(hobbies)} */}
                 {hobbies.map((val, index) => {
                   return (
                     <div
