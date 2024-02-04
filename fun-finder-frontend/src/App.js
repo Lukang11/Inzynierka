@@ -139,8 +139,8 @@ function App() {
                   <>
                     {" "}
                     <PrivateRoute>
-                    <Header />
-                    <EventInfo />{" "}
+                      <Header />
+                      <EventInfo />{" "}
                     </PrivateRoute>
                   </>
                 }

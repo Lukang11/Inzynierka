@@ -111,8 +111,8 @@ function SearchPage() {
               {searchedUsers
                 .filter((searchedUser) => searchedUser.email !== user.email)
                 .filter((searchedUser) => selectedCategory === "All" || searchedUser.hobbiesName.includes(selectedCategory) )
-                .map((user) => (  
-                  <div className="sp-results-item" onClick={() => onClick(user)}> 
+                .map((user, index) => (  
+                  <div className="sp-results-item" onClick={() => onClick(user)} key={index}> 
                   <UserCard user={user}  />
                   </div>
               ))}
