@@ -37,8 +37,6 @@ function PreferedEvents({ userLocation, filter }) {
       try {
         const userHobbiesResponse = await axios.get(userHobbiesUrl);
         const userHobbiesData = userHobbiesResponse.data.hobbiesNames;
-        console.log(userHobbiesData);
-
         const eventsResponse = await axios.get(eventsUrl);
         const allEvents = eventsResponse.data;
 
@@ -49,7 +47,6 @@ function PreferedEvents({ userLocation, filter }) {
           userHobbiesData
         );
         setEvents(filteredEvents);
-        console.log(filteredEvents);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

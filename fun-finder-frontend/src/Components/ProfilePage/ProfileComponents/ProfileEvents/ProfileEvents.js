@@ -13,7 +13,6 @@ const ProfileEvents = () => {
         try {
           const events = await axios.get(`${url}${user.email}`);
           setEventsData(events.data);
-          console.log(eventsData)
         } catch (error) {
           console.error("Error fetching events:", error);
         }
@@ -25,7 +24,6 @@ const ProfileEvents = () => {
 
   return (
     <div>
-      {console.log(eventsData)}
       <div className="events-profile-card">
         <h2 className="">Wydarzenia</h2>
         <ul>
@@ -44,7 +42,6 @@ const ProfileEvents = () => {
             <li className="events-item style-list-elem text-color">OSOBY</li>
             <li className="events-item style-list-elem text-color">id</li>
           </div>
-          {console.log(eventsData)}
           {eventsData
             ? eventsData.map((element, index) => (
                 <li key={index} className="events-row bottom-border">

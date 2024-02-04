@@ -24,7 +24,6 @@ function EventBattlerMoreUserView({ participants }) {
       latitude: latitude_f,
       longitude: longitude_f,
     });
-    console.log(participantsHobbiesList);
     setResData(participantsHobbiesList.data);
     setPlacesFound(true);
   };
@@ -53,7 +52,6 @@ function EventBattlerMoreUserView({ participants }) {
       ) : (
         <GoogleApiFetchPlacesView data={resData} />
       )}
-      {console.log(resData)}
     </div>
   );
 }

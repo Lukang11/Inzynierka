@@ -6,7 +6,6 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 function EventCardView({ eventInfo, places }) {
   const navigate = useNavigate();
-  console.log(eventInfo)
 
   const splitDateTime = (dateTime) => {
     if (!dateTime) return { date: '', time: '' };
@@ -20,16 +19,20 @@ function EventCardView({ eventInfo, places }) {
 
  
   const { date, time } = splitDateTime(eventInfo.eventStart);
-  console.log({date, time});
 
-  const handleRowClick = (id) => {
-    navigate(`/event-info/${id}`);
+  const handleRowClick = (id, eventInfo) => {
+    if(id === undefined){
+      window.open(eventInfo.websiteUri, '_blank');
+    }
+    else{
+      navigate(`/event-info/${id}`);
+    }
   };
 
   return (
     <div
       className="events-view-card"
-      onClick={() => handleRowClick(eventInfo._id)}
+      onClick={() => handleRowClick(eventInfo._id, eventInfo)}
     >
       <div className="events-view-card-item">
         <div className="events-view-image" style={{

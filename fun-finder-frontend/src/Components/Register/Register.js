@@ -107,7 +107,6 @@ const Register = () => {
                     },
                 });
 
-                console.log('Użytkownik zarejestrowany pomyślnie!');
                 navigate('/login');
             } catch (error) {
                 setError("Użytkownik o tym adresie email już istnieje!")
@@ -153,7 +152,7 @@ const Register = () => {
 
     return (
         <div className="register-container">
-            <img className="mobile-only-image" src={registerImg} />
+            <img className="mobile-only-image" src={registerImg} alt="Register"/>
             <div className="welcomeText-container">
                 <h1>Poznawaj ludzi z FunFinder!</h1>
                 <p>Utwórz konto i zacznij spędzać niezapomniane chwile</p>

@@ -194,9 +194,6 @@ const handleAddEventToUser = async (event_id) => {
         });
         createNewEventChat(user._id, name, imageUrl,response.data);
         handleAddEventToUser(response.data);
-  
-        console.log('Dane zostały pomyślnie zapisane:', response.data);
-        console.log('even chat created:', user._id)
         
         navigate('/events');
       } catch (error) {

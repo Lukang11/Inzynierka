@@ -38,8 +38,11 @@ function App() {
                 path="/search"
                 element={
                   <>
+                  <PrivateRoute>
                     <Header />
                     <SearchPage />
+                  </PrivateRoute>
+
                   </>
                 }
               />
@@ -99,8 +102,10 @@ function App() {
                 element={
                   <>
                     {" "}
-                    <Header />
-                    <ChatPageComponent />{" "}
+                    <PrivateRoute>
+                      <Header />
+                      <ChatPageComponent />{" "}
+                    </PrivateRoute>
                   </>
                 }
               />
@@ -109,8 +114,10 @@ function App() {
                 element={
                   <>
                     {" "}
-                    <Header />
-                    <EventsPageView />{" "}
+                    <PrivateRoute>
+                      <Header />
+                      <EventsPageView />{" "}
+                    </PrivateRoute>
                   </>
                 }
               />
@@ -119,8 +126,10 @@ function App() {
                 element={
                   <>
                     {" "}
-                    <Header />
-                    <CreateEvent />{" "}
+                    <PrivateRoute>
+                      <Header />
+                      <CreateEvent />{" "}
+                    </PrivateRoute>
                   </>
                 }
               />
@@ -129,14 +138,15 @@ function App() {
                 element={
                   <>
                     {" "}
+                    <PrivateRoute>
                     <Header />
                     <EventInfo />{" "}
+                    </PrivateRoute>
                   </>
                 }
               />
             </Routes>
           </GoogleOAuthProvider>
-          
         </BrowserRouter>
       </AuthProvider>
     </div>
