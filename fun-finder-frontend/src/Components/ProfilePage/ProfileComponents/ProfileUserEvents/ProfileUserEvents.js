@@ -3,6 +3,7 @@ import "./ProfileUserEvents.css";
 import axios from "axios";
 import { useAuth } from "../../../../Utils/AuthProvider";
 import EventCell from "./EventCell";
+import { Link } from "react-router-dom";
 
 const ProfileUserEvents = () => {
   const [eventsData, setEventsData] = useState();
@@ -35,7 +36,7 @@ const ProfileUserEvents = () => {
               <EventCell key={index} element={element} index={index} />
             ))
           ) : (
-            <span>Nie dołączyłeś(aś) do żadnych wydarzeń, kliknij <a href="/events">tutaj</a> aby to zmienić</span> 
+            <span>Nie dołączyłeś(aś) do żadnych wydarzeń, kliknij <Link to="/events">tutaj</Link> aby to zmienić</span> 
           )}
         </ul>
       </div>
