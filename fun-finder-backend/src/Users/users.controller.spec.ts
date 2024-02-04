@@ -116,6 +116,54 @@ describe('Users Controller', () => {
     expect(result).toEqual({ hobbies });
     expect(service.getUserHobbiesByEmail).toHaveBeenCalledWith(email);
   });
+  it('should get current user data by email', async () => {
+    const email = 'test@example.com';
+    const userData: Partial<User> = {
+      email: 'test@example.com',
+      fname: 'John',
+      lname: 'Doe',
+      hobbies: [],
+      events: [],
+      description: '',
+      avatar: '',
+    };
+  
+    const result = await controller.getCurrentUserDataByEmail(email);
+    expect(result).toEqual(userData);
+    expect(service.findByEmail).toHaveBeenCalledWith(email);
+  });
+  
+  it('should get user avatar by email', async () => {
+    const email = 'test@example.com';
+    const avatar = 'avatar-url';
+    jest.spyOn(service, 'getUserAvatarByEmail').mockResolvedValue(avatar);
+  
+    const result = await controller.getCurrentUserAvatar(email);
+    expect(result).toEqual({ avatar });
+    expect(service.getUserAvatarByEmail).toHaveBeenCalledWith(email);
+  });
+  
+  it('should update user avatar by email', async () => {
+    const email = 'test@example.com';
+    const avatar = 'new-avatar-url';
+    const updatedUser = { email, avatar } as User;
+    jest.spyOn(service, 'updateUserAvatarByEmail').mockResolvedValue(updatedUser);
+  
+    const result = await controller.updateCurrentUserAvatar(email, { avatar });
+    expect(result).toEqual({ message: 'Avatar updated successfully', user: updatedUser });
+    expect(service.updateUserAvatarByEmail).toHaveBeenCalledWith(email, avatar);
+  });
+  it('should update user hobbies by email', async () => {
+    const email = 'test@example.com';
+    const hobbies = ['new-hobby1', 'new-hobby2'];
+    const hobbiesName = ['new-hobby1', 'new-hobby2'];
+    const updatedUser = { email, hobbies, hobbiesName } as User;
+    jest.spyOn(service, 'updateUserHobbiesByEmail').mockResolvedValue(updatedUser);
+  
+    const result = await controller.updateCurrentUserHobbies(email, { hobbies, hobbiesName });
+    expect(result).toEqual({ message: 'Hobbies updated successfully', user: updatedUser });
+    expect(service.updateUserHobbiesByEmail).toHaveBeenCalledWith(email, hobbies, hobbiesName);
+  });
 
  
   

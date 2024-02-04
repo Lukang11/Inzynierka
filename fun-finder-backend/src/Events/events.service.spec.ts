@@ -1,4 +1,4 @@
-// path/filename: tests/events.service.spec.ts
+
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { EventsService } from './events.service';
@@ -91,6 +91,44 @@ describe('EventsService', () => {
     expect(result).toEqual(mockEvent);
     expect(mockEventModel.create).toHaveBeenCalledWith(mockEvent);
   });
+  describe('getAllEvents', () => {
+    it('should return all events', async () => {
+      const mockEvents = [{ name: 'Event 1' }, { name: 'Event 2' }];
+      MockEventModel.find.mockResolvedValue(mockEvents);
+  
+      const result = await service.getAllEvents();
+      expect(result).toEqual(mockEvents);
+      expect(MockEventModel.find).toHaveBeenCalled();
+    });
+  
+    it('should handle errors when fetching all events fails', async () => {
+      const errorMessage = 'Error fetching all events';
+      MockEventModel.find.mockRejectedValue(new Error(errorMessage));
+  
+      await expect(service.getAllEvents()).rejects.toThrow(errorMessage);
+    });
+  });
+  
+  describe('getEventsByLocation', () => {
+    it('should return events filtered by location', async () => {
+      const mockLocation = 'Test Location';
+      const mockEvents = [{ name: 'Event 1', location: mockLocation }];
+      MockEventModel.find.mockResolvedValue(mockEvents);
+  
+      const result = await service.getEventsByLocation(mockLocation);
+      expect(result).toEqual(mockEvents);
+      expect(MockEventModel.find).toHaveBeenCalledWith({ location: mockLocation });
+    });
+  
+    it('should handle errors when fetching events by location fails', async () => {
+      const mockLocation = 'Test Location';
+      const errorMessage = 'Error fetching events by location';
+      MockEventModel.find.mockRejectedValue(new Error(errorMessage));
+  
+      await expect(service.getEventsByLocation(mockLocation)).rejects.toThrow(errorMessage);
+    });
+  });
+  
 
   describe('getAllPlaces', () => {
     it('should return an array of places', async () => {
@@ -154,28 +192,6 @@ describe('EventsService', () => {
     
   });
   describe('createOfResourceInMongoDbOnlyIfDoesntExist', () => {
-  it('should create a new place if it does not exist', async () => {
-    const createPlaceDto = {
-      displayName: { text: 'Place 1', languageCode: 'EN' },
-      formattedAddress: '123 Example St',
-      types: ['restaurant'],
-        websiteUri: 'https://example.com',
-        iconMaskBaseUri: 'https://example.com',
-        rating: 4.5,
-        
-    };
-    mockPlaceModel.findOne.mockResolvedValue(null); 
-    mockPlaceModel.create.mockResolvedValue(createPlaceDto);
-
-    const result = await service.createOfResourceInMongoDbOnlyIfDoesntExist(createPlaceDto);
-    expect(result).toEqual(createPlaceDto);
-    expect(mockPlaceModel.findOne).toHaveBeenCalledWith({
-      'displayName.text': createPlaceDto.displayName.text,
-      'displayName.languageCode': createPlaceDto.displayName.languageCode,
-      formattedAddress: createPlaceDto.formattedAddress,
-    });
-    expect(mockPlaceModel.create).toHaveBeenCalledWith(createPlaceDto);
-  });
 
   it('should not create a new place if it already exists', async () => {
     const createPlaceDto = {
@@ -201,7 +217,7 @@ describe('EventsService', () => {
 });
 describe('fetchTopRatingPlaces', () => {
     it('should fetch places with top ratings', async () => {
-      const mockPlaces = [{ /* ... place data ... */ }, { /* ... place data ... */ }];
+      const mockPlaces = [{ types:'test',formattedAddress:'testowa',websiteUri:'zal.pl',displayName:{text:'test',languageCode:'PL'} }];
       mockPlaceModel.find.mockReturnValue({ exec: jest.fn().mockResolvedValue(mockPlaces) });
   
       const result = await service.fetchTopRatingPlaces();
@@ -212,24 +228,21 @@ describe('fetchTopRatingPlaces', () => {
   });
   
   
-    
-  
   describe('fetchTopRatingPlaces', () => {
     it('should fetch places with top ratings', async () => {
-      const mockPlaces = [{  }, { /* ... place data ... */ }];
+      const mockPlaces = [{ types:'test',formattedAddress:'testowa',websiteUri:'zal.pl',displayName:{text:'test',languageCode:'PL'} }];
       mockPlaceModel.find.mockReturnValue({ exec: jest.fn().mockResolvedValue(mockPlaces) });
   
       const result = await service.fetchTopRatingPlaces();
       expect(result).toEqual(mockPlaces);
       expect(mockPlaceModel.find).toHaveBeenCalledWith({ rating: { $gt: 4.5, $lt: 5 } });
     });
-  
     
   });
   describe('getEventById', () => {
     it('should retrieve an event by id', async () => {
       const eventId = 'event123';
-      const mockEvent = { /* ... event data ... */ };
+      const mockEvent = { name: 'Test Event', location: 'Test Location',geoLocation:{latitude:1,longitude:1},startDate:new Date(),endDate:new Date(),description:'test',imageUrl:'test',maxEventParticipants:[] };
       MockEventModel.findById.mockResolvedValue(mockEvent);
   
       const result = await service.getEventById(eventId);

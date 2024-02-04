@@ -55,8 +55,10 @@ describe('EventsController', () => {
       eventStart: new Date(),
       eventEnd: new Date(),
       relatedHobbies: ['hobby1', 'hobby2'],
-        eventDescription: 'description',
-        eventParticipants: ['user1', 'user2'],
+      eventDescription: 'description',
+      eventParticipants: ['user1', 'user2'],
+      maxEventParticipants: 10,
+      eventImage: 'image',
 
     };
   

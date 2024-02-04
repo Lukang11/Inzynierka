@@ -1,0 +1,10 @@
+{
+  "success": true,
+  "message": "Message sent successfully",
+  "data": {
+    "id": 3,
+    "sender": "CurrentUser",
+    "content": "This is a test message",
+    "timestamp": "2024-02-03T12:36:56Z"
+  }
+}

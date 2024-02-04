@@ -36,7 +36,7 @@ describe('UserService', () => {
           provide: JwtService,
           useFactory: () => {
             return new JwtService({
-              secret: 'F129344E6501F029CECBBFE302498CAA9235CC2A637E9FFA33EA4277FE7ED5E3',
+              secret: 'F129344E6501F029CECBBFE302498CAA9235CC2A637E9FFA33EA4277FE7ED5E2',
               signOptions: { expiresIn: '3h' },
             });
           },
@@ -233,6 +233,9 @@ describe('UserService', () => {
     expect(result).toHaveProperty('avatar', newAvatar);
     expect(userService.updateUserAvatarByEmail).toHaveBeenCalledWith(email, newAvatar);
   });
+  
+  
+  
  
   
   
