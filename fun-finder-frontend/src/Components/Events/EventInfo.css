@@ -98,15 +98,35 @@
 
 
 @media (max-width: 768px) {
-  .text-wrapper,
+  .event-info-container {
+    flex-direction: column; 
+    padding: 10px; 
+  }
+
   .event-information,
   .event-name,
   .event-address,
   .event-enrolled-users {
-    padding: 0 20px; 
+    margin-left: 20px;
+    font-size: 18px; 
+    padding: 10px 20px; 
+    margin-bottom: 15px; 
   }
 
-  .event-map-container {
-    flex-direction: column; 
+  .event-map {
+    height: 300px; 
+  }
+
+  .register-on-event-button {
+    margin-left: 30px;
+    padding: 8px 20px;
+    font-size: 16px; 
+  }
+
+  
+  .event-enrolled-users {
+    justify-content: center; 
+    margin-bottom: 20px;  
   }
 }
+

@@ -70,80 +70,58 @@ function CreateEvent( ) {
     setErrors(tempErrors);
     return isValid && Object.values(tempErrors).every(x => x === "");
   };
-
+ 
   useEffect(() => {
     const loader = new Loader({
       apiKey: apiKey,
       version: "weekly",
       libraries: ["places"],
     });
-  
+
     loader.load().then(() => {
-      const map = new window.google.maps.Map(mapRef.current, {
-        zoom: 8, 
+      const googleMaps = window.google.maps;
+      const initialPosition = { lat: -34.397, lng: 150.644 };
+
+      const map = new googleMaps.Map(mapRef.current, {
+        center: initialPosition,
+        zoom: 8,
       });
       setMap(map);
-  
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const userLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-          map.setCenter(userLocation);
-          map.setZoom(15);
-  
-          new window.google.maps.Marker({
-            position: userLocation,
-            map: map,
-            title: "Twoja lokalizacja"
-          });
-        }, (error) => {
-          console.error("Błąd geolokalizacji:", error)
-        });
-      }
-  
-      const searchBox = new window.google.maps.places.SearchBox(searchBoxRef.current);
-      searchBox.addListener('places_changed', () => {
+
+      const searchBox = new googleMaps.places.SearchBox(searchBoxRef.current);
+
+      let marker = null;
+
+      searchBox.addListener("places_changed", () => {
         const places = searchBox.getPlaces();
         if (places.length === 0) return;
-  
-        const bounds = new window.google.maps.LatLngBounds();
-        places.forEach(place => {
-          if (!place.geometry) return;
+
+        if (marker) {
+          marker.setMap(null);
+        }
+
+        const bounds = new googleMaps.LatLngBounds();
+        places.forEach((place) => {
+          if (!place.geometry || !place.geometry.location) return;
+
+          marker = new googleMaps.Marker({
+            map: map,
+            title: place.name,
+            position: place.geometry.location,
+          });
+
           if (place.geometry.viewport) {
             bounds.union(place.geometry.viewport);
           } else {
             bounds.extend(place.geometry.location);
           }
         });
-  
+
         map.fitBounds(bounds);
-        const selectedPlace = places[0];
-        const selectedLatLng = { lat: selectedPlace.geometry.location.lat(), lng: selectedPlace.geometry.location.lng() };
-        setLatLng(selectedLatLng);
-        setAddress(selectedPlace.formatted_address);
-  
-        if (marker) {
-          marker.setPosition(selectedLatLng);
-        } else {
-          const newMarker = new window.google.maps.Marker({
-            position: selectedLatLng,
-            map: map,
-          });
-          setMarker(newMarker);
-        }
       });
-  
     });
   }, [apiKey]);
-  
 
-  useEffect(() => {
-    if (marker && latLng.lat !== 0 && latLng.lng !== 0) {
-      marker.setPosition(latLng);
-    }
-  }, [latLng, marker]);
   
  
   
@@ -252,7 +230,7 @@ const handleAddEventToUser = async (event_id) => {
       </div>
       <div className='events-map' ref={mapRef} ></div>
       <input className={`input-textbox ${errors.imageUrl ? 'input-error' : ''}`} type="text" placeholder={errors.imageUrl || 'Dodaj URL zdjęcia'} value={imageUrl} onChange={e => {setImageUrl(e.target.value); setErrors({...errors, imageUrl: ''});}} />
-      <EventCardPrewiev name={name} location={address} description={description} startDate={startDate} endDate={endDate} people={people} category={selectedCategory} imageUrl={imageUrl} />
+      <EventCardPrewiev className='preview-card' name={name} location={address} description={description} startDate={startDate} endDate={endDate} people={people} category={selectedCategory} imageUrl={imageUrl} />
       </div>
       <div className='events-card'>
         <div className='info-header'>Kategoria</div>

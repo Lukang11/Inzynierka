@@ -60,14 +60,12 @@ function PreferedEvents({ userLocation, filter }) {
 
   const filterEvents = (events, filter, userLocation, userHobbiesData) => {
     return events.filter((event) => {
-      // Sprawdzanie pasujących hobby
       const isHobbyMatch =
         Array.isArray(event.relatedHobbiesName) &&
         event.relatedHobbiesName.some((hobby) =>
           userHobbiesData.includes(hobby)
         );
 
-      // Wykluczenie wydarzeń bez danych geolokalizacyjnych, jeśli filtr jest aktywny
       if (
         filter &&
         (!event.geoLocation ||
@@ -77,7 +75,7 @@ function PreferedEvents({ userLocation, filter }) {
         return false;
       }
 
-      // Sprawdzanie odległości, jeśli filtr i lokalizacja są dostępne
+
       if (filter && userLocation && event.geoLocation) {
         const distance = calculateDistance(
           userLocation.latitude,

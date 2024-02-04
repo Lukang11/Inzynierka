@@ -6,7 +6,7 @@
   overflow-x: scroll;
 }
 
-/* Style horizontal scrollbar in .events-view-container */
+
 .events-view-container::-webkit-scrollbar,
 .events-view-container::-webkit-scrollbar-horizontal {
   height: 12px;
@@ -38,12 +38,17 @@
   padding: 10px 20px 10px 20px;
   border-radius: 20px;
   margin: 0 20px 0 20px;
+  cursor: pointer;
 }
 
 .event-button-group {
   display: flex;
   justify-content: end;
   margin-top: 50px;
+  cursor: pointer;
+}
+.select{
+  cursor: pointer;
 }
 
 .event-view-title {

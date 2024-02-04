@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AllEventComponent from "./AllEventComponent/AllEventComponent";
 import NearbyEventsComponent from "./PreferedEvents/NearbyEventsComponent";
 import HiglyRatedPlaces from "./Restaruants/Restaurants";
+import Restaurants from "./Restaruants/Restaurants";
 
 function EventsPageView() {
   const [error, setError] = useState();
@@ -86,7 +87,7 @@ function EventsPageView() {
 
       <div className="event-view-title-desc">Restaruacje blisko ciebie :)</div>
       <div className="events-view-container">
-        <HiglyRatedPlaces />
+        <Restaurants />
       </div>
     </div>
   );
