@@ -54,7 +54,7 @@ function EventBattlerCreateRoom({updateModalShow}) {
               <input type="datetime-local" value={roomDate} onChange={handleRoomDateChange} required/>
             </label>
             <button type="submit">Utwórz</button>
-            <button type="button">Anuluj</button>
+            <button type="button" onClick={updateModalShow}>Anuluj</button>
           </form>
         </div>
       </div>
