@@ -45,17 +45,14 @@ export class EventsController {
     @Body() queryObject: GoogleApiQueryObject,
   ): any {
     try {
-      console.log(
-        'Wysłałem płatny request uwaga!!!!!!!!!!!!! trzeba odkomentować przed pokazywaniem events.controller.ts/ =>   findPlaceByLocalizationGoogleApi',
-      );
-     // const result =
-      //this.eventService.getEventsByLocationFromGoogleApi(queryObject);
-     // return result;
+      console.log('Wysłałem płatny request uwaga!');
+      const result =
+        this.eventService.getEventsByLocationFromGoogleApi(queryObject);
+      return result;
     } catch (error) {
       console.error('Error processing request:', error);
       throw new HttpException('Invalid data format', HttpStatus.BAD_REQUEST);
     }
-
   }
 
   @Post('/test')

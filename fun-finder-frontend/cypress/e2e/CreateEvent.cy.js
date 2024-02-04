@@ -17,7 +17,7 @@ describe('CreateEvent Component Tests', () => {
 
   it('should show error messages for empty required fields on submit', () => {
     cy.get('.create-eventt-button').click();
-    cy.get('.input-error').should('have.length', 7); // Zakładając, że jest 7 wymaganych pól
+    cy.get('.input-error').should('have.length', 7); 
     
   });
 

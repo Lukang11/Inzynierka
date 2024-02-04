@@ -1,0 +1,40 @@
+[
+    {
+        "_id": "*",
+        "name": "test event",
+        "location": "Świętego Ducha 64, 80-834 Gdańsk, Polska",
+        "geoLocation": {
+            "latitude": "54.3501456",
+            "longitude": "18.654628"
+        },
+        "eventStart": "2024-08-01T10:00:00.000Z",
+        "eventEnd": "2024-08-01T12:00:00.000Z",
+        "eventDescription": "This is a test event description",
+        "eventCategory": "test",
+        "eventParticipantsEmail": [],
+        "maxEventParticipants": 10,
+        "relatedHobbies": ["test"],
+        "relatedHobbiesName": ["test"],
+        "eventPhoto": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+    },
+    {
+        "_id": "5f3e3e3e3e3e3e3e3e3e2333e3e",
+        "name": "test event",
+        "location": "Świętego Ducha 63, 80-834 Gdańsk, Polska",
+        "geoLocation": {
+            "latitude": "54.3501456",
+            "longitude": "18.654628"
+        },
+        "eventStart": "2024-08-01T10:00:00.000Z",
+        "eventEnd": "2024-08-01T12:00:00.000Z",
+        "eventDescription": "This is a test event description",
+        "eventCategory": "test",
+        "eventParticipantsEmail": [],
+        "maxEventParticipants": 10,
+        "relatedHobbies": ["test"],
+        "relatedHobbiesName": ["test"],
+        "eventPhoto": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+    }
+]
+    
+  

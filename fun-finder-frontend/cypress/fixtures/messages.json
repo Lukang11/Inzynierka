@@ -1,0 +1,14 @@
+[
+    {
+      "id": 1,
+      "sender": "User1",
+      "content": "Hello from User1!",
+      "timestamp": "2024-02-03T12:34:56Z"
+    },
+    {
+      "id": 2,
+      "sender": "User2",
+      "content": "Hello from User2!",
+      "timestamp": "2024-02-03T12:35:56Z"
+    }
+  ]

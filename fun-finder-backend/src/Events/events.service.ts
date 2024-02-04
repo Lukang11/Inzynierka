@@ -1,5 +1,11 @@
 // events.service.ts
-import { Injectable, forwardRef, Inject, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Injectable,
+  forwardRef,
+  Inject,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
@@ -41,7 +47,7 @@ export class EventsService {
       eventParticipantsEmail: fullObject.eventParticipantsEmail,
       maxEventParticipants: fullObject.maxEventParticipants,
       relatedHobbies: fullObject.relatedHobbies,
-      relatedHobbiesName:fullObject.relatedHobbiesName,
+      relatedHobbiesName: fullObject.relatedHobbiesName,
       eventPhoto: fullObject.eventPhoto,
     });
     const result = await newEvent.save();
@@ -100,7 +106,7 @@ export class EventsService {
 
   async getEventsByLocationFromGoogleApi(
     queryObject: GoogleApiQueryObject,
-  ): Promise<GoogleApiQueryResponse> | null {
+  ): Promise<any> {
     const placesUrl = 'https://places.googleapis.com/v1/places:searchNearby';
     const headers = {
       'Content-Type': 'application/json',
@@ -210,13 +216,15 @@ export class EventsService {
       if (participantIndex !== -1) {
         throw new Error('user arleady in event');
       }
-      if(event.maxEventParticipants < event.eventParticipantsEmail.length + 1){
-        console.log("max users in event reached");
+      if (
+        event.maxEventParticipants <
+        event.eventParticipantsEmail.length + 1
+      ) {
+        console.log('max users in event reached');
         return HttpStatus.FORBIDDEN;
-      }
-      else {
-        event.eventParticipantsEmail.push(body.userEmail)
-        console.log('dodaje uzytkownika')
+      } else {
+        event.eventParticipantsEmail.push(body.userEmail);
+        console.log('dodaje uzytkownika');
         await event.save();
       }
     } catch (error) {
