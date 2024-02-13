@@ -77,47 +77,52 @@ function CreateEvent( ) {
       version: "weekly",
       libraries: ["places"],
     });
-
+  
     loader.load().then(() => {
       const googleMaps = window.google.maps;
       const initialPosition = { lat: -34.397, lng: 150.644 };
-
+  
       const map = new googleMaps.Map(mapRef.current, {
         center: initialPosition,
         zoom: 8,
       });
       setMap(map);
-
+  
       const searchBox = new googleMaps.places.SearchBox(searchBoxRef.current);
-
-      let marker = null;
-
+      
+  
+      let marker = new googleMaps.Marker({
+        map: map,
+        draggable: true,
+      });
+  
+      setMarker(marker); 
+  
       searchBox.addListener("places_changed", () => {
         const places = searchBox.getPlaces();
         if (places.length === 0) return;
-
-        if (marker) {
-          marker.setMap(null);
+  
+        const place = places[0];
+        if (!place.geometry || !place.geometry.location) return;
+  
+        
+        marker.setPosition(place.geometry.location);
+        marker.setMap(map);
+  
+        
+        if (place.geometry.viewport) {
+          map.fitBounds(place.geometry.viewport);
+        } else {
+          map.setCenter(place.geometry.location);
+          map.setZoom(17); 
         }
-
-        const bounds = new googleMaps.LatLngBounds();
-        places.forEach((place) => {
-          if (!place.geometry || !place.geometry.location) return;
-
-          marker = new googleMaps.Marker({
-            map: map,
-            title: place.name,
-            position: place.geometry.location,
-          });
-
-          if (place.geometry.viewport) {
-            bounds.union(place.geometry.viewport);
-          } else {
-            bounds.extend(place.geometry.location);
-          }
+  
+        
+        setLatLng({
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
         });
-
-        map.fitBounds(bounds);
+        setAddress(place.formatted_address || ''); 
       });
     });
   }, [apiKey]);

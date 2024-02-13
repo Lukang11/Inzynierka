@@ -1,0 +1,58 @@
+2024.01.28 18:22:15 INFO  Started: Metals version 1.2.0 in folders 'C:\Users\hubi8\OneDrive\Dokumenty\GitHub\Inzynierka' for client Visual Studio Code 1.85.2.
+2024.01.28 18:22:23 INFO  Shutting down server
+2024.01.28 18:22:23 INFO  shutting down Metals
+2024.01.28 18:22:25 INFO  no build target found for C:\Users\hubi8\OneDrive\Pulpit\POF\skl\skl\src\main\scala\Main.scala. Using presentation compiler with project's scala-library version: 3.3.1
+2024.01.28 18:22:25 INFO  Exiting server
+2024.01.28 19:31:05 INFO  Started: Metals version 1.2.0 in folders 'C:\Users\hubi8\OneDrive\Dokumenty\GitHub\Inzynierka' for client Visual Studio Code 1.85.2.
+2024.01.28 19:31:14 WARN  Build server is not auto-connectable.
+2024.01.28 19:31:14 WARN  no build tool detected in workspace 'C:\Users\hubi8\OneDrive\Dokumenty\GitHub\Inzynierka'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+sty 28, 2024 9:02:23 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+2024.01.31 20:42:53 INFO  Started: Metals version 1.2.0 in folders 'C:\Users\hubi8\OneDrive\Dokumenty\GitHub\Inzynierka' for client Visual Studio Code 1.85.2.
+2024.01.31 20:43:01 INFO  no build target found for C:\Users\hubi8\OneDrive\Pulpit\pomoc.scala. Using presentation compiler with project's scala-library version: 3.3.1
+2024.01.31 20:43:03 WARN  Could not find semantic tokens for: file:///C:/Users/hubi8/OneDrive/Pulpit/pomoc.scala
+2024.01.31 20:43:10 WARN  Build server is not auto-connectable.
+2024.01.31 20:43:10 WARN  no build tool detected in workspace 'C:\Users\hubi8\OneDrive\Dokumenty\GitHub\Inzynierka'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2024.01.31 20:43:10 WARN  no build target for: C:\Users\hubi8\OneDrive\Pulpit\pomoc.scala
+2024.01.31 20:43:10 INFO  Shutting down server
+2024.01.31 20:43:10 INFO  shutting down Metals
+2024.01.31 20:43:11 WARN  Could not find semantic tokens for: file:///c:/Users/hubi8/OneDrive/Pulpit/pomoc.scala
+2024.01.31 20:43:11 INFO  Exiting server
+2024.01.31 20:43:11 INFO  time: code lens generation in 1.73s
+2024.01.31 20:43:11 INFO  time: code lens generation in 1.73s
+2024.01.31 22:09:51 INFO  Started: Metals version 1.2.0 in folders 'C:\Users\hubi8\OneDrive\Dokumenty\GitHub\Inzynierka' for client Visual Studio Code 1.85.2.
+2024.01.31 22:10:00 INFO  no build target found for C:\Users\hubi8\OneDrive\Pulpit\POF\szkielet\src\main\scala\zad1.scala. Using presentation compiler with project's scala-library version: 3.3.1
+2024.01.31 22:10:30 WARN  Build server is not auto-connectable.
+2024.01.31 22:10:30 WARN  no build tool detected in workspace 'C:\Users\hubi8\OneDrive\Dokumenty\GitHub\Inzynierka'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2024.01.31 22:10:30 WARN  no build target for: C:\Users\hubi8\OneDrive\Pulpit\POF\szkielet\src\main\scala\zad1.scala
+2024.01.31 22:11:28 WARN  no build target for: C:\Users\hubi8\OneDrive\Pulpit\Inne\Scala zadania\metrage.scala
+sty 31, 2024 10:11:34 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 40
+2024.01.31 22:12:07 WARN  no build target for: C:\Users\hubi8\OneDrive\Pulpit\POF\skl\szkielet\src\main\scala\zad1.scala
+sty 31, 2024 10:16:34 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 101
+2024.02.01 10:18:11 INFO  Started: Metals version 1.2.0 in folders 'C:\Users\hubi8\OneDrive\Dokumenty\GitHub\Inzynierka' for client Visual Studio Code 1.85.2.
+2024.02.01 10:18:38 WARN  Build server is not auto-connectable.
+2024.02.01 10:18:38 WARN  no build tool detected in workspace 'C:\Users\hubi8\OneDrive\Dokumenty\GitHub\Inzynierka'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+lut 01, 2024 11:27:53 AM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+lut 01, 2024 3:22:11 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+lut 01, 2024 3:22:11 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+lut 01, 2024 3:22:11 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+lut 01, 2024 3:22:12 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+lut 01, 2024 3:22:12 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+lut 01, 2024 3:22:13 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+lut 01, 2024 3:22:13 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+lut 01, 2024 3:22:15 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+lut 01, 2024 3:59:47 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+lut 02, 2024 12:05:33 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
