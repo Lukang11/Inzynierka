@@ -65,6 +65,7 @@ function GooglePlaceSquare({ eventInfo, isAddedByUser }) {
         <Link
           to={`/event-info/${eventInfo._id}`}
           className="google-square-link"
+          target="_blank"
         >
           <div>
             <div className="google-square-header">{eventInfo.name}</div>
